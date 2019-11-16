@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.use('/article', require('./article.js'));
-router.use('/user', require('./user.js'));
+router.use('/groups', require('./groups.js'));
+router.use('/users', require('./users.js'));
 
 module.exports = router;
