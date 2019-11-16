@@ -1,34 +1,33 @@
-# node-js-getting-started
+# lovelab.heroku
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
-
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+API server of lovelab with node.js and express
 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
 
 ```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
+$ git clone https://github.com/basd4g/lovelab.heroku
+$ cd lovelab.heroku
 $ npm install
 $ npm start
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Your app should now be running on [localhost:3000](http://localhost:3000/).
 
 ## Deploying to Heroku
 
-```
+```sh
 $ heroku create
 $ git push heroku master
 $ heroku open
 ```
+
 or
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-## Documentation
+## Documentation of Heroku and Node.js
 
 For more information about using Node.js on Heroku, see these Dev Center articles:
 
@@ -37,3 +36,10 @@ For more information about using Node.js on Heroku, see these Dev Center article
 - [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
 - [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
 - [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+
+## ToDo
+
+- install TypeScript
+- commonjs -> ES6
+- connect DataBase
+- write code of API
