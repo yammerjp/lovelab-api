@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+import * as express from "express"
+const router = express.Router();
 
 // /users ユーザーに関する操作
 
@@ -38,4 +38,5 @@ router.get('/:id', function (req, res) {
 });
 
 //routerをモジュールとして扱う準備
-module.exports = router;
+
+export default router

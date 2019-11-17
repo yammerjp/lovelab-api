@@ -112,7 +112,6 @@ For more information about using Node.js on Heroku, see these Dev Center article
 
 ### ToDo
 
-- install TypeScript
-- commonjs -> ES6
+- install lint
 - connect DataBase
 - write code of API
