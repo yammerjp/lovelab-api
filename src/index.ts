@@ -14,4 +14,5 @@ app.use("/api/v1/", routerV1);
 
 // サーバ起動
 app.listen(port);
+// eslint-disable-next-line no-console
 console.log(`listen on port ${port}`);

@@ -1,4 +1,5 @@
 import * as express from "express";
+import pool from "../../database/database";
 
 const router = express.Router();
 
@@ -27,16 +28,47 @@ const router = express.Router();
 // PUT https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations/:invitationid
 
 // GET  http://localhost:3000/api/v1/user/:id
+
+const validateId = (str: string): boolean => {
+  // 半角英数と_の組み合わせのみ許可
+  return /^[a-zA-Z0-9_]+$/.test(str);
+};
+
 router.get("/:id", (req, res) => {
-  //    console.log(req);
-  // req.params.id ... /:idの部分
-  res.json({
-    id: req.params.id,
-    name: "太郎",
-    picturepath:
-      "https://www.dropbox.com/s/szjeyvrmd4z047y/GettyImages-522585140.jpg?dl=0",
-    groupid: 0
+  const { id } = req.params;
+  //  console.log(`access: GET http://localhost:3000/api/v1/user/${id}`)
+  if (!validateId(id)) {
+    res.json({ error: true, errorMessage: "invalid id" });
+    return;
+  }
+  pool.connect((err, client) => {
+    // eslint-disable-next-line no-console
+    if (err) console.log(err);
+    client
+      .query(`SELECT id FROM users WHERE id = '${id}'`)
+      .then(result => {
+        // idは主キーなので result.rows.length=0 or 1
+        if (result.rows.length === 0) {
+          res.json({ error: true, errorMessage: "the id's user is not exist" });
+          return;
+        }
+        res.json(result.rows[0]);
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.log(e);
+        res.json({ error: true, errorMessage: "SQL query Error" });
+      });
   });
+  /*
+    res.json({
+      id: req.params.id,
+      name: "太郎",
+      picturepath:
+        "https://www.dropbox.com/s/szjeyvrmd4z047y/GettyImages-522585140.jpg?dl=0",
+      groupid: 0
+    });
+ */
 });
 
 // routerをモジュールとして扱う準備
