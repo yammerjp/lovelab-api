@@ -1,7 +1,7 @@
-import * as express from "express"
-import * as bodyParser from "body-parser"
+import * as express from "express";
+import * as bodyParser from "body-parser";
 
-import routerV1 from "./routes/v1/index"
+import routerV1 from "./routes/v1/index";
 
 const app = express();
 
@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT || 3000;
 
-app.use('/api/v1/', routerV1);
+app.use("/api/v1/", routerV1);
 
-//サーバ起動
+// サーバ起動
 app.listen(port);
-console.log('listen on port ' + port);
+console.log(`listen on port ${port}`);

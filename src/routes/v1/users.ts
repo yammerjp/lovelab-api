@@ -1,10 +1,11 @@
-import * as express from "express"
+import * as express from "express";
+
 const router = express.Router();
 
 // /users ユーザーに関する操作
 
-// GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid 
-//  グループに所属するユーザーを取得 
+// GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
+//  グループに所属するユーザーを取得
 // GET https://lovelab.2n2n.ninja/api/v1/users/user:id
 //  ユーザー情報を取得
 // POST https://lovelab.2n2n.ninja/api/v1/users
@@ -26,17 +27,18 @@ const router = express.Router();
 // PUT https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations/:invitationid
 
 // GET  http://localhost:3000/api/v1/user/:id
-router.get('/:id', function (req, res) {
-//    console.log(req);
-    // req.params.id ... /:idの部分
-    res.json({
-        id: req.params.id,
-        name: "太郎",
-        picturepath:"https://www.dropbox.com/s/szjeyvrmd4z047y/GettyImages-522585140.jpg?dl=0",
-        groupid:0
-    });
+router.get("/:id", (req, res) => {
+  //    console.log(req);
+  // req.params.id ... /:idの部分
+  res.json({
+    id: req.params.id,
+    name: "太郎",
+    picturepath:
+      "https://www.dropbox.com/s/szjeyvrmd4z047y/GettyImages-522585140.jpg?dl=0",
+    groupid: 0
+  });
 });
 
-//routerをモジュールとして扱う準備
+// routerをモジュールとして扱う準備
 
-export default router
+export default router;
