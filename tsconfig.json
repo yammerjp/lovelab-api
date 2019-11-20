@@ -3,11 +3,16 @@
     "target": "es6",
     "module": "commonjs",
     "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "src/*": ["*"]
+    },
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "strictPropertyInitialization": false
   },
   "include": [
     "src/*",
