@@ -3,6 +3,7 @@ import configfunc from "./config/config";
 import { Users, usersFactory } from "./models/users";
 import { Invitations, invitationsFactory } from "./models/invitations";
 import { Groups, groupsFactory } from "./models/groups";
+import { Tasks, tasksFactory } from "./models/tasks";
 // database接続
 
 const connectDataBase = (): void => {
@@ -20,6 +21,7 @@ const connectDataBase = (): void => {
   groupsFactory(sequelize);
   usersFactory(sequelize);
   invitationsFactory(sequelize);
+  tasksFactory(sequelize);
 
   sequelize
     .authenticate()
@@ -32,6 +34,7 @@ const connectDataBase = (): void => {
       });
       Invitations.sync({});
       Groups.sync({});
+      Tasks.sync({});
     })
     .then(() => {})
     .catch(() => {

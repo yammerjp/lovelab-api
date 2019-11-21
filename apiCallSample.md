@@ -184,3 +184,34 @@ http://localhost:3000/api/v1/invitations/1
     "error": false
 }
 ```
+
+## tasks
+
+### POST /tasks?userid=:userid
+
+#### Call
+
+```json
+{
+	"name":"taskname",
+	"comment":"taskcomment"
+}
+```
+
+#### Responce
+
+```json
+{
+    "whoisdoinguserid": null,
+    "isfinished": false,
+    "deadlinedate": null,
+    "finisheddate": null,
+    "id": 1,
+    "name": "taskname",
+    "comment": "taskcomment",
+    "groupid": 1,
+    "updatedAt": "2019-11-21T15:43:49.745Z",
+    "createdAt": "2019-11-21T15:43:49.745Z"
+}
+```
+
