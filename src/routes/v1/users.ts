@@ -5,12 +5,8 @@ const router = express.Router();
 
 // /users ユーザーに関する操作
 
-// GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
-//  グループに所属するユーザーを取得
 // /users/:userid/invitations 招待に関する操作
 
-// POST https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations
-//  グループへの招待を追加 自分の所属するグループへの招待のみ可能
 // GET https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations
 //  招待をすべて取得 自分への招待のみ取得可能
 // PUT https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations/:invitationid
@@ -37,6 +33,7 @@ const userResponceObjectFilter = (
   const { groupid, picturepath, id, email, name } = user;
   return { groupid, picturepath, id, email, name };
 };
+
 // POST https://lovelab.2n2n.ninja/api/v1/users
 //  ユーザーを追加 (認証に絡む。新しいアカウントの作成)
 router.post("/", (req, res) => {
@@ -57,10 +54,36 @@ router.post("/", (req, res) => {
   });
 });
 
+// GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
+//  グループに所属するユーザーを取得
+router.get("/", (req, res) => {
+  if (req.query.groupid === undefined) {
+    res.json({ error: true, errorMessage: "Need to specify groupid" });
+    return;
+  }
+  const groupid = parseInt(req.query.groupid, 10);
+  if (Number.isNaN(groupid) || groupid < 0) {
+    res.json({ error: true, errorMessage: "Invalid groupid" });
+    return;
+  }
+  Users.findAll({ where: { groupid } }).then(users => {
+    res.json(
+      users.map(user => {
+        return userResponceObjectFilter(user);
+      })
+    );
+  });
+});
+
 // GET https://lovelab.2n2n.ninja/api/v1/users/user:id
 //  ユーザー情報を取得
 router.get("/:userid", (req, res) => {
-  Users.findByPk(parseInt(req.params.userid, 10)).then(user => {
+  const userid = parseInt(req.params.userid, 10);
+  if (Number.isNaN(userid) || userid < 0) {
+    res.json({ error: true, errorMessage: "Invalid userid" });
+    return;
+  }
+  Users.findByPk(userid).then(user => {
     if (user === null) {
       res.json({ error: true, errorMessage: "user is not found" });
       return;
@@ -68,6 +91,9 @@ router.get("/:userid", (req, res) => {
     res.json(userResponceObjectFilter(user));
   });
 });
+
+// POST https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations
+//  グループへの招待を追加 自分の所属するグループへの招待のみ可能
 
 // routerをモジュールとして扱う準備
 export default router;
