@@ -67,7 +67,6 @@ router.get("/", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   const agreement = req.query.agreement === "true";
-  console.log(`agreement: ${agreement}`);
   const invitationid = parseInt(req.params.id, 10);
   if (Number.isNaN(invitationid) || invitationid < 0) {
     res.json({ error: true, errorMessage: "Invalid invitation id" });

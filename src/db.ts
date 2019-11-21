@@ -26,6 +26,7 @@ const connectDataBase = (): void => {
   sequelize
     .authenticate()
     .then(() => {
+      // eslint-disable-next-line no-console
       console.log("authenticate().then ...");
     })
     .then(() => {
@@ -38,6 +39,7 @@ const connectDataBase = (): void => {
     })
     .then(() => {})
     .catch(() => {
+      // eslint-disable-next-line no-console
       console.log("authenticate().catch");
     });
 };

@@ -234,3 +234,56 @@ http://localhost:3000/api/v1/invitations/1
 }
 ```
 
+### PUT /tasks/:id
+
+#### Call
+
+```json
+{
+	"name":"newtaskname",
+	"comment":"newtaskcomment"
+}
+```
+
+#### Responce
+
+```json
+{
+    "id": 1,
+    "groupid": 1,
+    "whoisdoinguserid": null,
+    "isfinished": false,
+    "name": "newtaskname",
+    "comment": "newtaskcomment",
+    "deadlinedate": null,
+    "finisheddate": null,
+    "createdAt": "2019-11-21T15:43:49.745Z",
+    "updatedAt": "2019-11-21T16:47:09.713Z"
+}
+```
+
+#### Call
+
+```json
+{
+	"isfinished": true
+}
+```
+
+#### Responce
+
+```json
+{
+    "id": 1,
+    "groupid": 1,
+    "whoisdoinguserid": null,
+    "isfinished": true,
+    "name": "newtaskname",
+    "comment": "newtaskcomment",
+    "deadlinedate": null,
+    "finisheddate": null,
+    "createdAt": "2019-11-21T15:43:49.745Z",
+    "updatedAt": "2019-11-21T16:48:34.461Z"
+}
+```
+

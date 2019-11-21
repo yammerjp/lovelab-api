@@ -36,6 +36,7 @@ class Groups extends Model {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const groupsFactory = (sequelize: Sequelize) => {
   Groups.attach(sequelize);
   return Groups;

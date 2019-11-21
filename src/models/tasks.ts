@@ -78,6 +78,7 @@ class Tasks extends Model {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const tasksFactory = (sequelize: Sequelize) => {
   Tasks.attach(sequelize);
   return Tasks;

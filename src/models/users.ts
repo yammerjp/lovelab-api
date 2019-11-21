@@ -61,6 +61,7 @@ class Users extends Model {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usersFactory = (sequelize: Sequelize) => {
   Users.attach(sequelize);
   return Users;

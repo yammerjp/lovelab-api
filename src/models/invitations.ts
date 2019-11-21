@@ -59,6 +59,7 @@ class Invitations extends Model {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const invitationsFactory = (sequelize: Sequelize) => {
   Invitations.attach(sequelize);
   return Invitations;

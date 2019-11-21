@@ -3,9 +3,10 @@ import { Users } from "../../models/users";
 import { Tasks } from "../../models/tasks";
 
 interface TaskRequest {
-  name: string;
-  comment: string;
-  groupid: number;
+  name?: string;
+  comment?: string;
+  groupid?: number;
+  isfinished?: boolean;
   whoisdoinguserid?: number;
 }
 const router = express.Router();
@@ -98,10 +99,53 @@ router.get("/:taskid", (req, res) => {
       res.json({ error: true, errorMessage: "Database error" });
     });
 });
+
 // PUT https://lovelab.2n2n.ninja/api/v1/groups/:groupid/tasks/:taskid
 //  タスクを完了 自分の所属するグループのみ編集可能
-// GET https://lovelab.2n2n.ninja/api/v1/groups/:groupid
-//  グループの情報を取得
+router.put("/:taskid", (req, res) => {
+  const taskid = parseInt(req.params.taskid, 10);
+  if (Number.isNaN(taskid)) {
+    res.json({ error: true, errorMessage: "Invalid or task id" });
+    return;
+  }
+
+  const { name, isfinished, comment } = req.body;
+  // TODO: Deadline, finishedlineを扱えるようにする
+
+  const taskRequest: TaskRequest = {};
+  if (name !== undefined) {
+    taskRequest.name = name;
+  }
+  if (comment !== undefined) {
+    taskRequest.comment = comment;
+  }
+  if (isfinished === true || isfinished === false) {
+    taskRequest.isfinished = isfinished;
+  } else if (isfinished !== undefined) {
+    res.json({ error: true, errorMessage: "isfinished is need true/false" });
+    return;
+  }
+  // TODO: name, commentのSQLインジェクション可能性排除
+
+  // TODO: 自分の所属するグループのタスクであることを確認
+
+  Tasks.update(taskRequest, { where: { id: taskid } })
+    .then(() => {
+      Tasks.findByPk(taskid)
+        .then(task => {
+          res.json(task);
+        })
+        .catch(() => {
+          res.json({
+            error: true,
+            errorMessage: "Database updated. and failed to get updated task"
+          });
+        });
+    })
+    .catch(() => {
+      res.json({ error: true, errorMessage: "Database error" });
+    });
+});
 
 // routerをモジュールとして扱う準備
 export default router;

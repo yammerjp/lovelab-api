@@ -41,16 +41,6 @@ router.get("/:id", (req, res) => {
     .catch(() => {
       res.json({ error: true, errorMessage: "Database error" });
     });
-  /*
-  res.json({
-    id: req.params.id,
-    name: "group name",
-    groupid: 0,
-    updatedtimestamp: 0,
-    picturepath:
-      "https://www.dropbox.com/s/szjeyvrmd4z047y/GettyImages-522585140.jpg?dl=0"
-  });
- */
 });
 
 // POST https://lovelab.2n2n.ninja/api/v1/groups?userid=:userid
@@ -95,5 +85,6 @@ router.post("/", (req, res) => {
       });
   });
 });
+
 // routerをモジュールとして扱う準備
 export default router;
