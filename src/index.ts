@@ -23,5 +23,5 @@ app.listen(port);
 console.log(`listen on port ${port}`);
 
 connectDataBase();
-const str = "hello,world";
+const str = "user";
 console.log(sha256(str));

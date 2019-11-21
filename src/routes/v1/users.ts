@@ -1,4 +1,6 @@
 import * as express from "express";
+import * as sha256 from "sha256";
+import * as crypto from "crypto";
 import { Users } from "../../models/users";
 
 const router = express.Router();
@@ -43,7 +45,9 @@ router.post("/", (req, res) => {
     res.json({ error: true, errorMessage: "Invalid send json" });
     return;
   }
-  Users.create({ email, password, name }).then(newUser => {
+  const salt = crypto.randomBytes(8).toString("HEX");
+  const passwordhash = sha256(password + salt);
+  Users.create({ email, passwordhash, name, salt }).then(newUser => {
     res.json(userResponceObjectFilter(newUser));
   });
 });

@@ -7,6 +7,8 @@ class Users extends Model {
 
   public passwordhash!: string;
 
+  public salt: string;
+
   public name: string;
 
   public groupid: number;
@@ -31,6 +33,11 @@ class Users extends Model {
           type: DataTypes.STRING,
           allowNull: false,
           defaultValue: ""
+        },
+        salt: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          defaultValue: "ISSALT"
         },
         name: {
           type: DataTypes.STRING,
