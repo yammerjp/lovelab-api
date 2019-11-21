@@ -40,7 +40,11 @@ class Users extends Model {
         groupid: {
           type: DataTypes.INTEGER,
           allowNull: true,
-          defaultValue: null
+          defaultValue: null,
+          references: {
+            model: "groups",
+            key: "id"
+          }
         },
         picturepath: {
           type: DataTypes.STRING,

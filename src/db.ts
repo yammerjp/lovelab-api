@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 import configfunc from "./config/config";
 import { Users, usersFactory } from "./models/users";
 import { Invitations, invitationsFactory } from "./models/invitations";
+import { Groups, groupsFactory } from "./models/groups";
 // database接続
 
 const connectDataBase = (): void => {
@@ -18,6 +19,7 @@ const connectDataBase = (): void => {
   );
   usersFactory(sequelize);
   invitationsFactory(sequelize);
+  groupsFactory(sequelize);
 
   sequelize
     .authenticate()
@@ -29,6 +31,7 @@ const connectDataBase = (): void => {
         /* force: true */
       });
       Invitations.sync({});
+      Groups.sync({});
     })
     .then(() => {})
     .catch(() => {

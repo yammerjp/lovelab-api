@@ -22,11 +22,11 @@ class Invitations extends Model {
         },
         groupid: {
           type: DataTypes.INTEGER,
-          allowNull: false /* ,
+          allowNull: false,
           references: {
             model: "groups",
             key: "id"
-          } */
+          }
         },
         inviteruserid: {
           type: DataTypes.INTEGER,
