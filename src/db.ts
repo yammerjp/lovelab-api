@@ -17,9 +17,9 @@ const connectDataBase = (): void => {
       port: config.port
     }
   );
+  groupsFactory(sequelize);
   usersFactory(sequelize);
   invitationsFactory(sequelize);
-  groupsFactory(sequelize);
 
   sequelize
     .authenticate()
