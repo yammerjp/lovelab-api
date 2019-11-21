@@ -1,20 +1,7 @@
 import * as express from "express";
-import * as sha256 from "sha256";
-import * as crypto from "crypto";
 import { Users } from "../../models/users";
 
 const router = express.Router();
-
-// /users ユーザーに関する操作
-
-// /users/:userid/invitations 招待に関する操作
-
-/*
-const validateId = (str: string): boolean => {
-  // 半角英数と_の組み合わせのみ許可
-  return /^[a-zA-Z0-9_]+$/.test(str);
-};
-*/
 
 interface UserResponceObject {
   groupid: number | null;
@@ -24,33 +11,18 @@ interface UserResponceObject {
   name: string;
 }
 
-const userResponceObjectFilter = (
+export const userResponceObjectFilter = (
   user: UserResponceObject
 ): UserResponceObject => {
   const { groupid, picturepath, id, email, name } = user;
   return { groupid, picturepath, id, email, name };
 };
-const validate = (str: string): boolean => {
+export const validate = (str: string): boolean => {
   if (str === undefined || str === null || str === "") {
     return false;
   }
   return true;
 };
-
-// POST https://lovelab.2n2n.ninja/api/v1/users
-//  ユーザーを追加 (認証に絡む。新しいアカウントの作成)
-router.post("/", (req, res) => {
-  const { email, password, name } = req.body;
-  if (!validate(email) || !validate(password) || !validate(name)) {
-    res.json({ error: true, errorMessage: "Invalid send json" });
-    return;
-  }
-  const salt = crypto.randomBytes(8).toString("HEX");
-  const passwordhash = sha256(password + salt);
-  Users.create({ email, passwordhash, name, salt }).then(newUser => {
-    res.json(userResponceObjectFilter(newUser));
-  });
-});
 
 // GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
 //  グループに所属するユーザーを取得
@@ -73,7 +45,7 @@ router.get("/", (req, res) => {
   });
 });
 
-// GET https://lovelab.2n2n.ninja/api/v1/users/user:id
+// GET https://lovelab.2n2n.ninja/api/v1/users/:id
 //  ユーザー情報を取得
 router.get("/:userid", (req, res) => {
   const userid = parseInt(req.params.userid, 10);
