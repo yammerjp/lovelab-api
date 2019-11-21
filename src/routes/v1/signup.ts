@@ -14,11 +14,34 @@ router.post("/", (req, res) => {
     res.json({ error: true, errorMessage: "Invalid send json" });
     return;
   }
-  const salt = crypto.randomBytes(8).toString("HEX");
-  const passwordhash = sha256(password + salt);
-  Users.create({ email, passwordhash, name, salt }).then(newUser => {
-    res.json(userResponceObjectFilter(newUser));
-  });
+  Users.findAll({ where: { email } })
+    .then(users => {
+      if (users.length !== 0) {
+        res.json({
+          error: true,
+          errorMessage: "the email user is already exist"
+        });
+        return;
+      }
+      const salt = crypto.randomBytes(8).toString("HEX");
+      const passwordhash = sha256(password + salt);
+      Users.create({ email, passwordhash, name, salt })
+        .then(newUser => {
+          res.json(userResponceObjectFilter(newUser));
+        })
+        .catch(() => {
+          res.json({
+            error: true,
+            errorMessage: "Database error, failed to create new user"
+          });
+        });
+    })
+    .catch(() => {
+      res.json({
+        error: true,
+        errorMessage: "Database error, searching same email user is failed"
+      });
+    });
 });
 
 // routerをモジュールとして扱う準備
