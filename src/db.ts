@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import configfunc from "./config/config";
-import { Users, factory } from "./models/users";
+import { Users, usersFactory } from "./models/users";
+import { Invitations, invitationsFactory } from "./models/invitations";
 // database接続
 
 const connectDataBase = (): void => {
@@ -15,7 +16,8 @@ const connectDataBase = (): void => {
       port: config.port
     }
   );
-  factory(sequelize);
+  usersFactory(sequelize);
+  invitationsFactory(sequelize);
 
   sequelize
     .authenticate()
@@ -26,7 +28,9 @@ const connectDataBase = (): void => {
       Users.sync({
         /* force: true */
       });
+      Invitations.sync({});
     })
+    .then(() => {})
     .catch(() => {
       console.log("authenticate().catch");
     });

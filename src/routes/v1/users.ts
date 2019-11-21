@@ -7,11 +7,6 @@ const router = express.Router();
 
 // /users/:userid/invitations 招待に関する操作
 
-// GET https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations
-//  招待をすべて取得 自分への招待のみ取得可能
-// PUT https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations/:invitationid
-//  招待を承諾/拒否 自分への招待のみ編集可能
-
 /*
 const validateId = (str: string): boolean => {
   // 半角英数と_の組み合わせのみ許可
@@ -33,18 +28,17 @@ const userResponceObjectFilter = (
   const { groupid, picturepath, id, email, name } = user;
   return { groupid, picturepath, id, email, name };
 };
+const validate = (str: string): boolean => {
+  if (str === undefined || str === null || str === "") {
+    return false;
+  }
+  return true;
+};
 
 // POST https://lovelab.2n2n.ninja/api/v1/users
 //  ユーザーを追加 (認証に絡む。新しいアカウントの作成)
 router.post("/", (req, res) => {
-  const validate = (str: string): boolean => {
-    if (str === undefined || str === null || str === "") {
-      return false;
-    }
-    return true;
-  };
   const { email, password, name } = req.body;
-
   if (!validate(email) || !validate(password) || !validate(name)) {
     res.json({ error: true, errorMessage: "Invalid send json" });
     return;
@@ -91,9 +85,6 @@ router.get("/:userid", (req, res) => {
     res.json(userResponceObjectFilter(user));
   });
 });
-
-// POST https://lovelab.2n2n.ninja/api/v1/users/:userid/invitations
-//  グループへの招待を追加 自分の所属するグループへの招待のみ可能
 
 // routerをモジュールとして扱う準備
 export default router;

@@ -57,9 +57,9 @@ class Users extends Model {
   }
 }
 
-const factory = (sequelize: Sequelize) => {
+const usersFactory = (sequelize: Sequelize) => {
   Users.attach(sequelize);
   return Users;
 };
 
-export { Users, factory };
+export { Users, usersFactory };
