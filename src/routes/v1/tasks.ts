@@ -75,8 +75,29 @@ router.post("/", (req, res) => {
     });
 });
 
-// GET https://lovelab.2n2n.ninja/api/v1/groups/:groupid/tasks/:taskid
+// GET https://lovelab.2n2n.ninja/api/v1/tasks/:taskid?userid=
 //  タスクの詳細を取得 自分の所属するグループのみ取得可能
+router.get("/:taskid", (req, res) => {
+  const taskid = parseInt(req.params.taskid, 10);
+
+  if (Number.isNaN(taskid)) {
+    res.json({ error: true, errorMessage: "Invalid or task id" });
+    return;
+  }
+  // TODO: ユーザーidの所属するグループのタスクであることを確認
+
+  Tasks.findByPk(taskid)
+    .then(task => {
+      if (task === null) {
+        res.json({ error: true, errorMessage: "Task is not found" });
+        return;
+      }
+      res.json(task);
+    })
+    .catch(() => {
+      res.json({ error: true, errorMessage: "Database error" });
+    });
+});
 // PUT https://lovelab.2n2n.ninja/api/v1/groups/:groupid/tasks/:taskid
 //  タスクを完了 自分の所属するグループのみ編集可能
 // GET https://lovelab.2n2n.ninja/api/v1/groups/:groupid

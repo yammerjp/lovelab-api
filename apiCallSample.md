@@ -215,3 +215,22 @@ http://localhost:3000/api/v1/invitations/1
 }
 ```
 
+### GET /tasks/:id
+
+#### Responce
+
+```json
+{
+    "id": 1,
+    "groupid": 1,
+    "whoisdoinguserid": null,
+    "isfinished": false,
+    "name": "taskname",
+    "comment": "taskcomment",
+    "deadlinedate": null,
+    "finisheddate": null,
+    "createdAt": "2019-11-21T15:43:49.745Z",
+    "updatedAt": "2019-11-21T15:43:49.745Z"
+}
+```
+
