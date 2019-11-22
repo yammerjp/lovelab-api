@@ -1,6 +1,6 @@
 import * as express from "express";
-import { Users } from "../../models/users";
-import { Tasks } from "../../models/tasks";
+import { Users } from "../../../models/users";
+import { Tasks } from "../../../models/tasks";
 
 interface TaskRequest {
   name?: string;

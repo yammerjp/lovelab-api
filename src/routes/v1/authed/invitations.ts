@@ -1,6 +1,6 @@
 import * as express from "express";
-import { Invitations } from "../../models/invitations";
-import { Users } from "../../models/users";
+import { Invitations } from "../../../models/invitations";
+import { Users } from "../../../models/users";
 
 const router = express.Router();
 
