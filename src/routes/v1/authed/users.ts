@@ -1,28 +1,8 @@
 import * as express from "express";
 import { Users } from "../../../models/users";
+import { userResponceObjectFilter } from "../../../others/users";
 
 const router = express.Router();
-
-interface UserResponceObject {
-  groupid: number | null;
-  picturepath: string;
-  id: number;
-  email: string;
-  name: string;
-}
-
-export const userResponceObjectFilter = (
-  user: UserResponceObject
-): UserResponceObject => {
-  const { groupid, picturepath, id, email, name } = user;
-  return { groupid, picturepath, id, email, name };
-};
-export const validate = (str: string): boolean => {
-  if (str === undefined || str === null || str === "") {
-    return false;
-  }
-  return true;
-};
 
 // GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
 //  グループに所属するユーザーを取得

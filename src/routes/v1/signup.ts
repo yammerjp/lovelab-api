@@ -2,7 +2,7 @@ import * as express from "express";
 import * as sha256 from "sha256";
 import * as crypto from "crypto";
 import { Users } from "../../models/users";
-import { userResponceObjectFilter, validate } from "./authed/users";
+import { userResponceObjectFilter, validate } from "../../others/users";
 
 const router = express.Router();
 
