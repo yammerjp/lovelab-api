@@ -33,35 +33,11 @@ or
 
 This is REST-like API(Authentication required).
 
-### API URI
+[API仕様書](document/apiSpec.md)にAPIの仕様を記述した。
 
-#### user
+## Database table structure
 
-- GET /users?groups=:id // グループに所属するユーザーを取得 
-- GET /users/:id // ユーザー情報を取得
-- POST /users // ユーザーを追加 // 認証に絡む。新しいアカウントの作成
-
-#### invitation
-
-- POST /users/:id/invitation // グループへの招待を追加 自分の所属するグループへの招待のみ可能
-- GET /users/:id/invitation // 招待をすべて取得 自分への招待のみ取得可能
-- PUT /users/:id/invitation/:id // 招待を承諾/拒否 自分への招待のみ編集可能
-
-#### group
-
-- GET /groups/:id // グループの情報を取得
-- POST /groups // グループを追加 自分が強制的にそのグループに所属することになる 
-
-#### task
-
-- GET /groups/:id/tasks // グループのタスク一覧を取得 自分の所属するグループのみ取得可能
-- POST /groups/:id/tasks // タスクを追加 自分の所属するグループのみ追加可能
-- GET /groups/:id/tasks/:id // タスクの詳細を取得 自分の所属するグループのみ取得可能
-- PUT /groups/:id/tasks/:id // タスクを完了 自分の所属するグループのみ編集可能
-
-### Database table structure
-
-#### user table
+### user table
 
 - id ... int
 - passwordhash ... char[]
@@ -70,7 +46,7 @@ This is REST-like API(Authentication required).
 - updatedtimestamp ... timestamp
 - picturepath ... varchar[]
 
-#### task table
+### task table
 
 - id ... int
 - name ... nvarchar[]
@@ -83,14 +59,14 @@ This is REST-like API(Authentication required).
 - finisheddate ... datetime
 - whoisdoinguserid ... int
 
-#### group table
+### group table
 
 - id ... int
 - name ... nvarchar[]
 - updatedtimestamp ... timestamp
 - picturepath varchar[]
 
-#### invitation table
+### invitation table
 
 - id ... int
 - groupid ... int 
