@@ -10,7 +10,7 @@ class Tokens extends Model {
   public static attach(sequelize: Sequelize): void {
     this.init(
       {
-        id: {
+        userid: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {

@@ -32,6 +32,8 @@ app.use("/api/v1/authed", (req, res, next) => {
       // TODO: 日付をチェック
     }
     req.body.userid = tokenObj.userid;
+    console.log(`\n\n tokenObj.userid: ${tokenObj.userid}\n\n`);
+    console.log(`\n\n req.body.userid: ${req.body.userid}\n\n`);
     next();
 
     if (false) {

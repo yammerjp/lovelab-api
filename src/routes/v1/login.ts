@@ -26,7 +26,7 @@ router.post("/", (req, res) => {
     const token = `${user.id}-${sha256(email + password + deadline)}`;
 
     // セッションキーを発行して登録
-    const tokenObj = { id: user.id, token, deadline };
+    const tokenObj = { userid: user.id, token, deadline };
     Tokens.create(tokenObj)
       .then(() => {
         res.json(tokenObj);
