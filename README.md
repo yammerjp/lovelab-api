@@ -33,7 +33,7 @@ or
 
 This is REST-like API(Authentication required).
 
-[API仕様書](document/apiSpec.md)にAPIの仕様を記述した。
+[API仕様書](documents/apiSpec.md)にAPIの仕様を記述した。
 
 ## Database table structure
 
