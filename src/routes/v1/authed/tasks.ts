@@ -18,37 +18,46 @@ const validate = (str: string): boolean => {
   return true;
 };
 
-// GET https://lovelab.2n2n.ninja/api/v1/tasks?groupid=groupid
-//  グループのタスク一覧を取得 自分の所属するグループのみ取得可能
+// GET https://lovelab.2n2n.ninja/api/v1/tasks
+//  自分の所属するグループのタスク一覧を取得
 router.get("/", (req, res) => {
-  const groupid = parseInt(req.query.groupid, 10);
-  if (Number.isNaN(groupid)) {
-    res.json({ error: true, errorMessage: "Invalid query of group id" });
-    return;
-  }
-  // TODO: groupidがアクセスしてきたユーザーの所属するグループのものであることを確認
-  Tasks.findAll({ where: { groupid } })
-    .then(tasks => {
-      res.json(tasks);
+  Users.findByPk(req.body.userid)
+    .then(user => {
+      if (user === null) {
+        res.json({
+          error: true,
+          errorMessage: "access user is not found on database"
+        });
+        return;
+      }
+      const { groupid } = user;
+      if (groupid === null) {
+        res.json({
+          error: true,
+          errorMessage: "you are not joined any groups"
+        });
+        return;
+      }
+      Tasks.findAll({ where: { groupid } })
+        .then(tasks => {
+          res.json(tasks);
+        })
+        .catch(() => {
+          res.json({ error: true, errorMessage: "DataBase error" });
+        });
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "DataBase error" });
+      res.json({ error: true, errorMessage: "Database error to access users" });
     });
 });
 
-// POST https://lovelab.2n2n.ninja/api/v1/tasks?userid=
+// POST https://lovelab.2n2n.ninja/api/v1/tasks
 //  タスクを追加 自分の所属するグループのみ追加可能
-// 認証を実施していないので、誰が追加したタスクかわかるようにクエリにユーザーidを付与してとりあえず動作させる
 router.post("/", (req, res) => {
-  const userid = parseInt(req.query.userid, 10); // TODO: 認証からuseridを取得してクエリをなくす
-  const { name, comment } = req.body;
+  const { userid, name, comment } = req.body;
 
   // TODO: whoisdoinguseridを受け取る
   // TODO: deadlinedate, finisheddateを受け取って型変換する。(あとでデータベースに詰め込めるようにする)
-  if (Number.isNaN(userid)) {
-    res.json({ error: true, errorMessage: "Invalid query of user id" });
-    return;
-  }
   if (!validate(name) || !validate(comment)) {
     res.json({ error: true, errorMessage: "Invalid params of request" });
     return;
@@ -76,7 +85,7 @@ router.post("/", (req, res) => {
     });
 });
 
-// GET https://lovelab.2n2n.ninja/api/v1/tasks/:taskid?userid=
+// GET https://lovelab.2n2n.ninja/api/v1/tasks/:taskid
 //  タスクの詳細を取得 自分の所属するグループのみ取得可能
 router.get("/:taskid", (req, res) => {
   const taskid = parseInt(req.params.taskid, 10);
@@ -85,18 +94,34 @@ router.get("/:taskid", (req, res) => {
     res.json({ error: true, errorMessage: "Invalid or task id" });
     return;
   }
-  // TODO: ユーザーidの所属するグループのタスクであることを確認
-
-  Tasks.findByPk(taskid)
-    .then(task => {
-      if (task === null) {
-        res.json({ error: true, errorMessage: "Task is not found" });
+  // ユーザーidの所属するグループのタスクであることを確認
+  Users.findByPk(req.body.userid)
+    .then(user => {
+      if (user === null) {
+        res.json({
+          error: true,
+          errorMessage: "accessed user is not found on database"
+        });
         return;
       }
-      res.json(task);
+      Tasks.findByPk(taskid)
+        .then(task => {
+          if (task === null) {
+            res.json({ error: true, errorMessage: "Task is not found" });
+            return;
+          }
+          if (task.groupid !== user.groupid) {
+            res.json({ error: true, errorMessage: "Not parmitted. " });
+            return;
+          }
+          res.json(task);
+        })
+        .catch(() => {
+          res.json({ error: true, errorMessage: "Database error" });
+        });
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database error" });
+      res.json({ error: true, errorMessage: "Database error. users" });
     });
 });
 
@@ -109,7 +134,7 @@ router.put("/:taskid", (req, res) => {
     return;
   }
 
-  const { name, isfinished, comment } = req.body;
+  const { userid, name, isfinished, comment } = req.body;
   // TODO: Deadline, finishedlineを扱えるようにする
 
   const taskRequest: TaskRequest = {};
@@ -126,24 +151,53 @@ router.put("/:taskid", (req, res) => {
     return;
   }
   // TODO: name, commentのSQLインジェクション可能性排除
-
   // TODO: 自分の所属するグループのタスクであることを確認
+  Users.findByPk(userid)
+    .then(user => {
+      if (user === null) {
+        res.json({
+          error: true,
+          errorMessage: "accessed user is not found on database"
+        });
+        return;
+      }
 
-  Tasks.update(taskRequest, { where: { id: taskid } })
-    .then(() => {
-      Tasks.findByPk(taskid)
-        .then(task => {
-          res.json(task);
+      Tasks.update(taskRequest, { where: { id: taskid } })
+        .then(() => {
+          Tasks.findByPk(taskid)
+            .then(task => {
+              if (task === null) {
+                res.json({
+                  error: true,
+                  errorMessage: "searching task from task id is failed"
+                });
+                return;
+              }
+              if (user.groupid !== task.groupid) {
+                res.json({
+                  error: true,
+                  errorMessage: "Not permitted. the task is out of your group."
+                });
+                return;
+              }
+              res.json(task);
+            })
+            .catch(() => {
+              res.json({
+                error: true,
+                errorMessage: "Database updated. and failed to get updated task"
+              });
+            });
         })
         .catch(() => {
           res.json({
             error: true,
-            errorMessage: "Database updated. and failed to get updated task"
+            errorMessage: "Database error. tasks update"
           });
         });
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database error" });
+      res.json({ error: true, errorMessage: "Database error. user find" });
     });
 });
 
