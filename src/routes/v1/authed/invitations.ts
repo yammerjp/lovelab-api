@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Invitations } from "../../../models/invitations";
 import { Users } from "../../../models/users";
+import errorHandle from "../../../others/error";
 
 const router = express.Router();
 
@@ -12,40 +13,31 @@ router.post("/", (req, res) => {
   const { message } = req.body;
 
   if (Number.isNaN(inviteeuserid) || inviteeuserid < 0) {
-    res.json({ error: true, errorMessage: "Invalid json" });
+    errorHandle(res, 1401);
     return;
   }
   // inviteeuserid !== inviteruserid を確認
   if (inviteruserid === inviteeuserid) {
-    res.json({ error: true, errorMessage: "inviter and invitee is same" });
+    errorHandle(res, 1402);
     return;
   }
   // db上にinviteeuseridが存在することを確認
   Users.findByPk(inviteeuserid)
     .then(inviteeuser => {
       if (inviteeuser === null) {
-        res.json({
-          error: true,
-          errorMessage: "invitee user is not found on database"
-        });
+        errorHandle(res, 1403);
         return;
       }
       Users.findByPk(inviteruserid)
         .then(inviter => {
           if (inviter === null) {
-            res.json({
-              error: true,
-              errorMessage: "inviter is not found on database"
-            });
+            errorHandle(res, 1404);
             return;
           }
-          // groupidがリクエストした本人が所属しているグループであることを確認
+          // リクエストした本人が所属しているgroupidを取得
           const { groupid } = inviter;
           if (groupid === null) {
-            res.json({
-              error: true,
-              errorMessage: "inviter is not join any groups"
-            });
+            errorHandle(res, 1405);
             return;
           }
           // TODO: messageからSQLインジェクションの可能性が排除できるようにする
@@ -55,42 +47,28 @@ router.post("/", (req, res) => {
               res.json(newInvitation);
             })
             .catch(() => {
-              res.json({ error: true, errorMessage: "Database Error" });
+              errorHandle(res, 1406);
             });
         })
         .catch(() => {
-          res.json({
-            error: true,
-            errorMessage: "Database Error to search inviter"
-          });
+          errorHandle(res, 1407);
         });
     })
     .catch(() => {
-      res.json({
-        error: true,
-        errorMessage: "Database Error to search invitee"
-      });
+      errorHandle(res, 1408);
     });
 });
 
 // GET https://lovelab.2n2n.ninja/api/v1/invitations
 // 自分への招待のみ取得可能
 router.get("/", (req, res) => {
-  const inviteeuserid = parseInt(req.body.userid, 10);
-  if (Number.isNaN(inviteeuserid) || inviteeuserid < 0) {
-    res.json({ error: true, errorMessage: "invalid query of userid" });
-    return;
-  }
+  const inviteeuserid = req.body.userid;
   Invitations.findAll({ where: { inviteeuserid } })
     .then(invitations => {
-      if (invitations === null) {
-        res.json({ error: true, errorMessage: "DataBase return null" });
-        return;
-      }
       res.json(invitations);
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database Error" });
+      errorHandle(res, 1409);
     });
 });
 
@@ -104,25 +82,19 @@ router.delete("/:id", (req, res) => {
   const invitationid = parseInt(req.params.id, 10);
   const { userid } = req.body;
   if (Number.isNaN(invitationid) || invitationid < 0) {
-    res.json({ error: true, errorMessage: "Invalid invitation id" });
+    errorHandle(res, 1410);
     return;
   }
   Invitations.findByPk(invitationid).then(async invitation => {
-    if (invitation === null || invitation === undefined) {
-      res.json({
-        error: true,
-        errorMessage: "Database return null of invitation"
-      });
+    if (invitation === null) {
+      errorHandle(res, 1411);
       return;
     }
     // inviteeが自分であることを確認
     if (userid !== invitation.inviteeuserid) {
-      res.json({ error: true, errorMessage: "you are not invitee" });
+      errorHandle(res, 1412);
       return;
     }
-    // console.log(`group:${invitation.groupid}`);
-    // console.log(`invitee:${invitation.inviteeuserid}`);
-    // console.log(`inviter:${invitation.inviteruserid}`);
 
     // agreement == tureなら登録処理をする
     if (agreement === true) {
@@ -143,7 +115,7 @@ router.delete("/:id", (req, res) => {
         res.json({ error: false });
       })
       .catch(() => {
-        res.json({ error: true, errorMessage: "Failed to delete" });
+        errorHandle(res, 1413);
       });
   });
 });

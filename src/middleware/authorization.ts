@@ -9,14 +9,14 @@ const authorization = (
 ): void => {
   const httpHeaderAuth = req.get("Authorization");
   if (httpHeaderAuth === undefined || /^Beaer /.test(httpHeaderAuth)) {
-    errorHandle(res, 1);
+    errorHandle(res, 1001);
     return; // return文はtsコンパイラのために挿入
   }
   const token = httpHeaderAuth.split(" ")[1];
   Tokens.findByPk(token).then(tokenObj => {
     if (tokenObj === null) {
       // TODO: 日付をチェック
-      errorHandle(res, 2);
+      errorHandle(res, 1002);
       return; // tscコンパイラにこの先が実行されないことを明示
     }
     req.body.userid = tokenObj.userid;

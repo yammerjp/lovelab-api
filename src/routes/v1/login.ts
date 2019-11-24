@@ -2,6 +2,7 @@ import * as express from "express";
 import * as sha256 from "sha256";
 import { Users } from "../../models/users";
 import { Tokens } from "../../models/tokens";
+import errorHandle from "../../others/error";
 
 const router = express.Router();
 
@@ -11,13 +12,12 @@ router.post("/", (req, res) => {
   const { email, password } = req.body;
   Users.findAll({ where: { email } }).then(users => {
     if (users.length !== 1) {
-      res.json({ error: true, errorMessage: "user is not found from email" });
-      return;
+      errorHandle(res, 1101);
     }
     const user = users[0];
 
     if (user.passwordhash !== sha256(password + user.salt)) {
-      res.json({ error: true, errorMessage: "password is wrong" });
+      errorHandle(res, 1102);
       return;
     }
 
@@ -32,10 +32,7 @@ router.post("/", (req, res) => {
         res.json(tokenObj);
       })
       .catch(() => {
-        res.json({
-          error: true,
-          errorMessage: "database error. pleas retray login"
-        });
+        errorHandle(res, 1103);
       });
   });
 });

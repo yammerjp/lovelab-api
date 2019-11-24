@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Users } from "../../../models/users";
 import { Tasks } from "../../../models/tasks";
+import errorHandle from "../../../others/error";
 
 interface TaskRequest {
   name?: string;
@@ -24,18 +25,12 @@ router.get("/", (req, res) => {
   Users.findByPk(req.body.userid)
     .then(user => {
       if (user === null) {
-        res.json({
-          error: true,
-          errorMessage: "access user is not found on database"
-        });
+        errorHandle(res, 1601);
         return;
       }
       const { groupid } = user;
       if (groupid === null) {
-        res.json({
-          error: true,
-          errorMessage: "you are not joined any groups"
-        });
+        errorHandle(res, 1602);
         return;
       }
       Tasks.findAll({ where: { groupid } })
@@ -43,11 +38,11 @@ router.get("/", (req, res) => {
           res.json(tasks);
         })
         .catch(() => {
-          res.json({ error: true, errorMessage: "DataBase error" });
+          errorHandle(res, 1603);
         });
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database error to access users" });
+      errorHandle(res, 1604);
     });
 });
 
@@ -59,16 +54,13 @@ router.post("/", (req, res) => {
   // TODO: whoisdoinguseridを受け取る
   // TODO: deadlinedate, finisheddateを受け取って型変換する。(あとでデータベースに詰め込めるようにする)
   if (!validate(name) || !validate(comment)) {
-    res.json({ error: true, errorMessage: "Invalid params of request" });
+    errorHandle(res, 1605);
     return;
   }
   Users.findByPk(userid)
     .then(user => {
       if (user === null) {
-        res.json({
-          error: true,
-          errorMessage: "user is not found in database"
-        });
+        errorHandle(res, 1606);
         return;
       }
       const taskRequest: TaskRequest = { name, comment, groupid: user.groupid };
@@ -77,11 +69,11 @@ router.post("/", (req, res) => {
           res.json(task);
         })
         .catch(() => {
-          res.json({ error: true, errorMessage: "Database error" });
+          errorHandle(res, 1607);
         });
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database error findByPk" });
+      errorHandle(res, 1608);
     });
 });
 
@@ -91,37 +83,34 @@ router.get("/:taskid", (req, res) => {
   const taskid = parseInt(req.params.taskid, 10);
 
   if (Number.isNaN(taskid)) {
-    res.json({ error: true, errorMessage: "Invalid or task id" });
+    errorHandle(res, 1608);
     return;
   }
   // ユーザーidの所属するグループのタスクであることを確認
   Users.findByPk(req.body.userid)
     .then(user => {
       if (user === null) {
-        res.json({
-          error: true,
-          errorMessage: "accessed user is not found on database"
-        });
+        errorHandle(res, 1609);
         return;
       }
       Tasks.findByPk(taskid)
         .then(task => {
           if (task === null) {
-            res.json({ error: true, errorMessage: "Task is not found" });
+            errorHandle(res, 1610);
             return;
           }
           if (task.groupid !== user.groupid) {
-            res.json({ error: true, errorMessage: "Not parmitted. " });
+            errorHandle(res, 1611);
             return;
           }
           res.json(task);
         })
         .catch(() => {
-          res.json({ error: true, errorMessage: "Database error" });
+          errorHandle(res, 1612);
         });
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database error. users" });
+      errorHandle(res, 1613);
     });
 });
 
@@ -130,7 +119,7 @@ router.get("/:taskid", (req, res) => {
 router.put("/:taskid", (req, res) => {
   const taskid = parseInt(req.params.taskid, 10);
   if (Number.isNaN(taskid)) {
-    res.json({ error: true, errorMessage: "Invalid or task id" });
+    errorHandle(res, 1614);
     return;
   }
 
@@ -147,7 +136,7 @@ router.put("/:taskid", (req, res) => {
   if (isfinished === true || isfinished === false) {
     taskRequest.isfinished = isfinished;
   } else if (isfinished !== undefined) {
-    res.json({ error: true, errorMessage: "isfinished is need true/false" });
+    errorHandle(res, 1615);
     return;
   }
   // TODO: name, commentのSQLインジェクション可能性排除
@@ -155,10 +144,7 @@ router.put("/:taskid", (req, res) => {
   Users.findByPk(userid)
     .then(user => {
       if (user === null) {
-        res.json({
-          error: true,
-          errorMessage: "accessed user is not found on database"
-        });
+        errorHandle(res, 1616);
         return;
       }
 
@@ -167,37 +153,25 @@ router.put("/:taskid", (req, res) => {
           Tasks.findByPk(taskid)
             .then(task => {
               if (task === null) {
-                res.json({
-                  error: true,
-                  errorMessage: "searching task from task id is failed"
-                });
+                errorHandle(res, 1617);
                 return;
               }
               if (user.groupid !== task.groupid) {
-                res.json({
-                  error: true,
-                  errorMessage: "Not permitted. the task is out of your group."
-                });
+                errorHandle(res, 1618);
                 return;
               }
               res.json(task);
             })
             .catch(() => {
-              res.json({
-                error: true,
-                errorMessage: "Database updated. and failed to get updated task"
-              });
+              errorHandle(res, 1619);
             });
         })
         .catch(() => {
-          res.json({
-            error: true,
-            errorMessage: "Database error. tasks update"
-          });
+          errorHandle(res, 1620);
         });
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database error. user find" });
+      errorHandle(res, 1621);
     });
 });
 

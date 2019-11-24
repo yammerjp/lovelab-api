@@ -3,6 +3,7 @@ import * as sha256 from "sha256";
 import * as crypto from "crypto";
 import { Users } from "../../models/users";
 import { userResponceObjectFilter, validate } from "../../others/users";
+import errorHandle from "../../others/error";
 
 const router = express.Router();
 
@@ -11,16 +12,13 @@ const router = express.Router();
 router.post("/", (req, res) => {
   const { email, password, name } = req.body;
   if (!validate(email) || !validate(password)) {
-    res.json({ error: true, errorMessage: "Invalid send json" });
+    errorHandle(res, 1201);
     return;
   }
   Users.findAll({ where: { email } })
     .then(users => {
       if (users.length !== 0) {
-        res.json({
-          error: true,
-          errorMessage: "the email user is already exist"
-        });
+        errorHandle(res, 1202);
         return;
       }
       const salt = crypto.randomBytes(8).toString("HEX");
@@ -30,17 +28,11 @@ router.post("/", (req, res) => {
           res.json(userResponceObjectFilter(newUser));
         })
         .catch(() => {
-          res.json({
-            error: true,
-            errorMessage: "Database error, failed to create new user"
-          });
+          errorHandle(res, 1203);
         });
     })
     .catch(() => {
-      res.json({
-        error: true,
-        errorMessage: "Database error, searching same email user is failed"
-      });
+      errorHandle(res, 1204);
     });
 });
 

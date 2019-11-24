@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Users } from "../../../models/users";
 import { userResponceObjectFilter } from "../../../others/users";
+import errorHandle from "../../../others/error";
 
 const router = express.Router();
 
@@ -8,21 +9,25 @@ const router = express.Router();
 //  グループに所属するユーザーを取得
 router.get("/", (req, res) => {
   if (req.query.groupid === undefined) {
-    res.json({ error: true, errorMessage: "Need to specify groupid" });
+    errorHandle(res, 1501);
     return;
   }
   const groupid = parseInt(req.query.groupid, 10);
   if (Number.isNaN(groupid) || groupid < 0) {
-    res.json({ error: true, errorMessage: "Invalid groupid" });
+    errorHandle(res, 1502);
     return;
   }
-  Users.findAll({ where: { groupid } }).then(users => {
-    res.json(
-      users.map(user => {
-        return userResponceObjectFilter(user);
-      })
-    );
-  });
+  Users.findAll({ where: { groupid } })
+    .then(users => {
+      res.json(
+        users.map(user => {
+          return userResponceObjectFilter(user);
+        })
+      );
+    })
+    .catch(() => {
+      errorHandle(res, 1503);
+    });
 });
 
 // GET https://lovelab.2n2n.ninja/api/v1/users/:id
@@ -30,12 +35,12 @@ router.get("/", (req, res) => {
 router.get("/:userid", (req, res) => {
   const userid = parseInt(req.params.userid, 10);
   if (Number.isNaN(userid) || userid < 0) {
-    res.json({ error: true, errorMessage: "Invalid userid" });
+    errorHandle(res, 1504);
     return;
   }
   Users.findByPk(userid).then(user => {
     if (user === null) {
-      res.json({ error: true, errorMessage: "user is not found" });
+      errorHandle(res, 1505);
       return;
     }
     res.json(userResponceObjectFilter(user));

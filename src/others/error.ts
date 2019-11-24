@@ -4,6 +4,7 @@ interface ErrorMessage {
   httpStatus: number;
   message: string;
   messageJp: string;
+  status: string;
 }
 interface ErrorMessages {
   [key: string]: ErrorMessage; // <-この行を追加!
@@ -18,3 +19,4 @@ const errorHandle = (res: express.Response, errorCode: number): void => {
   res.status(httpStatus).json({ errorCode, errorMessage });
 };
 export default errorHandle;
+export { errorMessages };

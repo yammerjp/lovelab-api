@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Groups } from "../../../models/groups";
 import { Users } from "../../../models/users";
+import errorHandle from "../../../others/error";
 
 const router = express.Router();
 
@@ -27,19 +28,19 @@ const validate = (str: string): boolean => {
 router.get("/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (Number.isNaN(id) || id < 0) {
-    res.json({ error: true, errorMessage: "Invalid groupid" });
+    errorHandle(res, 1301);
     return;
   }
   Groups.findByPk(id)
     .then(group => {
       if (group === null) {
-        res.json({ error: true, errorMessage: "group is not found" });
+        errorHandle(res, 1302);
         return;
       }
       res.json(groupResponceObjectFilter(group));
     })
     .catch(() => {
-      res.json({ error: true, errorMessage: "Database error" });
+      errorHandle(res, 1303);
     });
 });
 
@@ -47,27 +48,19 @@ router.get("/:id", (req, res) => {
 //  グループを追加 自分が強制的にそのグループに所属することになる
 router.post("/", (req, res) => {
   const { userid, name, picturepath } = req.body;
-  console.log(`\n\n userid: ${userid}\n\n`);
   if (!validate(name)) {
-    res.json({ error: true, errorMessage: "invalid name" });
+    errorHandle(res, 1304);
     return;
   }
   Users.findByPk(userid)
     .then(user => {
       if (user === null) {
-        res.json({
-          error: true,
-          errorMessage:
-            "unknown error. authorized user is not found in database"
-        });
+        errorHandle(res, 1305);
         return;
       }
       // 自分がグループに所属していないことを確認
       if (user.groupid !== null) {
-        res.json({
-          error: true,
-          errorMessage: "you are already join any group."
-        });
+        errorHandle(res, 1306);
         return;
       }
       Groups.create({ name, picturepath }).then(group => {
@@ -81,27 +74,16 @@ router.post("/", (req, res) => {
           .catch(() => {
             Groups.destroy({ where: { id: groupid } })
               .then(() => {
-                res.json({
-                  error: true,
-                  errorMessage:
-                    "failed to update your groupid. And don't create new group"
-                });
+                errorHandle(res, 1307);
               })
               .catch(() => {
-                res.json({
-                  error: true,
-                  errorMessage:
-                    "created group and failed to update your groupid, but failed to delete new group"
-                });
+                errorHandle(res, 1308);
               });
           });
       });
     })
     .catch(() => {
-      res.json({
-        error: true,
-        errorMessage: "unknown error. failed to access user database"
-      });
+      errorHandle(res, 1309);
     });
 });
 

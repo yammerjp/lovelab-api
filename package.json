@@ -10,7 +10,8 @@
     "server": "node dist/index.js",
     "start": "tsc && node dist/index.js",
     "lint": "eslint src --ext .ts",
-    "fix": "eslint --fix src --ext .ts"
+    "fix": "eslint --fix src --ext .ts",
+    "doc": "tsc && node dist/others/errorTest.js > documents/errorMessages.md"
   },
   "dependencies": {
     "@types/body-parser": "^1.17.1",
