@@ -102,7 +102,7 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/authed/users/1" \
        -H "Content-Type: application/json" \
        -H "Authorization: Bearer xxxx" \
        -X GET
-# xxxx は取得したAPIキーを利用
+# xxxx は取得したAPIキーに置き換えること
 ```
 
 #### Postmanで通信
