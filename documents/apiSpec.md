@@ -59,10 +59,12 @@ POST /login の項を参照のこと。ログインに成功するとレスポ�
 # ユーザ登録
 $ curl "https://lovelab.2n2n.ninja/api/v1/signup" \
        -X POST \
+       -H "Content-Type: application/json" \
        -d '{"email":"charlie@example.com","password":"charlie-password","name":"charlie"}' 
 # ログイン(Beaerトークンを取得)
 $ curl "https://lovelab.2n2n.ninja/api/v1/login" \
        -X POST \
+       -H "Content-Type: application/json" \
        -d '{"email":"charlie@example.com","password":"charlie-password"}' 
 ```
 
@@ -77,6 +79,7 @@ terminalで次のコマンドを実行
 ```sh
 # ユーザ情報を取得
 $ curl "https://lovelab.2n2n.ninja/api/v1/authed/users/1" \
+       -H "Content-Type: application/json" \
        -H "Authorization: Bearer xxxx" \
        -X GET
 # xxxx は取得したAPIキーを利用
