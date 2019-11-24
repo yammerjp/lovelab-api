@@ -112,7 +112,7 @@ router.delete("/:id", (req, res) => {
     }
     Invitations.destroy({ where: { id: invitationid } })
       .then(() => {
-        res.json({ error: false });
+        res.status(204).end();
       })
       .catch(() => {
         errorHandle(res, 1413);
