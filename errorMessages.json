@@ -1,0 +1,12 @@
+{
+  "1":{
+    "httpStatus":401,
+    "message":"Authorization type is Beaer",
+    "messageJp":"未認証です。BeaerトークンをHTTPヘッダに付加してください。"
+  },
+  "2":{
+    "httpStatus":403,
+    "message":"token is invalid",
+    "messageJp":"認証トークンが無効です。"
+  }
+}
