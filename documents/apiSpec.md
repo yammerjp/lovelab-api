@@ -78,7 +78,17 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/login" \
 
 #### Postmanで通信
 
-未執筆
+1. HTTPリクエストメソッドを`POST`に設定 (画像1枚目)
+1. URIを(`https://lovelab.2n2n/ninja/api/v1/ ... `に適宜設定 (画像1枚目)
+1. AuthorizationタブのTYPEを`No Auth`に設定 (画像1枚目)
+1. Bodyタブにて形式を`raw`かつ`JSON`に設定 (画像2枚目)
+1. リクエストボディのJSONを入力 (画像2枚目)
+1. Sendをクリックしてリクエストを送信 (画像2枚目)
+1. 画面下部にレスポンスの内容が表示される
+
+![Postmanのスクリーンショット1](postman_noauth_1.png)
+
+![Postmanのスクリーンショット2](postman_noauth_2.png)
 
 ### 認証付きのリクエストを試してみる
 
@@ -103,8 +113,9 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/authed/users/1" \
 1. URIを設定
 1. (必要があれば)リクエストのBodyタブでrawを選択し、JSONを設定
 1. Send
+1. 画面下部にレスポンスの内容が表示される
 
-![postman.png](postman_auth.png)
+![Postmanのスクリーンショット3](postman_auth.png)
 
 #### Swiftで送信する
 
@@ -477,6 +488,8 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | null | タスク担当者を表す予定のフィールド(現在未使用) |
+| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -513,6 +526,8 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か(タスク作成時はデフォルトでfalseが設定される) |
 | whoisdoinguserid | null | タスク担当者を表す予定のフィールド(現在未使用) |
+| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -547,6 +562,8 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | null | タスク担当者を表す予定のフィールド(現在未使用) |
+| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -582,6 +599,8 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | null | タスク担当者を表す予定のフィールド(現在未使用) |
+| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
