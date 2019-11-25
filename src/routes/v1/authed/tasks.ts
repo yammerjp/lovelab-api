@@ -1,5 +1,4 @@
 import * as express from "express";
-import { Users } from "../../../models/users";
 import { Tasks } from "../../../models/tasks";
 import errorHandle from "../../../others/error";
 
@@ -22,34 +21,24 @@ const validate = (str: string): boolean => {
 // GET https://lovelab.2n2n.ninja/api/v1/tasks
 //  自分の所属するグループのタスク一覧を取得
 router.get("/", (req, res) => {
-  Users.findByPk(req.body.userid)
-    .then(user => {
-      if (user === null) {
-        errorHandle(res, 1601);
-        return;
-      }
-      const { groupid } = user;
-      if (groupid === null) {
-        errorHandle(res, 1602);
-        return;
-      }
-      Tasks.findAll({ where: { groupid } })
-        .then(tasks => {
-          res.json(tasks);
-        })
-        .catch(() => {
-          errorHandle(res, 1603);
-        });
+  const { groupidAuth } = req.body;
+  if (groupidAuth === null) {
+    errorHandle(res, 1602);
+    return;
+  }
+  Tasks.findAll({ where: { groupid: groupidAuth } })
+    .then(tasks => {
+      res.json(tasks);
     })
     .catch(() => {
-      errorHandle(res, 1604);
+      errorHandle(res, 1603);
     });
 });
 
 // POST https://lovelab.2n2n.ninja/api/v1/tasks
 //  タスクを追加 自分の所属するグループのみ追加可能
 router.post("/", (req, res) => {
-  const { userid, name, comment } = req.body;
+  const { groupidAuth, name, comment } = req.body;
 
   // TODO: whoisdoinguseridを受け取る
   // TODO: deadlinedate, finisheddateを受け取って型変換する。(あとでデータベースに詰め込めるようにする)
@@ -57,29 +46,20 @@ router.post("/", (req, res) => {
     errorHandle(res, 1605);
     return;
   }
-  Users.findByPk(userid)
-    .then(user => {
-      if (user === null) {
-        errorHandle(res, 1606);
-        return;
-      }
-      const taskRequest: TaskRequest = { name, comment, groupid: user.groupid };
-      Tasks.create(taskRequest)
-        .then(task => {
-          res.json(task);
-        })
-        .catch(() => {
-          errorHandle(res, 1607);
-        });
+  const taskRequest: TaskRequest = { name, comment, groupid: groupidAuth };
+  Tasks.create(taskRequest)
+    .then(task => {
+      res.json(task);
     })
     .catch(() => {
-      errorHandle(res, 1608);
+      errorHandle(res, 1607);
     });
 });
 
 // GET https://lovelab.2n2n.ninja/api/v1/tasks/:taskid
 //  タスクの詳細を取得 自分の所属するグループのみ取得可能
 router.get("/:taskid", (req, res) => {
+  const { groupidAuth } = req.body;
   const taskid = parseInt(req.params.taskid, 10);
 
   if (Number.isNaN(taskid)) {
@@ -87,30 +67,20 @@ router.get("/:taskid", (req, res) => {
     return;
   }
   // ユーザーidの所属するグループのタスクであることを確認
-  Users.findByPk(req.body.userid)
-    .then(user => {
-      if (user === null) {
-        errorHandle(res, 1609);
+  Tasks.findByPk(taskid)
+    .then(task => {
+      if (task === null) {
+        errorHandle(res, 1610);
         return;
       }
-      Tasks.findByPk(taskid)
-        .then(task => {
-          if (task === null) {
-            errorHandle(res, 1610);
-            return;
-          }
-          if (task.groupid !== user.groupid) {
-            errorHandle(res, 1611);
-            return;
-          }
-          res.json(task);
-        })
-        .catch(() => {
-          errorHandle(res, 1612);
-        });
+      if (task.groupid !== groupidAuth) {
+        errorHandle(res, 1611);
+        return;
+      }
+      res.json(task);
     })
     .catch(() => {
-      errorHandle(res, 1613);
+      errorHandle(res, 1612);
     });
 });
 
@@ -123,7 +93,7 @@ router.put("/:taskid", (req, res) => {
     return;
   }
 
-  const { userid, name, isfinished, comment } = req.body;
+  const { groupidAuth, name, isfinished, comment } = req.body;
   // TODO: Deadline, finishedlineを扱えるようにする
 
   const taskRequest: TaskRequest = {};
@@ -141,37 +111,26 @@ router.put("/:taskid", (req, res) => {
   }
   // TODO: name, commentのSQLインジェクション可能性排除
   // TODO: 自分の所属するグループのタスクであることを確認
-  Users.findByPk(userid)
-    .then(user => {
-      if (user === null) {
-        errorHandle(res, 1616);
-        return;
-      }
-
-      Tasks.update(taskRequest, { where: { id: taskid } })
-        .then(() => {
-          Tasks.findByPk(taskid)
-            .then(task => {
-              if (task === null) {
-                errorHandle(res, 1617);
-                return;
-              }
-              if (user.groupid !== task.groupid) {
-                errorHandle(res, 1618);
-                return;
-              }
-              res.json(task);
-            })
-            .catch(() => {
-              errorHandle(res, 1619);
-            });
+  Tasks.update(taskRequest, { where: { id: taskid } })
+    .then(() => {
+      Tasks.findByPk(taskid)
+        .then(task => {
+          if (task === null) {
+            errorHandle(res, 1617);
+            return;
+          }
+          if (task.groupid !== groupidAuth) {
+            errorHandle(res, 1618);
+            return;
+          }
+          res.json(task);
         })
         .catch(() => {
-          errorHandle(res, 1620);
+          errorHandle(res, 1619);
         });
     })
     .catch(() => {
-      errorHandle(res, 1621);
+      errorHandle(res, 1620);
     });
 });
 

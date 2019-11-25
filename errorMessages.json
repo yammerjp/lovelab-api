@@ -11,6 +11,18 @@
     "messageJp":"認証トークンが無効です。",
     "status":"認証が必要なリソースにアクセスしたが、認証トークンが誤りまたは期限切れのときに発生"
   },
+  "1003":{
+    "httpStatus":500,
+    "message":"token's user is not found",
+    "messageJp":"トークンは有効ですが、トークンに該当するユーザがデータベースから発見できません。",
+    "status":"トークンの指すユーザがデータベース上に存在しないときに発生。想定していない。"
+  },
+  "1004":{
+    "httpStatus":500,
+    "message":"unknown error",
+    "messageJp":"想定外のエラーです。データベースエラーの可能性があります。",
+    "status":"トークンの有効性確認時、特に故意にエラーを投げていないがcatchされた。データベースエラーの可能性あり。想定されていない。"
+  },
   "1101":{
     "httpStatus":404,
     "message":"user is not found from email",
@@ -83,12 +95,6 @@
     "messageJp":"リクエストに含まれるnameが不適切です。",
     "status":"新規グループ作成時、リクエストに含まれるnameが適切な文字列として渡されたなかったときに発生"
   },
-  "1305":{
-    "httpStatus":500,
-    "message":"authorized user is not found in database",
-    "messageJp":"ユーザがデータベース上から発見できませんでした。",
-    "status":"新規グループ作成時、グループidを知るために認証トークンのユーザをidからデータベース検索したが、発見できなかったことを示す。想定していない。"
-  },
   "1306":{
     "httpStatus":409,
     "message":"you are already join any group.",
@@ -133,35 +139,11 @@
   },
   "1404":{
     "httpStatus":500,
-    "message":"inviter is not found on database",
-    "messageJp":"リクエストしたユーザをデータベース上で発見できません。",
-    "status":"新規招待作成時、リクエストしたユーザ(招待者)がデータベース上で発見できないときに発生。想定されていない。"
+    "message":"unknown error database?",
+    "messageJp":"想定されていないエラーが発生しました。データベースエラーの可能性があります。",
+    "status":"新規招待作成時、例外が発生。データベースエラーの可能性あり。想定されていない。"
   },
-  "1405":{
-    "httpStatus":409,
-    "message":"inviter is not join any groups",
-    "messageJp":"招待者はいずれかのグループに所属している必要があります。現在所属していません。",
-    "status":"新規招待作成時、リクエストしたユーザ(招待者)がグループに所属していないときに発生"
-  },
-  "1406":{
-    "httpStatus":500,
-    "message":"Database Error",
-    "messageJp":"データベースエラーにより新規招待作成に失敗しました。",
-    "status":"新規招待作成時のデータベースエラー"
-  },
-  "1407":{
-    "httpStatus":500,
-    "message":"Database Error to search inviter",
-    "messageJp":"リクエストしたユーザの検索時にデータベースエラーが発生しました。",
-    "status":"新規招待作成時、リクエストしたユーザ(招待者)のデータベース検索時にデータベースエラーが発生。想定されていない。"
-  },
-  "1408":{
-    "httpStatus":500,
-    "message":"Database Error to search invitee",
-    "messageJp":"被招待者を検索する際にデータベースエラーが発生しました。",
-    "status":"新規招待作成時、リクエストに含まれる被招待者をデータベース上で検索する際にデータベースエラーが発生。想定されていない。"
-  },
-   "1409":{
+  "1409":{
     "httpStatus":500,
     "message":"DataBase error",
     "messageJp":"データベースエラー",
@@ -221,12 +203,6 @@
     "messageJp":"ユーザが存在しません。",
     "status":"特定のユーザ情報取得時、指定されたidのユーザが存在しないことで発生"
   },
-  "1601":{
-    "httpStatus":500,
-    "message":"access user is not found on database",
-    "messageJp":"ユーザが見つかりません",
-    "status":"所属グループのタスク一覧取得時、認証トークンのユーザがデータベースに存在しない時発生。想定していない。"
-  },
   "1602":{
     "httpStatus":409,
     "message":"you are not joined any groups",
@@ -239,23 +215,11 @@
     "messageJp":"タスク一括取得時にデータベースエラーが発生しました。",
     "status":"所属グループのタスク一覧取得時、データベースエラーが発生。想定していない。"
   },
-  "1604":{
-    "httpStatus":500,
-    "message":"Database error to access users",
-    "messageJp":"リクエストしたユーザの検索時にデータベースエラーが発生しました。",
-    "status":"所属グループのタスク一覧取得前、リクエストしたユーザの検索時にデータベースエラーが発生。想定していない"
-  },
   "1605":{
     "httpStatus":400,
     "message":"Invalid params of request",
     "messageJp":"リクエストボディの形式が無効です",
     "status":"新規タスク作成時、リクエストボディの形式が無効であることで発生"
-  },
-  "1606":{
-    "httpStatus":500,
-    "message":"user is not found in database",
-    "messageJp":"リクエストしたユーザがデータベースで発見できません。",
-    "status":"新規タスク作成時、リクエストしたユーザをデータベースで検索したが発見できないときに発生。想定していない。"
   },
   "1607":{
     "httpStatus":500,
@@ -275,12 +239,6 @@
     "messageJp":"タスクidが無効です。",
     "status":"特定のタスクの情報取得時、URIで指定されたtaskidが数字として認識できないときに発生"
   },
-  "1609":{
-    "httpStatus":500,
-    "message":"accessed user is not found on database",
-    "messageJp":"リクエストしたユーザがデータベースで発見できません。",
-    "status":"特定のタスク情報取得時、リクエストしたユーザをデータベースで検索したが発見できないときに発生。想定していない。"
-  },
   "1610":{
     "httpStatus":404,
     "message":"Task is not found",
@@ -299,12 +257,6 @@
     "messageJp":"タスク検索時にデータベースエラーが発生しました。",
     "status":"特定のタスク情報取得時、タスク検索中にデータベースエラーが発生。想定していない。"
   },
-  "1613":{
-    "httpStatus":500,
-    "message":"Database error. users",
-    "messageJp":"リクエストユーザ検索時にデータベースエラーが発生しました。",
-    "status":"特定のタスク情報取得時、リクエストしたユーザを検索中にデータベースエラーが発生。想定していない。"
-  },
   "1614":{
     "httpStatus":400,
     "message":"task id is invalid",
@@ -316,12 +268,6 @@
     "message":"isfinished is need true/false",
     "messageJp":"リクエストボディの形式が無効です。isfinishedは真偽値を要求します。",
     "status":"タスク編集時、リクエストボディのisfinishedが真偽値でない値を与えられたときに発生"
-  },
-  "1616":{
-    "httpStatus":500,
-    "message":"accessed user is not found on database",
-    "messageJp":"リクエストしたユーザがデータベース上から発見できません。",
-    "status":"タスク編集時、リクエストしたユーザがデータベース上に存在しないときに発生。想定していない。"
   },
   "1617":{
     "httpStatus":404,
@@ -346,11 +292,5 @@
     "message":"Database error. tasks update",
     "messageJp":"データベースエラーが発生し、タスク更新に失敗しました。",
     "status":"タスク編集時、データベースエラーが発生。想定していない。"
-  },
-  "1621":{
-    "httpStatus":500,
-    "message":"Database error. users",
-    "messageJp":"リクエストしたユーザの取得時にデータベースエラーが発生しました。",
-    "status":"タスク編集前、リクエストユーザを検索時にデータベースエラーが発生。想定していない。"
   }
 }

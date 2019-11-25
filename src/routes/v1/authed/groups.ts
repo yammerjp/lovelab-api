@@ -44,43 +44,37 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// POST https://lovelab.2n2n.ninja/api/v1/groups?userid=:userid
+// POST https://lovelab.2n2n.ninja/api/v1/groups
 //  グループを追加 自分が強制的にそのグループに所属することになる
 router.post("/", (req, res) => {
-  const { userid, name, picturepath } = req.body;
+  const { useridAuth, groupidAuth, name, picturepath } = req.body;
   if (!validate(name)) {
     errorHandle(res, 1304);
     return;
   }
-  Users.findByPk(userid)
-    .then(user => {
-      if (user === null) {
-        errorHandle(res, 1305);
-        return;
-      }
-      // 自分がグループに所属していないことを確認
-      if (user.groupid !== null) {
-        errorHandle(res, 1306);
-        return;
-      }
-      Groups.create({ name, picturepath }).then(group => {
-        // アクセスしたユーザーを新しく作ったグループに加盟させる。
-        const groupid = group.id;
-        Users.update({ groupid }, { where: { id: userid } })
-          .then(() => {
-            // 作ったグループをresponce
-            res.json(groupResponceObjectFilter(group));
-          })
-          .catch(() => {
-            Groups.destroy({ where: { id: groupid } })
-              .then(() => {
-                errorHandle(res, 1307);
-              })
-              .catch(() => {
-                errorHandle(res, 1308);
-              });
-          });
-      });
+  // 自分がグループに所属していないことを確認
+  if (groupidAuth !== null) {
+    errorHandle(res, 1306);
+    return;
+  }
+  Groups.create({ name, picturepath })
+    .then(group => {
+      // アクセスしたユーザーを新しく作ったグループに加盟させる。
+      const groupid = group.id;
+      Users.update({ groupid }, { where: { id: useridAuth } })
+        .then(() => {
+          // 作ったグループをresponce
+          res.json(groupResponceObjectFilter(group));
+        })
+        .catch(() => {
+          Groups.destroy({ where: { id: groupid } })
+            .then(() => {
+              errorHandle(res, 1307);
+            })
+            .catch(() => {
+              errorHandle(res, 1308);
+            });
+        });
     })
     .catch(() => {
       errorHandle(res, 1309);

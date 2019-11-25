@@ -8,7 +8,8 @@ const router = express.Router();
 // POST https://lovelab.2n2n.ninja/api/v1/invitations
 //  グループへの招待を追加 自分の所属するグループへの招待のみ可能
 router.post("/", (req, res) => {
-  const inviteruserid = parseInt(req.body.userid, 10); // inviteruseridはリクエストした本人
+  const inviteruserid = req.body.useridAuth; // inviteruseridはリクエストした本人
+  const invitergroupid = req.body.groupidAuth;
   const inviteeuserid = parseInt(req.body.inviteeuserid, 10);
   const { message } = req.body;
 
@@ -25,44 +26,32 @@ router.post("/", (req, res) => {
   Users.findByPk(inviteeuserid)
     .then(inviteeuser => {
       if (inviteeuser === null) {
-        errorHandle(res, 1403);
-        return;
+        return Promise.reject(1403);
       }
-      Users.findByPk(inviteruserid)
-        .then(inviter => {
-          if (inviter === null) {
-            errorHandle(res, 1404);
-            return;
-          }
-          // リクエストした本人が所属しているgroupidを取得
-          const { groupid } = inviter;
-          if (groupid === null) {
-            errorHandle(res, 1405);
-            return;
-          }
-          // TODO: messageからSQLインジェクションの可能性が排除できるようにする
+      // TODO: messageからSQLインジェクションの可能性が排除できるようにする
 
-          Invitations.create({ groupid, inviteruserid, inviteeuserid, message })
-            .then(newInvitation => {
-              res.json(newInvitation);
-            })
-            .catch(() => {
-              errorHandle(res, 1406);
-            });
-        })
-        .catch(() => {
-          errorHandle(res, 1407);
-        });
+      return Invitations.create({
+        groupid: invitergroupid,
+        inviteruserid,
+        inviteeuserid,
+        message
+      });
     })
-    .catch(() => {
-      errorHandle(res, 1408);
+    .then(newInvitation => {
+      res.json(newInvitation);
+    })
+    .catch(e => {
+      if (e === 1403) {
+        errorHandle(res, e);
+      }
+      errorHandle(res, 1404);
     });
 });
 
 // GET https://lovelab.2n2n.ninja/api/v1/invitations
 // 自分への招待のみ取得可能
 router.get("/", (req, res) => {
-  const inviteeuserid = req.body.userid;
+  const inviteeuserid = req.body.useridAuth;
   Invitations.findAll({ where: { inviteeuserid } })
     .then(invitations => {
       res.json(invitations);
@@ -80,7 +69,7 @@ router.get("/", (req, res) => {
 router.delete("/:id", (req, res) => {
   const agreement = req.query.agreement === "true";
   const invitationid = parseInt(req.params.id, 10);
-  const { userid } = req.body;
+  const { useridAuth } = req.body;
   if (Number.isNaN(invitationid) || invitationid < 0) {
     errorHandle(res, 1410);
     return;
@@ -91,13 +80,14 @@ router.delete("/:id", (req, res) => {
       return;
     }
     // inviteeが自分であることを確認
-    if (userid !== invitation.inviteeuserid) {
+    if (useridAuth !== invitation.inviteeuserid) {
       errorHandle(res, 1412);
       return;
     }
 
     // agreement == tureなら登録処理をする
     if (agreement === true) {
+      // TODO: グループに加盟してないことを確認
       await Users.update(
         { groupid: invitation.groupid },
         { where: { id: invitation.inviteeuserid } }
