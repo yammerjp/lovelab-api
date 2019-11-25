@@ -53,6 +53,12 @@
     "messageJp":"データベースエラーにより、同じemailアドレスを持つユーザが存在するかの調査に失敗しました。",
     "status":"ユーザ登録時、データベースの追加前に、同じemailのユーザが存在するかを検索した際のデータベースエラー。想定されていない。"
   },
+  "1205":{
+    "httpStatus":500,
+    "message":"Database error",
+    "messageJp":"データベースエラーが発生しました",
+    "status":"errorCode:1203 or errorCode 1204"
+  },
   "1301":{
     "httpStatus":400,
     "message":"Invalid groupid",

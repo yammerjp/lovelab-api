@@ -162,6 +162,24 @@ Database error, searching same email user is failed
 
 ユーザ登録時、データベースの追加前に、同じemailのユーザが存在するかを検索した際のデータベースエラー。想定されていない。
 
+## errorCode: 1205
+
+### HTTP status code
+
+500
+
+### Error Message
+
+Database error
+
+### Error Message Jp
+
+データベースエラーが発生しました
+
+### Status
+
+errorCode:1203 or errorCode 1204
+
 ## errorCode: 1301
 
 ### HTTP status code

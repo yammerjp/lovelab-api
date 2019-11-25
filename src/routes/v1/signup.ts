@@ -19,20 +19,18 @@ router.post("/", (req, res) => {
     .then(users => {
       if (users.length !== 0) {
         errorHandle(res, 1202);
-        return;
+        Promise.reject();
       }
       const salt = crypto.randomBytes(8).toString("HEX");
       const passwordhash = sha256(password + salt);
-      Users.create({ email, passwordhash, name, salt })
-        .then(newUser => {
-          res.json(userResponceObjectFilter(newUser));
-        })
-        .catch(() => {
-          errorHandle(res, 1203);
-        });
+      return Users.create({ email, passwordhash, name, salt });
+    })
+    .then(newUser => {
+      res.json(userResponceObjectFilter(newUser));
     })
     .catch(() => {
-      errorHandle(res, 1204);
+      errorHandle(res, 1205);
+      // errorHandle(res, 1204);
     });
 });
 
