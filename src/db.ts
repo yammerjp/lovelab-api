@@ -7,7 +7,7 @@ import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
 // database接続
 
-const connectDataBase = (): void => {
+const connectDataBase = (forceReset = false): void => {
   const config = configfunc();
   const sequelize = new Sequelize(
     config.database,
@@ -29,21 +29,29 @@ const connectDataBase = (): void => {
   sequelize
     .authenticate()
     .then(() => {
-      return Groups.sync({});
-    })
-    .then(() => {
-      return Users.sync({
-        /* force: true */
+      return Groups.sync({
+        force: forceReset
       });
     })
     .then(() => {
-      return Invitations.sync({});
+      return Users.sync({
+        force: forceReset
+      });
     })
     .then(() => {
-      return Tasks.sync({});
+      return Invitations.sync({
+        force: forceReset
+      });
     })
     .then(() => {
-      return Tokens.sync({});
+      return Tasks.sync({
+        force: forceReset
+      });
+    })
+    .then(() => {
+      return Tokens.sync({
+        force: forceReset
+      });
     })
     .catch(() => {
       // eslint-disable-next-line no-console

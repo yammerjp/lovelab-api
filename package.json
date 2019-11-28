@@ -8,7 +8,9 @@
   "main": "dist/index.js",
   "scripts": {
     "server": "node dist/index.js",
+    "server:reset": "node dist/index.js --reset",
     "start": "tsc && node dist/index.js",
+    "start:reset": "tsc && node dist/index.js --reset",
     "lint": "eslint src --ext .ts",
     "fix": "eslint --fix src --ext .ts",
     "doc": "tsc && node dist/others/errorTest.js > documents/errorMessages.md"
