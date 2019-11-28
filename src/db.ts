@@ -19,6 +19,7 @@ const connectDataBase = (): void => {
       port: config.port
     }
   );
+
   groupsFactory(sequelize);
   usersFactory(sequelize);
   invitationsFactory(sequelize);
@@ -28,22 +29,26 @@ const connectDataBase = (): void => {
   sequelize
     .authenticate()
     .then(() => {
-      // eslint-disable-next-line no-console
-      console.log("authenticate().then ...");
+      return Groups.sync({});
     })
     .then(() => {
-      Groups.sync({});
-      Users.sync({
+      return Users.sync({
         /* force: true */
       });
-      Invitations.sync({});
-      Tasks.sync({});
-      Tokens.sync({});
     })
-    .then(() => {})
+    .then(() => {
+      return Invitations.sync({});
+    })
+    .then(() => {
+      return Tasks.sync({});
+    })
+    .then(() => {
+      return Tokens.sync({});
+    })
     .catch(() => {
       // eslint-disable-next-line no-console
-      console.log("authenticate().catch");
+      console.log("create or connect database is failed.");
+      process.exit(1);
     });
 };
 
