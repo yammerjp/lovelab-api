@@ -26,6 +26,13 @@ app.listen(port);
 // eslint-disable-next-line no-console
 console.log(`listen on port ${port}`);
 
-const forceReset = process.argv[2] === "--reset";
+const forceReset =
+  process.argv.findIndex(arg => {
+    return arg === "--reset";
+  }) !== -1;
+const isTest =
+  process.argv.findIndex(arg => {
+    return arg === "--testDB";
+  }) !== -1;
 console.log(`forceReset: ${forceReset}`);
-connectDataBase(forceReset);
+connectDataBase(forceReset, isTest);

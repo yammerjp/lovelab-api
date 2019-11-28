@@ -23,6 +23,13 @@ ENV_USER=yourDatabasesUser
 ENV_PORT=5432
 ENV_PASSWORD=yourPassword
 ENV_DIALECT=postgres
+
+ENV_HOST=localhost
+ENV_DATABASE=yourDatabaseNameForTest
+ENV_USER=yourDatabasesUserForTest
+ENV_PORT=5432
+ENV_PASSWORD=yourPasswordForTest
+ENV_DIALECT=postgres
 ```
 
 ### Start PostgreSQL server

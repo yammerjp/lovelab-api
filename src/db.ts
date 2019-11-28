@@ -7,8 +7,8 @@ import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
 // database接続
 
-const connectDataBase = (forceReset = false): void => {
-  const config = configfunc();
+const connectDataBase = (forceReset = false, isTest = false): void => {
+  const config = configfunc(isTest);
   const sequelize = new Sequelize(
     config.database,
     config.user,
