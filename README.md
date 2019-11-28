@@ -8,15 +8,13 @@ API server of lovelab with node.js and express
  - Sequelize
 - PostgreSQL
 
-## Run
+## Running Locally
 
-### Running Locally
+Make sure you have Node.js and PostgreSQL installed.
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
+### Set .env
 
-__Need PostgreSQL__
-
-Install, setup PostgreSQL and add .env
+Set your database name, database user, database password.
 
 ```.env
 ENV_HOST=localhost
@@ -27,7 +25,13 @@ ENV_PASSWORD=yourPassword
 ENV_DIALECT=postgres
 ```
 
-Set your database name, database user, database password.
+### Start PostgreSQL server
+
+```sh
+$ postgres -D /usr/local/var/postgres
+```
+
+### Start lovelab.heroku
 
 ```sh
 $ git clone https://github.com/basd4g/lovelab.heroku
@@ -36,23 +40,13 @@ $ npm install
 $ npm start
 ```
 
-Your app should now be running on [localhost:3000](http://localhost:3000/).
+Open [localhost:3000](http://localhost:3000/) on browser.
 
-### Deploying to Heroku
-
-__Need PostgreSQL__
-
-and set environment variables.
+### Check database
 
 ```sh
-$ heroku create
-$ git push heroku master
-$ heroku open
+$ psql -h localhost -p 5432 -d yourDatabaseName -U yourDatabaseUser
 ```
-
-or
-
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ## Specification
 
