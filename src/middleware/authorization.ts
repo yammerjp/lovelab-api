@@ -8,7 +8,7 @@ const authorization = (
   next: Function
 ): void => {
   const httpHeaderAuth = req.get("Authorization");
-  if (httpHeaderAuth === undefined || /^Beaer /.test(httpHeaderAuth)) {
+  if (httpHeaderAuth === undefined || !/^Bearer /.test(httpHeaderAuth)) {
     errorHandle(res, 1001);
     return; // return文はtsコンパイラのために挿入
   }

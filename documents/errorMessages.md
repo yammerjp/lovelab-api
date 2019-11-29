@@ -666,6 +666,42 @@ user is not found
 
 特定のユーザ情報取得時、指定されたidのユーザが存在しないことで発生
 
+## errorCode: 1511
+
+### HTTP status code
+
+500
+
+### Error Message
+
+unknown error. accessed user is not found.
+
+### Error Message Jp
+
+認証トークンより取得したユーザが、データベース上で見つかりません。
+
+### Status
+
+グループ所属ユーザ一覧取得時、認証トークンのユーザがデータベース検索でヒットしなかったときに発生
+
+## errorCode: 1512
+
+### HTTP status code
+
+500
+
+### Error Message
+
+database error
+
+### Error Message Jp
+
+認証トークンより取得したユーザの詳細情報をデータベースに問い合わせましたがエラーが発生しました。
+
+### Status
+
+グループ所属ユーザ一覧取得時、認証トークンのユーザをデータベース検索しようとした際にデータベースエラーが発生
+
 ## errorCode: 1601
 
 ### HTTP status code
