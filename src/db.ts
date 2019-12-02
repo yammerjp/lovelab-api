@@ -6,9 +6,17 @@ import { Groups, groupsFactory } from "./models/groups";
 import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
 // database接続
+let isConnected = false;
+const connectDataBase = (
+  forceReset = false,
+  isTest = false
+): Promise<boolean> => {
+  console.log(`isConnected: ${isConnected}`);
+  if (isConnected === true) {
+    return Promise.resolve(true);
+  }
 
-const connectDataBase = (): void => {
-  const config = configfunc();
+  const config = configfunc(isTest);
   const sequelize = new Sequelize(
     config.database,
     config.user,
@@ -19,31 +27,48 @@ const connectDataBase = (): void => {
       port: config.port
     }
   );
+
   groupsFactory(sequelize);
   usersFactory(sequelize);
   invitationsFactory(sequelize);
   tasksFactory(sequelize);
   tokensFactory(sequelize);
 
-  sequelize
+  return sequelize
     .authenticate()
     .then(() => {
-      // eslint-disable-next-line no-console
-      console.log("authenticate().then ...");
+      return Groups.sync({
+        force: forceReset
+      });
     })
     .then(() => {
-      Groups.sync({});
-      Users.sync({
-        /* force: true */
+      return Users.sync({
+        force: forceReset
       });
-      Invitations.sync({});
-      Tasks.sync({});
-      Tokens.sync({});
     })
-    .then(() => {})
+    .then(() => {
+      return Invitations.sync({
+        force: forceReset
+      });
+    })
+    .then(() => {
+      return Tasks.sync({
+        force: forceReset
+      });
+    })
+    .then(() => {
+      return Tokens.sync({
+        force: forceReset
+      });
+    })
+    .then(() => {
+      isConnected = true;
+      return true;
+    })
     .catch(() => {
       // eslint-disable-next-line no-console
-      console.log("authenticate().catch");
+      console.log("create or connect database is failed.");
+      process.exit(1);
     });
 };
 

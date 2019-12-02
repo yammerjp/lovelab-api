@@ -2,11 +2,43 @@
 
 API server of lovelab with node.js and express
 
-## Run
+- node.js
+ - express
+ - TypeScript
+ - Sequelize
+- PostgreSQL
 
-### Running Locally
+## Running Locally
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
+Make sure you have Node.js and PostgreSQL installed.
+
+### Set .env
+
+Set your database name, database user, database password.
+
+```.env
+ENV_HOST=localhost
+ENV_DATABASE=yourDatabaseName
+ENV_USER=yourDatabasesUser
+ENV_PORT=5432
+ENV_PASSWORD=yourPassword
+ENV_DIALECT=postgres
+
+ENV_HOST=localhost
+ENV_DATABASE=yourDatabaseNameForTest
+ENV_USER=yourDatabasesUserForTest
+ENV_PORT=5432
+ENV_PASSWORD=yourPasswordForTest
+ENV_DIALECT=postgres
+```
+
+### Start PostgreSQL server
+
+```sh
+$ postgres -D /usr/local/var/postgres
+```
+
+### Start lovelab.heroku
 
 ```sh
 $ git clone https://github.com/basd4g/lovelab.heroku
@@ -15,79 +47,17 @@ $ npm install
 $ npm start
 ```
 
-Your app should now be running on [localhost:3000](http://localhost:3000/).
+Open [localhost:3000](http://localhost:3000/) on browser.
 
-### Deploying to Heroku
+### Check database
 
 ```sh
-$ heroku create
-$ git push heroku master
-$ heroku open
+$ psql -h localhost -p 5432 -d yourDatabaseName -U yourDatabaseUser
 ```
-
-or
-
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ## Specification
 
-This is REST-like API(Authentication required).
+This is REST-like API(Authorization required).
 
-[API仕様書](documents/apiSpec.md)にAPIの仕様を記述した。
+[API Specification is here](documents/apiSpec.md)
 
-## Database table structure
-
-### user table
-
-- id ... int
-- passwordhash ... char[]
-- name ... nvarchar[]
-- groupid ... int
-- updatedtimestamp ... timestamp
-- picturepath ... varchar[]
-
-### task table
-
-- id ... int
-- name ... nvarchar[]
-- isfinished ... boolean
-- groupid ... int 
-- updateddate ... datetime
-- updatedtimestamp ... timestamp
-- comment ... nvarchar[]
-- deadlinedate ... datetime
-- finisheddate ... datetime
-- whoisdoinguserid ... int
-
-### group table
-
-- id ... int
-- name ... nvarchar[]
-- updatedtimestamp ... timestamp
-- picturepath varchar[]
-
-### invitation table
-
-- id ... int
-- groupid ... int 
-- inviteruserid ... int
-- inviteeuserid ... int
-- updatedtimestamp ... timestamp
-
-## Documentation of Heroku and Node.js
-
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
-
-## Developing
-
-### ToDo
-
-- install lint
-- connect DataBase
-- write code of API

@@ -5,18 +5,7 @@ import errorHandle from "../../../others/error";
 
 const router = express.Router();
 
-// GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
-//  グループに所属するユーザーを取得
-router.get("/", (req, res) => {
-  if (req.query.groupid === undefined) {
-    errorHandle(res, 1501);
-    return;
-  }
-  const groupid = parseInt(req.query.groupid, 10);
-  if (Number.isNaN(groupid) || groupid < 0) {
-    errorHandle(res, 1502);
-    return;
-  }
+const getUsersByGroupid = (groupid: number, res: express.Response): void => {
   Users.findAll({ where: { groupid } })
     .then(users => {
       res.json(
@@ -28,6 +17,25 @@ router.get("/", (req, res) => {
     .catch(() => {
       errorHandle(res, 1503);
     });
+};
+// GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
+//  グループに所属するユーザーを取得
+router.get("/", (req, res) => {
+  if (req.query.groupid === undefined) {
+    if (req.query.mygroup === "true") {
+      getUsersByGroupid(req.body.groupidAuth, res);
+      return;
+    }
+    errorHandle(res, 1501);
+
+    return;
+  }
+  const groupid = parseInt(req.query.groupid, 10);
+  if (Number.isNaN(groupid) || groupid < 0) {
+    errorHandle(res, 1502);
+    return;
+  }
+  getUsersByGroupid(groupid, res);
 });
 
 // GET https://lovelab.2n2n.ninja/api/v1/users/:id

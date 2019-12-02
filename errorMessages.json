@@ -203,6 +203,24 @@
     "messageJp":"ユーザが存在しません。",
     "status":"特定のユーザ情報取得時、指定されたidのユーザが存在しないことで発生"
   },
+  "1511":{
+    "httpStatus":500,
+    "message":"unknown error. accessed user is not found.",
+    "messageJp":"認証トークンより取得したユーザが、データベース上で見つかりません。",
+    "status":"グループ所属ユーザ一覧取得時、認証トークンのユーザがデータベース検索でヒットしなかったときに発生"
+  },
+  "1512":{
+    "httpStatus":500,
+    "message":"database error",
+    "messageJp":"認証トークンより取得したユーザの詳細情報をデータベースに問い合わせましたがエラーが発生しました。",
+    "status":"グループ所属ユーザ一覧取得時、認証トークンのユーザをデータベース検索しようとした際にデータベースエラーが発生"
+  },
+  "1601":{
+    "httpStatus":500,
+    "message":"access user is not found on database",
+    "messageJp":"ユーザが見つかりません",
+    "status":"所属グループのタスク一覧取得時、認証トークンのユーザがデータベースに存在しない時発生。想定していない。"
+  },
   "1602":{
     "httpStatus":409,
     "message":"you are not joined any groups",
