@@ -9,6 +9,5 @@ module.exports = {
     "ts-jest": {
       tsConfig: "tsconfig.json"
     }
-  },
-  testMatch: ["**/*.test.+(ts|tsx|js)"]
+  }
 };

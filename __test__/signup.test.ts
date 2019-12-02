@@ -1,6 +1,6 @@
 import * as supertest from "supertest";
-import app from "../../startApp";
-import connectDatabase from "../../db";
+import app from "../src/startApp";
+import connectDatabase from "../src/db";
 
 const req = supertest(app);
 
