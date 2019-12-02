@@ -7,7 +7,10 @@ import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
 // database接続
 
-const connectDataBase = (forceReset = false, isTest = false): void => {
+const connectDataBase = (
+  forceReset = false,
+  isTest = false
+): Promise<boolean> => {
   const config = configfunc(isTest);
   const sequelize = new Sequelize(
     config.database,
@@ -26,7 +29,7 @@ const connectDataBase = (forceReset = false, isTest = false): void => {
   tasksFactory(sequelize);
   tokensFactory(sequelize);
 
-  sequelize
+  return sequelize
     .authenticate()
     .then(() => {
       return Groups.sync({
@@ -52,6 +55,9 @@ const connectDataBase = (forceReset = false, isTest = false): void => {
       return Tokens.sync({
         force: forceReset
       });
+    })
+    .then(() => {
+      return true;
     })
     .catch(() => {
       // eslint-disable-next-line no-console
