@@ -4,6 +4,9 @@ import connectDatabase from "../src/db";
 
 const req = supertest(app);
 
+let bearerUser1 = "";
+let bearerUser2 = "";
+
 beforeAll(() => {
   return connectDatabase(true, true);
 });
@@ -68,6 +71,19 @@ describe("/login", () => {
     expect(res.status).toBe(200);
     expect(res.body.userid).toBe(1);
     expect(res.body.token.length).toBe(66);
+    bearerUser1 = res.body.token;
+  });
+
+  it("user2", async () => {
+    const reqBody = {
+      email: "user2",
+      password: "hogehoge"
+    };
+    const res = await req.post("/api/v1/login").send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body.userid).toBe(2);
+    expect(res.body.token.length).toBe(66);
+    bearerUser2 = res.body.token;
   });
 
   it("user1 wrong password (will fail)", async () => {
@@ -79,8 +95,8 @@ describe("/login", () => {
     expect(res.status).toBe(403);
   });
 });
+
 /*
-| 認証系 | [既存ユーザログイン](#既存ユーザログイン) | 無し | POST | `/login` |
 | ユーザ | [特定のグループに所属するユーザ達の情報を取得](#特定のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?groupid=:id` |
 | ユーザ | [特定のユーザの情報を取得](#特定のユーザの情報を取得) | 有り | GET | `/authed/users/:id` |
 | 招待 | [新しい招待を作成](#新しい招待を作成) | 有り | POST | `/authed/invitations` |
