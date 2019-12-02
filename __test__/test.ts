@@ -326,14 +326,26 @@ describe("/invitations", () => {
   });
 });
 
+describe("/users", () => {
+  it("GET /authed/users?groupid=1", async () => {});
+  it("GET /authed/users?mygroup=true", async () => {});
+  it("GET /authed/users?groupid=2", async () => {});
+  it("GET /authed/users", async () => {});
+  it("GET /authed/users/1", async () => {});
+  it("GET /authed/users/3", async () => {});
+});
+
 /*
-| ユーザ | [特定のグループに所属するユーザ達の情報を取得](#特定のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?groupid=:id` |
-| ユーザ | [特定のユーザの情報を取得](#特定のユーザの情報を取得) | 有り | GET | `/authed/users/:id` |
-
-| タスク | [グループのタスクをすべて取得](#グループのタスクをすべて取得) | 有り | GET | `/authed/tasks` |
-| タスク | [新規タスクの作成](#新規タスクの作成) | 有り | POST | `/authed/tasks` |
-| タスク | [特定のタスクの情報を取得](#特定のタスクの情報を取得)| 有り | GET | `/authed/tasks/:id` |
-| タスク | [特定のタスクの内容を変更](#特定のタスクの内容を変更)| 有り | PUT | `/authed/tasks/:id` |
-
-
- */
+describe("/tasks", () => {
+  it("GET /authed/tasks", async () => {});
+  it("GET /authed/tasks/1", async () => {});
+  it("POST /authed/tasks", async () => {});
+  it("POST /authed/tasks", async () => {});
+  it("GET /authed/tasks", async () => {});
+  it("GET /authed/tasks/1", async () => {});
+  it("PUT /authed/tasks/1", async () => {});
+  it("PUT /authed/tasks/1", async () => {});
+  it("PUT /authed/tasks/1", async () => {});
+  it("PUT /authed/tasks/1", async () => {});
+});
+*/

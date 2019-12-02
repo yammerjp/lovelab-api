@@ -6,11 +6,16 @@ import { Groups, groupsFactory } from "./models/groups";
 import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
 // database接続
-
+let isConnected = false;
 const connectDataBase = (
   forceReset = false,
   isTest = false
 ): Promise<boolean> => {
+  console.log(`isConnected: ${isConnected}`);
+  if (isConnected === true) {
+    return Promise.resolve(true);
+  }
+
   const config = configfunc(isTest);
   const sequelize = new Sequelize(
     config.database,
@@ -57,6 +62,7 @@ const connectDataBase = (
       });
     })
     .then(() => {
+      isConnected = true;
       return true;
     })
     .catch(() => {
