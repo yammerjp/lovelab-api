@@ -98,6 +98,14 @@ describe("/login", () => {
   });
 });
 
+describe("/authed", () => {
+  it("GET /groups/1 (no authorization)", async () => {
+    const res = await req.get("/api/v1/authed/groups/1").send();
+    expect(res.status).toBe(401);
+    expect(res.body.errorCode).toBe(1001);
+  });
+});
+
 describe("/groups", () => {
   it("GET /groups/1 (no resouce)", async () => {
     const res = await req
