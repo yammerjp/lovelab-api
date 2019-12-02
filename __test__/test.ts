@@ -319,7 +319,7 @@ describe("/invitations", () => {
   it("GET /invitations (no-invitations)", async () => {
     const res = await req
       .get("/api/v1/authed/invitations")
-      .set("Authorization", `Bearer ${bearerUser1}`)
+      .set("Authorization", `Bearer ${bearerUser2}`)
       .send();
     expect(res.status).toBe(200);
     expect(res.body.length).toBe(0);
@@ -327,15 +327,94 @@ describe("/invitations", () => {
 });
 
 describe("/users", () => {
-  it("GET /authed/users?groupid=1", async () => {});
-  it("GET /authed/users?mygroup=true", async () => {});
-  it("GET /authed/users?groupid=2", async () => {});
-  it("GET /authed/users", async () => {});
-  it("GET /authed/users/1", async () => {});
-  it("GET /authed/users/3", async () => {});
+  it("GET /authed/users?groupid=1", async () => {
+    const res = await req
+      .get("/api/v1/authed/users?groupid=1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      {
+        groupid: 1,
+        picturepath: null,
+        id: 1,
+        email: "user1",
+        name: null
+      },
+      {
+        groupid: 1,
+        picturepath: null,
+        id: 2,
+        email: "user2",
+        name: "user2"
+      }
+    ]);
+  });
+
+  it("GET /authed/users?mygroup=true", async () => {
+    const res = await req
+      .get("/api/v1/authed/users?mygroup=true")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      {
+        groupid: 1,
+        picturepath: null,
+        id: 1,
+        email: "user1",
+        name: null
+      },
+      {
+        groupid: 1,
+        picturepath: null,
+        id: 2,
+        email: "user2",
+        name: "user2"
+      }
+    ]);
+  });
+
+  it("GET /authed/users?groupid=2", async () => {
+    const res = await req
+      .get("/api/v1/authed/users?groupid=2")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body.length).toBe(0);
+  });
+  it("GET /authed/users", async () => {
+    const res = await req
+      .get("/api/v1/authed/users")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1501);
+  });
+  it("GET /authed/users/1", async () => {
+    const res = await req
+      .get("/api/v1/authed/users/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      groupid: 1,
+      picturepath: null,
+      id: 1,
+      email: "user1",
+      name: null
+    });
+  });
+  it("GET /authed/users/3", async () => {
+    const res = await req
+      .get("/api/v1/authed/users/3")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(1505);
+  });
 });
 
-/*
 describe("/tasks", () => {
   it("GET /authed/tasks", async () => {});
   it("GET /authed/tasks/1", async () => {});
@@ -348,4 +427,3 @@ describe("/tasks", () => {
   it("PUT /authed/tasks/1", async () => {});
   it("PUT /authed/tasks/1", async () => {});
 });
-*/
