@@ -149,15 +149,158 @@ describe("/groups", () => {
   });
 });
 
+describe("/invitations", () => {
+  it("GET /invitations (no-invitations)", async () => {
+    const res = await req
+      .get("/api/v1/authed/invitations")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body.length).toBe(0);
+  });
+
+  it("POST /invitations (wrong, user1 -> user1)", async () => {
+    const reqBody = {
+      inviteeuserid: 1,
+      message: "invitation message"
+    };
+    const res = await req
+      .post("/api/v1/authed/invitations")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1402);
+  });
+
+  it("POST /invitations (wrong, user2 -> user1)", async () => {
+    const reqBody = {
+      inviteeuserid: 1,
+      message: "invitation message"
+    };
+    const res = await req
+      .post("/api/v1/authed/invitations")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1405);
+  });
+
+  it("POST /invitations (user1 -> user2)", async () => {
+    const reqBody = {
+      inviteeuserid: 2,
+      message: "invitation message"
+    };
+    const res = await req
+      .post("/api/v1/authed/invitations")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      groupid: 1,
+      inviteruserid: 1,
+      inviteeuserid: 2,
+      message: "invitation message",
+      createdAt: expect.anything(),
+      updatedAt: expect.anything()
+    });
+  });
+
+  it("POST /invitations (user1 -> user2)", async () => {
+    const reqBody = {
+      inviteeuserid: 2
+    };
+    const res = await req
+      .post("/api/v1/authed/invitations")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 2,
+      groupid: 1,
+      inviteruserid: 1,
+      inviteeuserid: 2,
+      message: null,
+      createdAt: expect.anything(),
+      updatedAt: expect.anything()
+    });
+  });
+
+  it("GET /invitations (2 invitations)", async () => {
+    const res = await req
+      .get("/api/v1/authed/invitations")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      {
+        id: 1,
+        groupid: 1,
+        inviteruserid: 1,
+        inviteeuserid: 2,
+        message: "invitation message",
+        createdAt: expect.anything(),
+        updatedAt: expect.anything()
+      },
+      {
+        id: 2,
+        groupid: 1,
+        inviteruserid: 1,
+        inviteeuserid: 2,
+        message: null,
+        createdAt: expect.anything(),
+        updatedAt: expect.anything()
+      }
+    ]);
+  });
+
+  it("DELETE /invitations (reject)", async () => {
+    const res = await req
+      .delete("/api/v1/authed/invitations/1")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send();
+    expect(res.status).toBe(204);
+  });
+
+  it("GET /users/2 (not joined any groups", async () => {
+    const res = await req
+      .get("/api/v1/authed/users/2")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send();
+    expect(res.body.groupid).toBe(null);
+  });
+
+  it("DELETE /invitations (accept)", async () => {
+    const res = await req
+      .delete("/api/v1/authed/invitations/2?agreement=true")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send();
+    expect(res.status).toBe(204);
+  });
+
+  it("GET /users/2 (joined group 1", async () => {
+    const res = await req
+      .get("/api/v1/authed/users/2")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send();
+    expect(res.body.groupid).toBe(1);
+  });
+
+  it("GET /invitations (no-invitations)", async () => {
+    const res = await req
+      .get("/api/v1/authed/invitations")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body.length).toBe(0);
+  });
+});
+
 /*
 | ユーザ | [特定のグループに所属するユーザ達の情報を取得](#特定のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?groupid=:id` |
 | ユーザ | [特定のユーザの情報を取得](#特定のユーザの情報を取得) | 有り | GET | `/authed/users/:id` |
-| 招待 | [新しい招待を作成](#新しい招待を作成) | 有り | POST | `/authed/invitations` |
-| 招待 | [特定の招待を拒否](#特定の招待を拒否)| 有り | DELETE | `/authed/invitations/:id` |
-| 招待 | [特定の招待を承諾](#特定の招待を承諾) | 有り | DELETE | `/authed/invitations/:id?agreement=true` |
-| グループ | [グループの情報を取得](#グループの情報を取得) | 有り | GET | `/authed/groups/:id` |
-| グループ | [新規グループ作成](#新規グループ作成)| 有り | POST | `/authed/groups` |
-| グループ | [グループのタスクをすべて取得](#グループのタスクをすべて取得) | 有り | GET | `/authed/tasks` |
+
+| タスク | [グループのタスクをすべて取得](#グループのタスクをすべて取得) | 有り | GET | `/authed/tasks` |
 | タスク | [新規タスクの作成](#新規タスクの作成) | 有り | POST | `/authed/tasks` |
 | タスク | [特定のタスクの情報を取得](#特定のタスクの情報を取得)| 有り | GET | `/authed/tasks/:id` |
 | タスク | [特定のタスクの内容を変更](#特定のタスクの内容を変更)| 有り | PUT | `/authed/tasks/:id` |
