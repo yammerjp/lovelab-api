@@ -19,8 +19,13 @@ describe("/signup", () => {
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(200);
-    expect(res.body.id).toBe(1);
-    expect(res.body.name).toBe(null);
+    expect(res.body).toEqual({
+      groupid: null,
+      picturepath: null,
+      id: 1,
+      email: "user1",
+      name: null
+    });
   });
 
   it("user2 with name", async () => {
@@ -31,8 +36,13 @@ describe("/signup", () => {
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(200);
-    expect(res.body.id).toBe(2);
-    expect(res.body.name).toBe("user2");
+    expect(res.body).toEqual({
+      groupid: null,
+      picturepath: null,
+      id: 2,
+      email: "user2",
+      name: "user2"
+    });
   });
 
   it("a user only email (will fail)", async () => {
@@ -41,6 +51,7 @@ describe("/signup", () => {
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1201);
   });
 
   it("a user only email (will fail)", async () => {
@@ -49,6 +60,7 @@ describe("/signup", () => {
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1201);
   });
 
   it("a user as same as user1's email (will fail)", async () => {
@@ -58,6 +70,7 @@ describe("/signup", () => {
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1202);
   });
 });
 
@@ -69,7 +82,13 @@ describe("/login", () => {
     };
     const res = await req.post("/api/v1/login").send(reqBody);
     expect(res.status).toBe(200);
-    expect(res.body.userid).toBe(1);
+    expect(res.body).toEqual({
+      userid: 1,
+      token: expect.anything(),
+      deadline: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
     expect(res.body.token.length).toBe(66);
     bearerUser1 = res.body.token;
     console.log(`bearer token user1 : ${bearerUser1}`);
@@ -82,7 +101,13 @@ describe("/login", () => {
     };
     const res = await req.post("/api/v1/login").send(reqBody);
     expect(res.status).toBe(200);
-    expect(res.body.userid).toBe(2);
+    expect(res.body).toEqual({
+      userid: 2,
+      token: expect.anything(),
+      deadline: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
     expect(res.body.token.length).toBe(66);
     bearerUser2 = res.body.token;
     console.log(`bearer token user1 : ${bearerUser2}`);
@@ -95,6 +120,7 @@ describe("/login", () => {
     };
     const res = await req.post("/api/v1/login").send(reqBody);
     expect(res.status).toBe(403);
+    expect(res.body.errorCode).toBe(1102);
   });
 });
 
@@ -145,7 +171,11 @@ describe("/groups", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(200);
-    expect(res.body.id).toBe(1);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "groupname",
+      picturepath: null
+    });
   });
 });
 
