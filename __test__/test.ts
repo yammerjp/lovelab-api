@@ -72,6 +72,7 @@ describe("/login", () => {
     expect(res.body.userid).toBe(1);
     expect(res.body.token.length).toBe(66);
     bearerUser1 = res.body.token;
+    console.log(`bearer token user1 : ${bearerUser1}`);
   });
 
   it("user2", async () => {
@@ -84,6 +85,7 @@ describe("/login", () => {
     expect(res.body.userid).toBe(2);
     expect(res.body.token.length).toBe(66);
     bearerUser2 = res.body.token;
+    console.log(`bearer token user1 : ${bearerUser2}`);
   });
 
   it("user1 wrong password (will fail)", async () => {
@@ -93,6 +95,49 @@ describe("/login", () => {
     };
     const res = await req.post("/api/v1/login").send(reqBody);
     expect(res.status).toBe(403);
+  });
+});
+
+describe("/groups", () => {
+  it("GET /groups/1 (no resouce)", async () => {
+    const res = await req
+      .get("/api/v1/authed/groups/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(1302);
+  });
+
+  it("POST /groups , create group (no-name, wrong)", async () => {
+    const reqBody = {};
+    const res = await req
+      .post("/api/v1/authed/groups")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1304);
+  });
+
+  it("POST /groups , create group", async () => {
+    const reqBody = {
+      name: "groupname"
+    };
+    const res = await req
+      .post("/api/v1/authed/groups")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body.id).toBe(1);
+    expect(res.body.name).toBe("groupname");
+  });
+
+  it("GET /groups/1", async () => {
+    const res = await req
+      .get("/api/v1/authed/groups/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body.id).toBe(1);
   });
 });
 
