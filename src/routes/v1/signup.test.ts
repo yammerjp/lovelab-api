@@ -19,6 +19,7 @@ describe("/signup", () => {
     expect(res.body.id).toBe(1);
     expect(res.body.name).toBe(null);
   });
+
   it("user2 with name", async () => {
     const reqBody = {
       email: "user2",
@@ -30,16 +31,7 @@ describe("/signup", () => {
     expect(res.body.id).toBe(2);
     expect(res.body.name).toBe("user2");
   });
-  /*
-  it("a user as same as user1's email (will fail)", async () => {
-    const reqBody = {
-      email: "user1",
-      password: "hogehoge",
-    }
-    const res = await req.post("/api/v1/signup").send(reqBody);
-    expect(res.status).toBe(409);
-  });
- */
+
   it("a user only email (will fail)", async () => {
     const reqBody = {
       email: "user3"
@@ -47,12 +39,22 @@ describe("/signup", () => {
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(400);
   });
+
   it("a user only email (will fail)", async () => {
     const reqBody = {
       password: "password"
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(400);
+  });
+
+  it("a user as same as user1's email (will fail)", async () => {
+    const reqBody = {
+      email: "user1",
+      password: "hoge"
+    };
+    const res = await req.post("/api/v1/signup").send(reqBody);
+    expect(res.status).toBe(409);
   });
 });
 /*
