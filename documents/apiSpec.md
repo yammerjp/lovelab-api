@@ -2,7 +2,7 @@
 
 lovelab.herokuのAPIに関する仕様を記す。
 
-2019/11/24時点での仕様。
+2019/12/02時点での仕様。
 
 ## 概略
 
@@ -159,7 +159,7 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | 招待 | [新しい招待を作成](#新しい招待を作成) | 有り | POST | `/authed/invitations` |
 | 招待 | [特定の招待を拒否](#特定の招待を拒否)| 有り | DELETE | `/authed/invitations/:id` |
 | 招待 | [特定の招待を承諾](#特定の招待を承諾) | 有り | DELETE | `/authed/invitations/:id?agreement=true` |
-| 招待 | [グループの情報を取得](#グループの情報を取得) | 有り | POST | `/authed/groups/:id` |
+| グループ | [グループの情報を取得](#グループの情報を取得) | 有り | GET | `/authed/groups/:id` |
 | グループ | [新規グループ作成](#新規グループ作成)| 有り | POST | `/authed/groups` |
 | グループ | [グループのタスクをすべて取得](#グループのタスクをすべて取得) | 有り | GET | `/authed/tasks` |
 | タスク | [新規タスクの作成](#新規タスクの作成) | 有り | POST | `/authed/tasks` |
