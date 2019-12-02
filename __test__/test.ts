@@ -57,8 +57,29 @@ describe("/signup", () => {
     expect(res.status).toBe(409);
   });
 });
+
+describe("/login", () => {
+  it("user1", async () => {
+    const reqBody = {
+      email: "user1",
+      password: "hogehoge"
+    };
+    const res = await req.post("/api/v1/login").send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body.userid).toBe(1);
+    expect(res.body.token.length).toBe(66);
+  });
+
+  it("user1 wrong password (will fail)", async () => {
+    const reqBody = {
+      email: "user1",
+      password: "hogehogehoge"
+    };
+    const res = await req.post("/api/v1/login").send(reqBody);
+    expect(res.status).toBe(403);
+  });
+});
 /*
-| ユーザ | [新規ユーザ登録](#新規ユーザ登録) | 無し | POST | `/signup` |
 | 認証系 | [既存ユーザログイン](#既存ユーザログイン) | 無し | POST | `/login` |
 | ユーザ | [特定のグループに所属するユーザ達の情報を取得](#特定のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?groupid=:id` |
 | ユーザ | [特定のユーザの情報を取得](#特定のユーザの情報を取得) | 有り | GET | `/authed/users/:id` |
