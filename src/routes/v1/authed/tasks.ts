@@ -49,11 +49,17 @@ router.get("/", (req, res) => {
 // POST https://lovelab.2n2n.ninja/api/v1/tasks
 //  タスクを追加 自分の所属するグループのみ追加可能
 router.post("/", (req, res) => {
-  const { userid, name, comment } = req.body;
+  const { userid, name, comment, whoisdoinguserid } = req.body;
 
   // TODO: whoisdoinguseridを受け取る
   // TODO: deadlinedate, finisheddateを受け取って型変換する。(あとでデータベースに詰め込めるようにする)
-  if (!validate(name) || !validate(comment)) {
+  if (
+    !validate(name) ||
+    !validate(comment) ||
+    (typeof whoisdoinguserid !== "number" &&
+      whoisdoinguserid !== null &&
+      whoisdoinguserid !== undefined)
+  ) {
     errorHandle(res, 1605);
     return;
   }
@@ -63,7 +69,12 @@ router.post("/", (req, res) => {
         errorHandle(res, 1606);
         return;
       }
-      const taskRequest: TaskRequest = { name, comment, groupid: user.groupid };
+      const taskRequest: TaskRequest = {
+        name,
+        comment,
+        groupid: user.groupid,
+        whoisdoinguserid
+      };
       Tasks.create(taskRequest)
         .then(task => {
           res.json(task);
