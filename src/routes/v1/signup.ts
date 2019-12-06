@@ -2,7 +2,7 @@ import * as express from "express";
 import * as sha256 from "sha256";
 import * as crypto from "crypto";
 import { Users } from "../../models/users";
-import { userResponceObjectFilter, validate } from "../../others/users";
+import userResponceObjectFilter from "../../others/users";
 import errorHandle from "../../others/error";
 
 const router = express.Router();
@@ -11,10 +11,21 @@ const router = express.Router();
 //  ユーザーを追加 (認証に絡む。新しいアカウントの作成)
 router.post("/", (req, res) => {
   const { email, password, name } = req.body;
+  /*
   if (!validate(email) || !validate(password)) {
     errorHandle(res, 1201);
     return;
   }
+ */
+  if (
+    email === null ||
+    email === undefined ||
+    password === null ||
+    password === undefined
+  ) {
+    errorHandle(res, 1201);
+  }
+
   Users.findOne({ where: { email } })
     .then(user => {
       if (user !== null) {
