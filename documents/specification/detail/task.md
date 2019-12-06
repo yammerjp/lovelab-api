@@ -32,6 +32,7 @@ GET /authed/tasks
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| thanklength | 数字 | ありがとうの数 |
 
 ### サーバ内の状態変化
 
@@ -69,6 +70,7 @@ GET /authed/tasks
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| thanklength | 数字 | ありがとうの数 |
 
 ### サーバ内の状態変化
 
@@ -105,6 +107,7 @@ GET /authed/tasks
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| thanklength | 数字 | ありがとうの数 |
 
 
 ### サーバ内の状態変化
@@ -143,6 +146,7 @@ GET /authed/tasks
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| thanklength | 数字 | ありがとうの数 |
 
 ### サーバ内の状態変化
 
