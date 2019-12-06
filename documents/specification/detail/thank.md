@@ -24,25 +24,7 @@
 | id | 数字 | サンクid |
 | taskid | 数字 | ありがとうをしたタスク |
 | fromuserid | 数字 | ありがとうをした人 |
-| task | オブジェクト | タスクが入ったオブジェクトが入っている | 
-
-#### taskオブジェクト
-
-```json
-{
-  "id" : number,
-  "name" : string,
-  "comment" : string|null,
-  "groupid" : number,
-  "isfinished" : boolean,
-  "whoisdoinguserid" : number|null,
-  "deadlinedate" : null,
-  "finisheddate" : null,
-  "updatedAt" : string,
-  "createdAt" : string,
-  "thanklength" : number
-}
-```
+| thanklength | 数字 | 該当タスクのありがとうの数 | 
 
 ### サーバ内の状態変化
 
@@ -62,7 +44,7 @@
 
 | キー | データ型 | 説明 |
 ----|----|----
-| task | オブジェクト | タスクが入ったオブジェクトが入っている | 
+| thanklength | 数字 | 該当タスクのありがとうの数 | 
 
 ### サーバ内の状態変化
 
