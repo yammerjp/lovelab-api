@@ -506,11 +506,22 @@ describe("/tasks", () => {
       .post("/api/v1/authed/tasks")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(1605);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: null,
+      isfinished: false,
+      deadlinedate: null,
+      finisheddate: null,
+      id: 1,
+      name: "taskName",
+      comment: null,
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
   });
 
-  it("POST /authed/tasks", async () => {
+  it("POST /authed/tasks only comment (wrong)", async () => {
     const reqBody = {
       comment: "taskComment"
     };
@@ -522,7 +533,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1605);
   });
 
-  it("POST /authed/tasks", async () => {
+  it("POST /authed/tasks name and commemt", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment"
@@ -537,7 +548,7 @@ describe("/tasks", () => {
       isfinished: false,
       deadlinedate: null,
       finisheddate: null,
-      id: 1,
+      id: 2,
       name: "taskName",
       comment: "taskComment",
       groupid: 1,
@@ -546,7 +557,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("POST /authed/tasks whoisdoinguserid=2", async () => {
+  it("POST /authed/tasks name, comment and whoisdoinguserid", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment",
@@ -562,7 +573,7 @@ describe("/tasks", () => {
       isfinished: false,
       deadlinedate: null,
       finisheddate: null,
-      id: 2,
+      id: 3,
       name: "taskName",
       comment: "taskComment",
       groupid: 1,
@@ -598,6 +609,18 @@ describe("/tasks", () => {
         finisheddate: null,
         id: 1,
         name: "taskName",
+        comment: null,
+        groupid: 1,
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        whoisdoinguserid: null,
+        isfinished: false,
+        deadlinedate: null,
+        finisheddate: null,
+        id: 2,
+        name: "taskName",
         comment: "taskComment",
         groupid: 1,
         updatedAt: expect.anything(),
@@ -608,7 +631,7 @@ describe("/tasks", () => {
         isfinished: false,
         deadlinedate: null,
         finisheddate: null,
-        id: 2,
+        id: 3,
         name: "taskName",
         comment: "taskComment",
         groupid: 1,
@@ -631,7 +654,7 @@ describe("/tasks", () => {
       finisheddate: null,
       id: 1,
       name: "taskName",
-      comment: "taskComment",
+      comment: null,
       groupid: 1,
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -654,20 +677,20 @@ describe("/tasks", () => {
       finisheddate: null,
       id: 1,
       name: "newTaskName",
-      comment: "taskComment",
+      comment: null,
       groupid: 1,
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
   });
 
-  it("PUT /authed/tasks/3 (wrong, not found)", async () => {
+  it("PUT /authed/tasks/100 (wrong, not found)", async () => {
     const reqBody = {
       name: "newTaskName",
       comment: "taskComment"
     };
     const res = await req
-      .put("/api/v1/authed/tasks/3")
+      .put("/api/v1/authed/tasks/100")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(404);

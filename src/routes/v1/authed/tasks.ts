@@ -12,13 +12,6 @@ interface TaskRequest {
 }
 const router = express.Router();
 
-const validate = (str: string): boolean => {
-  if (str === undefined || str === null || str === "") {
-    return false;
-  }
-  return true;
-};
-
 // GET https://lovelab.2n2n.ninja/api/v1/tasks
 //  自分の所属するグループのタスク一覧を取得
 router.get("/", (req, res) => {
@@ -39,21 +32,46 @@ router.get("/", (req, res) => {
 // POST https://lovelab.2n2n.ninja/api/v1/tasks
 //  タスクを追加 自分の所属するグループのみ追加可能
 router.post("/", (req, res) => {
-  const { groupidAuth, name, comment } = req.body;
-
-  // TODO: whoisdoinguseridを受け取る
+  const { groupidAuth, name, comment, whoisdoinguserid } = req.body;
   // TODO: deadlinedate, finisheddateを受け取って型変換する。(あとでデータベースに詰め込めるようにする)
-  if (!validate(name) || !validate(comment)) {
+  const taskRequest: TaskRequest = {
+    name,
+    comment,
+    groupid: groupidAuth,
+    whoisdoinguserid
+  };
+
+  if (name === null || name === undefined) {
     errorHandle(res, 1605);
     return;
   }
-  const taskRequest: TaskRequest = { name, comment, groupid: groupidAuth };
-  Tasks.create(taskRequest)
+
+  new Promise((resolve, reject) => { // eslint-disable-line
+    if (
+      taskRequest.whoisdoinguserid === undefined ||
+      taskRequest.whoisdoinguserid === null
+    ) {
+      return resolve();
+    }
+    Users.findByPk(whoisdoinguserid)
+      .then(user => {
+        if (user === null || user.groupid !== groupidAuth) {
+          return reject(1621);
+        }
+        return resolve();
+      })
+      .catch(() => {
+        return reject();
+      });
+  })
+    .then(() => {
+      return Tasks.create(taskRequest);
+    })
     .then(task => {
       res.json(task);
     })
-    .catch(() => {
-      errorHandle(res, 1607);
+    .catch(e => {
+      errorHandle(res, e === 1621 ? e : 1607);
     });
 });
 
