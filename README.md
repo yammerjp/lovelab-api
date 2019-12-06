@@ -59,5 +59,5 @@ $ psql -h localhost -p 5432 -d yourDatabaseName -U yourDatabaseUser
 
 This is REST-like API(Authorization required).
 
-[API Specification is here](documents/apiSpec.md)
+[API Specification is here](documents/specification/index.md)
 
