@@ -637,7 +637,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toEqual(1617);
   });
 
-  it("PUT /authed/tasks/1", async () => {
+  it("PUT /authed/tasks/1 comment, isfinished", async () => {
     const reqBody = {
       comment: "newTaskComment",
       isfinished: true
@@ -661,7 +661,31 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/1", async () => {
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
+    const reqBody = {
+      whoisdoinguserid: "isNotNumber"
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1707);
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
+    const reqBody = {
+      whoisdoinguserid: 5
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1621);
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
     const reqBody = {
       whoisdoinguserid: 4
     };
@@ -673,7 +697,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1621);
   });
 
-  it("PUT /authed/tasks/1", async () => {
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
     const reqBody = {
       whoisdoinguserid: 3
     };
@@ -685,7 +709,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1621);
   });
 
-  it("PUT /authed/tasks/1", async () => {
+  it("PUT /authed/tasks/1 whoisdoinguserid", async () => {
     const reqBody = {
       whoisdoinguserid: 1
     };

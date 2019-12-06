@@ -316,5 +316,53 @@
     "message":"whoisdoinguserid is invalid",
     "messageJp":"リクエストボディのwhoisdoinguseridが無効な値です。",
     "status":"タスク編集時、リクエストボディに無効な値が与えられた時発生。"
+  },
+  "1700":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
+  },
+  "1701":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
+  },
+  "1702":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
+  },
+  "1703":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
+  },
+  "1704":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
+  },
+  "1705":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
+  },
+  "1706":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
+  },
+  "1707":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
   }
 }

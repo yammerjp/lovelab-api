@@ -1,6 +1,6 @@
 import * as express from "express";
 import { Users } from "../../../models/users";
-import { userResponceObjectFilter } from "../../../others/users";
+import userResponceObjectFilter from "../../../others/users";
 import errorHandle from "../../../others/error";
 
 const router = express.Router();

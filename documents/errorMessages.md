@@ -936,3 +936,147 @@ whoisdoinguserid is invalid
 
 タスク編集時、リクエストボディに無効な値が与えられた時発生。
 
+## errorCode: 1700
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1701
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1702
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1703
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1704
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1705
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1706
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1707
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
