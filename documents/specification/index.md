@@ -12,10 +12,10 @@ HTTPS通信で、jsonデータを送受信(一部は受信のみ)することで
 - 認証が必要な場合の方式: Bearerトークン
 - エンドポイント `https://lovelab.2n2n.ninja/api/v1/*`( 以下は`https://lovelab.2n2n.ninja/api/v1`以下のURIを記載する
 
-## API全体の仕様
+## もくじ
 
-- [認証](auth.md)
-- [成功と失敗](successAndFail.md)
-- [実際にAPIと通信してみる](try.md)
-- [各エンドポイントの仕様](detail/index.md)
+- [1.認証](auth.md)
+- [2.成功と失敗](successAndFail.md)
+- [3.実際にAPIと通信してみる](try.md)
+- [4.各エンドポイントの仕様](detail/index.md)
 
