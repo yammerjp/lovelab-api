@@ -15,11 +15,10 @@ router.post("/", (req, res) => {
     errorHandle(res, 1201);
     return;
   }
-  Users.findAll({ where: { email } })
-    .then(users => {
-      if (users.length !== 0) {
-        errorHandle(res, 1202);
-        Promise.reject();
+  Users.findOne({ where: { email } })
+    .then(user => {
+      if (user !== null) {
+        return Promise.reject(1202);
       }
       const salt = crypto.randomBytes(8).toString("HEX");
       const passwordhash = sha256(password + salt);
@@ -28,8 +27,8 @@ router.post("/", (req, res) => {
     .then(newUser => {
       res.json(userResponceObjectFilter(newUser));
     })
-    .catch(() => {
-      errorHandle(res, 1205);
+    .catch(e => {
+      errorHandle(res, e === 1202 ? e : 1205);
       // errorHandle(res, 1204);
     });
 });

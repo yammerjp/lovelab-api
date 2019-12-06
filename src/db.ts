@@ -6,9 +6,17 @@ import { Groups, groupsFactory } from "./models/groups";
 import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
 // database接続
+let isConnected = false;
+const connectDataBase = (
+  forceReset = false,
+  isTest = false
+): Promise<boolean> => {
+  console.log(`isConnected: ${isConnected}`);
+  if (isConnected === true) {
+    return Promise.resolve(true);
+  }
 
-const connectDataBase = (forceReset = false): void => {
-  const config = configfunc();
+  const config = configfunc(isTest);
   const sequelize = new Sequelize(
     config.database,
     config.user,
@@ -26,7 +34,7 @@ const connectDataBase = (forceReset = false): void => {
   tasksFactory(sequelize);
   tokensFactory(sequelize);
 
-  sequelize
+  return sequelize
     .authenticate()
     .then(() => {
       return Groups.sync({
@@ -52,6 +60,10 @@ const connectDataBase = (forceReset = false): void => {
       return Tokens.sync({
         force: forceReset
       });
+    })
+    .then(() => {
+      isConnected = true;
+      return true;
     })
     .catch(() => {
       // eslint-disable-next-line no-console

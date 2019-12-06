@@ -1,5 +1,5 @@
 # Node build artifacts
-node_modules
+/node_modules/
 npm-debug.log
 
 # Local development
@@ -11,4 +11,5 @@ npm-debug.log
 Dockerfile
 docker-compose.yml
 
-dist
+/dist/
+/coverage/

@@ -23,20 +23,11 @@ const getUsersByGroupid = (groupid: number, res: express.Response): void => {
 router.get("/", (req, res) => {
   if (req.query.groupid === undefined) {
     if (req.query.mygroup === "true") {
-      Users.findByPk(req.body.userid)
-        .then(user => {
-          if (user === null) {
-            errorHandle(res, 1511);
-            return;
-          }
-          getUsersByGroupid(user.groupid, res);
-        })
-        .catch(() => {
-          errorHandle(res, 1512);
-        });
-    } else {
-      errorHandle(res, 1501);
+      getUsersByGroupid(req.body.groupidAuth, res);
+      return;
     }
+    errorHandle(res, 1501);
+
     return;
   }
   const groupid = parseInt(req.query.groupid, 10);

@@ -36,6 +36,42 @@ token is invalid
 
 認証が必要なリソースにアクセスしたが、認証トークンが誤りまたは期限切れのときに発生
 
+## errorCode: 1003
+
+### HTTP status code
+
+500
+
+### Error Message
+
+token's user is not found
+
+### Error Message Jp
+
+トークンは有効ですが、トークンに該当するユーザがデータベースから発見できません。
+
+### Status
+
+トークンの指すユーザがデータベース上に存在しないときに発生。想定していない。
+
+## errorCode: 1004
+
+### HTTP status code
+
+500
+
+### Error Message
+
+unknown error
+
+### Error Message Jp
+
+想定外のエラーです。データベースエラーの可能性があります。
+
+### Status
+
+トークンの有効性確認時、特に故意にエラーを投げていないがcatchされた。データベースエラーの可能性あり。想定されていない。
+
 ## errorCode: 1101
 
 ### HTTP status code
@@ -252,24 +288,6 @@ invalid name
 
 新規グループ作成時、リクエストに含まれるnameが適切な文字列として渡されたなかったときに発生
 
-## errorCode: 1305
-
-### HTTP status code
-
-500
-
-### Error Message
-
-authorized user is not found in database
-
-### Error Message Jp
-
-ユーザがデータベース上から発見できませんでした。
-
-### Status
-
-新規グループ作成時、グループidを知るために認証トークンのユーザをidからデータベース検索したが、発見できなかったことを示す。想定していない。
-
 ## errorCode: 1306
 
 ### HTTP status code
@@ -404,87 +422,15 @@ invitee user is not found on database
 
 ### Error Message
 
-inviter is not found on database
+unknown error database?
 
 ### Error Message Jp
 
-リクエストしたユーザをデータベース上で発見できません。
+想定されていないエラーが発生しました。データベースエラーの可能性があります。
 
 ### Status
 
-新規招待作成時、リクエストしたユーザ(招待者)がデータベース上で発見できないときに発生。想定されていない。
-
-## errorCode: 1405
-
-### HTTP status code
-
-409
-
-### Error Message
-
-inviter is not join any groups
-
-### Error Message Jp
-
-招待者はいずれかのグループに所属している必要があります。現在所属していません。
-
-### Status
-
-新規招待作成時、リクエストしたユーザ(招待者)がグループに所属していないときに発生
-
-## errorCode: 1406
-
-### HTTP status code
-
-500
-
-### Error Message
-
-Database Error
-
-### Error Message Jp
-
-データベースエラーにより新規招待作成に失敗しました。
-
-### Status
-
-新規招待作成時のデータベースエラー
-
-## errorCode: 1407
-
-### HTTP status code
-
-500
-
-### Error Message
-
-Database Error to search inviter
-
-### Error Message Jp
-
-リクエストしたユーザの検索時にデータベースエラーが発生しました。
-
-### Status
-
-新規招待作成時、リクエストしたユーザ(招待者)のデータベース検索時にデータベースエラーが発生。想定されていない。
-
-## errorCode: 1408
-
-### HTTP status code
-
-500
-
-### Error Message
-
-Database Error to search invitee
-
-### Error Message Jp
-
-被招待者を検索する際にデータベースエラーが発生しました。
-
-### Status
-
-新規招待作成時、リクエストに含まれる被招待者をデータベース上で検索する際にデータベースエラーが発生。想定されていない。
+新規招待作成時、例外が発生。データベースエラーの可能性あり。想定されていない。
 
 ## errorCode: 1409
 
@@ -756,24 +702,6 @@ database error
 
 所属グループのタスク一覧取得時、データベースエラーが発生。想定していない。
 
-## errorCode: 1604
-
-### HTTP status code
-
-500
-
-### Error Message
-
-Database error to access users
-
-### Error Message Jp
-
-リクエストしたユーザの検索時にデータベースエラーが発生しました。
-
-### Status
-
-所属グループのタスク一覧取得前、リクエストしたユーザの検索時にデータベースエラーが発生。想定していない
-
 ## errorCode: 1605
 
 ### HTTP status code
@@ -791,24 +719,6 @@ Invalid params of request
 ### Status
 
 新規タスク作成時、リクエストボディの形式が無効であることで発生
-
-## errorCode: 1606
-
-### HTTP status code
-
-500
-
-### Error Message
-
-user is not found in database
-
-### Error Message Jp
-
-リクエストしたユーザがデータベースで発見できません。
-
-### Status
-
-新規タスク作成時、リクエストしたユーザをデータベースで検索したが発見できないときに発生。想定していない。
 
 ## errorCode: 1607
 
@@ -845,24 +755,6 @@ task id is invalid
 ### Status
 
 特定のタスクの情報取得時、URIで指定されたtaskidが数字として認識できないときに発生
-
-## errorCode: 1609
-
-### HTTP status code
-
-500
-
-### Error Message
-
-accessed user is not found on database
-
-### Error Message Jp
-
-リクエストしたユーザがデータベースで発見できません。
-
-### Status
-
-特定のタスク情報取得時、リクエストしたユーザをデータベースで検索したが発見できないときに発生。想定していない。
 
 ## errorCode: 1610
 
@@ -918,24 +810,6 @@ Database error
 
 特定のタスク情報取得時、タスク検索中にデータベースエラーが発生。想定していない。
 
-## errorCode: 1613
-
-### HTTP status code
-
-500
-
-### Error Message
-
-Database error. users
-
-### Error Message Jp
-
-リクエストユーザ検索時にデータベースエラーが発生しました。
-
-### Status
-
-特定のタスク情報取得時、リクエストしたユーザを検索中にデータベースエラーが発生。想定していない。
-
 ## errorCode: 1614
 
 ### HTTP status code
@@ -971,24 +845,6 @@ isfinished is need true/false
 ### Status
 
 タスク編集時、リクエストボディのisfinishedが真偽値でない値を与えられたときに発生
-
-## errorCode: 1616
-
-### HTTP status code
-
-500
-
-### Error Message
-
-accessed user is not found on database
-
-### Error Message Jp
-
-リクエストしたユーザがデータベース上から発見できません。
-
-### Status
-
-タスク編集時、リクエストしたユーザがデータベース上に存在しないときに発生。想定していない。
 
 ## errorCode: 1617
 
@@ -1061,22 +917,4 @@ Database error. tasks update
 ### Status
 
 タスク編集時、データベースエラーが発生。想定していない。
-
-## errorCode: 1621
-
-### HTTP status code
-
-500
-
-### Error Message
-
-Database error. users
-
-### Error Message Jp
-
-リクエストしたユーザの取得時にデータベースエラーが発生しました。
-
-### Status
-
-タスク編集前、リクエストユーザを検索時にデータベースエラーが発生。想定していない。
 

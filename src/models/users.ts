@@ -27,7 +27,7 @@ class Users extends Model {
         email: {
           type: DataTypes.STRING,
           allowNull: false,
-          defaultValue: ""
+          unique: true
         },
         passwordhash: {
           type: DataTypes.STRING,
