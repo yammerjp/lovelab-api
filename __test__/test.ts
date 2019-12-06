@@ -707,4 +707,27 @@ describe("/tasks", () => {
       createdAt: expect.anything()
     });
   });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is null", async () => {
+    const reqBody = {
+      whoisdoinguserid: null
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: null,
+      isfinished: true,
+      deadlinedate: null,
+      finisheddate: null,
+      id: 1,
+      name: "newTaskName",
+      comment: "newTaskComment",
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
 });
