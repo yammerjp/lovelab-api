@@ -1,4 +1,5 @@
 import * as express from "express";
+import { Users } from "../../../models/users";
 import { Tasks } from "../../../models/tasks";
 import errorHandle from "../../../others/error";
 
@@ -10,13 +11,6 @@ interface TaskRequest {
   whoisdoinguserid?: number;
 }
 const router = express.Router();
-
-const validate = (str: string): boolean => {
-  if (str === undefined || str === null || str === "") {
-    return false;
-  }
-  return true;
-};
 
 // GET https://lovelab.2n2n.ninja/api/v1/tasks
 //  自分の所属するグループのタスク一覧を取得
@@ -38,21 +32,46 @@ router.get("/", (req, res) => {
 // POST https://lovelab.2n2n.ninja/api/v1/tasks
 //  タスクを追加 自分の所属するグループのみ追加可能
 router.post("/", (req, res) => {
-  const { groupidAuth, name, comment } = req.body;
-
-  // TODO: whoisdoinguseridを受け取る
+  const { groupidAuth, name, comment, whoisdoinguserid } = req.body;
   // TODO: deadlinedate, finisheddateを受け取って型変換する。(あとでデータベースに詰め込めるようにする)
-  if (!validate(name) || !validate(comment)) {
+  const taskRequest: TaskRequest = {
+    name,
+    comment,
+    groupid: groupidAuth,
+    whoisdoinguserid
+  };
+
+  if (name === null || name === undefined) {
     errorHandle(res, 1605);
     return;
   }
-  const taskRequest: TaskRequest = { name, comment, groupid: groupidAuth };
-  Tasks.create(taskRequest)
+
+  new Promise((resolve, reject) => { // eslint-disable-line
+    if (
+      taskRequest.whoisdoinguserid === undefined ||
+      taskRequest.whoisdoinguserid === null
+    ) {
+      return resolve();
+    }
+    Users.findByPk(whoisdoinguserid)
+      .then(user => {
+        if (user === null || user.groupid !== groupidAuth) {
+          return reject(1621);
+        }
+        return resolve();
+      })
+      .catch(() => {
+        return reject();
+      });
+  })
+    .then(() => {
+      return Tasks.create(taskRequest);
+    })
     .then(task => {
       res.json(task);
     })
-    .catch(() => {
-      errorHandle(res, 1607);
+    .catch(e => {
+      errorHandle(res, e === 1621 ? e : 1607);
     });
 });
 
@@ -93,8 +112,9 @@ router.put("/:taskid", (req, res) => {
     return;
   }
 
-  const { groupidAuth, name, isfinished, comment } = req.body;
+  const { groupidAuth, name, isfinished, comment, whoisdoinguserid } = req.body;
   // TODO: Deadline, finishedlineを扱えるようにする
+  // TODO: name, commentのSQLインジェクション可能性排除
 
   const taskRequest: TaskRequest = {};
   if (name !== undefined) {
@@ -109,28 +129,46 @@ router.put("/:taskid", (req, res) => {
     errorHandle(res, 1615);
     return;
   }
-  // TODO: name, commentのSQLインジェクション可能性排除
-  // TODO: 自分の所属するグループのタスクであることを確認
-  Tasks.update(taskRequest, { where: { id: taskid } })
+  if (whoisdoinguserid !== undefined) {
+    taskRequest.whoisdoinguserid = whoisdoinguserid;
+  }
+
+  new Promise((resolve, reject) => { // eslint-disable-line
+    if (
+      taskRequest.whoisdoinguserid === undefined ||
+      taskRequest.whoisdoinguserid === null
+    ) {
+      return resolve();
+    }
+    Users.findByPk(whoisdoinguserid)
+      .then(user => {
+        if (user === null || user.groupid !== groupidAuth) {
+          return reject(1621);
+        }
+        return resolve();
+      })
+      .catch(() => {
+        return reject();
+      });
+  })
     .then(() => {
-      Tasks.findByPk(taskid)
-        .then(task => {
-          if (task === null) {
-            errorHandle(res, 1617);
-            return;
-          }
-          if (task.groupid !== groupidAuth) {
-            errorHandle(res, 1618);
-            return;
-          }
-          res.json(task);
-        })
-        .catch(() => {
-          errorHandle(res, 1619);
-        });
+      return Tasks.update(taskRequest, { where: { id: taskid } });
     })
-    .catch(() => {
-      errorHandle(res, 1620);
+    .then(() => {
+      return Tasks.findByPk(taskid);
+    })
+    .then(task => {
+      if (task === null) {
+        return Promise.reject(1617);
+      }
+      if (task.groupid !== groupidAuth) {
+        return Promise.reject(1618);
+      }
+      res.json(task);
+      return Promise.resolve(0);
+    })
+    .catch(e => {
+      errorHandle(res, e === 1617 || e === 1618 || e === 1621 ? e : 1619);
     });
 });
 

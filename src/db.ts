@@ -11,6 +11,7 @@ const connectDataBase = (
   forceReset = false,
   isTest = false
 ): Promise<boolean> => {
+  // eslint-disable-next-line no-console
   console.log(`isConnected: ${isConnected}`);
   if (isConnected === true) {
     return Promise.resolve(true);

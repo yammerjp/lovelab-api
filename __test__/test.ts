@@ -7,6 +7,7 @@ const req = supertest(app);
 let bearerUser1 = "";
 let bearerUser2 = "";
 let bearerUser3 = "";
+let bearerUser4 = "";
 
 beforeAll(() => {
   return connectDatabase(true, true);
@@ -49,6 +50,24 @@ describe("/signup", () => {
   it("user3 with name", async () => {
     const reqBody = {
       email: "user3",
+      password: "hogehoge"
+    };
+    const res = await req.post("/api/v1/signup").send(reqBody);
+    expect(res.status).toBe(200);
+  });
+
+  it("a user only email (will fail)", async () => {
+    const reqBody = {
+      email: "user3"
+    };
+    const res = await req.post("/api/v1/signup").send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1201);
+  });
+
+  it("user4 with name", async () => {
+    const reqBody = {
+      email: "user4",
       password: "hogehoge"
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
@@ -134,6 +153,17 @@ describe("/login", () => {
     console.log(`bearer token user3 : ${bearerUser3}`);
   });
 
+  it("user4", async () => {
+    const reqBody = {
+      email: "user4",
+      password: "hogehoge"
+    };
+    const res = await req.post("/api/v1/login").send(reqBody);
+    expect(res.status).toBe(200);
+    bearerUser4 = res.body.token;
+    console.log(`bearer token user4 : ${bearerUser4}`);
+  });
+
   it("user1 wrong password (will fail)", async () => {
     const reqBody = {
       email: "user1",
@@ -183,6 +213,19 @@ describe("/groups", () => {
       .send(reqBody);
     expect(res.status).toBe(200);
     expect(res.body.id).toBe(1);
+    expect(res.body.name).toBe("groupname");
+  });
+
+  it("POST /groups , create group ( groupid=2 user3 is joined )", async () => {
+    const reqBody = {
+      name: "groupname"
+    };
+    const res = await req
+      .post("/api/v1/authed/groups")
+      .set("Authorization", `Bearer ${bearerUser3}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body.id).toBe(2);
     expect(res.body.name).toBe("groupname");
   });
 
@@ -396,9 +439,9 @@ describe("/users", () => {
     ]);
   });
 
-  it("GET /authed/users?groupid=2", async () => {
+  it("GET /authed/users?groupid=3", async () => {
     const res = await req
-      .get("/api/v1/authed/users?groupid=2")
+      .get("/api/v1/authed/users?groupid=3")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(200);
@@ -426,9 +469,9 @@ describe("/users", () => {
       name: null
     });
   });
-  it("GET /authed/users/4", async () => {
+  it("GET /authed/users/5", async () => {
     const res = await req
-      .get("/api/v1/authed/users/4")
+      .get("/api/v1/authed/users/5")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(404);
@@ -463,11 +506,22 @@ describe("/tasks", () => {
       .post("/api/v1/authed/tasks")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(1605);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: null,
+      isfinished: false,
+      deadlinedate: null,
+      finisheddate: null,
+      id: 1,
+      name: "taskName",
+      comment: null,
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
   });
 
-  it("POST /authed/tasks", async () => {
+  it("POST /authed/tasks only comment (wrong)", async () => {
     const reqBody = {
       comment: "taskComment"
     };
@@ -479,7 +533,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1605);
   });
 
-  it("POST /authed/tasks", async () => {
+  it("POST /authed/tasks name and commemt", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment"
@@ -494,7 +548,7 @@ describe("/tasks", () => {
       isfinished: false,
       deadlinedate: null,
       finisheddate: null,
-      id: 1,
+      id: 2,
       name: "taskName",
       comment: "taskComment",
       groupid: 1,
@@ -503,14 +557,39 @@ describe("/tasks", () => {
     });
   });
 
-  it("POST /authed/tasks (wrong, user3, not belonged to any group)", async () => {
+  it("POST /authed/tasks name, comment and whoisdoinguserid", async () => {
+    const reqBody = {
+      name: "taskName",
+      comment: "taskComment",
+      whoisdoinguserid: 2
+    };
+    const res = await req
+      .post("/api/v1/authed/tasks")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: 2,
+      isfinished: false,
+      deadlinedate: null,
+      finisheddate: null,
+      id: 3,
+      name: "taskName",
+      comment: "taskComment",
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("POST /authed/tasks (wrong, user4, not belonged to any group)", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment"
     };
     const res = await req
       .post("/api/v1/authed/tasks")
-      .set("Authorization", `Bearer ${bearerUser3}`)
+      .set("Authorization", `Bearer ${bearerUser4}`)
       .send(reqBody);
     expect(res.status).toBe(500);
     expect(res.body.errorCode).toEqual(1607);
@@ -529,6 +608,30 @@ describe("/tasks", () => {
         deadlinedate: null,
         finisheddate: null,
         id: 1,
+        name: "taskName",
+        comment: null,
+        groupid: 1,
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        whoisdoinguserid: null,
+        isfinished: false,
+        deadlinedate: null,
+        finisheddate: null,
+        id: 2,
+        name: "taskName",
+        comment: "taskComment",
+        groupid: 1,
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        whoisdoinguserid: 2,
+        isfinished: false,
+        deadlinedate: null,
+        finisheddate: null,
+        id: 3,
         name: "taskName",
         comment: "taskComment",
         groupid: 1,
@@ -551,7 +654,7 @@ describe("/tasks", () => {
       finisheddate: null,
       id: 1,
       name: "taskName",
-      comment: "taskComment",
+      comment: null,
       groupid: 1,
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -574,30 +677,124 @@ describe("/tasks", () => {
       finisheddate: null,
       id: 1,
       name: "newTaskName",
-      comment: "taskComment",
+      comment: null,
       groupid: 1,
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
   });
 
-  it("PUT /authed/tasks/2 (wrong, not found)", async () => {
+  it("PUT /authed/tasks/100 (wrong, not found)", async () => {
     const reqBody = {
       name: "newTaskName",
       comment: "taskComment"
     };
     const res = await req
-      .put("/api/v1/authed/tasks/2")
+      .put("/api/v1/authed/tasks/100")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(404);
     expect(res.body.errorCode).toEqual(1617);
   });
 
-  it("PUT /authed/tasks/1", async () => {
+  it("PUT /authed/tasks/1 comment, isfinished", async () => {
     const reqBody = {
       comment: "newTaskComment",
       isfinished: true
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: null,
+      isfinished: true,
+      deadlinedate: null,
+      finisheddate: null,
+      id: 1,
+      name: "newTaskName",
+      comment: "newTaskComment",
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
+    const reqBody = {
+      whoisdoinguserid: "isNotNumber"
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1707);
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
+    const reqBody = {
+      whoisdoinguserid: 5
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1621);
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
+    const reqBody = {
+      whoisdoinguserid: 4
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1621);
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
+    const reqBody = {
+      whoisdoinguserid: 3
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1621);
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid", async () => {
+    const reqBody = {
+      whoisdoinguserid: 1
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: 1,
+      isfinished: true,
+      deadlinedate: null,
+      finisheddate: null,
+      id: 1,
+      name: "newTaskName",
+      comment: "newTaskComment",
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("PUT /authed/tasks/1 whoisdoinguserid is null", async () => {
+    const reqBody = {
+      whoisdoinguserid: null
     };
     const res = await req
       .put("/api/v1/authed/tasks/1")
