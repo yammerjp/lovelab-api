@@ -527,10 +527,10 @@ GET /authed/tasks
 ----|----|----
 | id | 数字 | タスクid |
 | name | 文字列 | タスクの表示名 |
-| comment | 文字列 | タスクの詳細文字列 |
+| comment | 文字列またはnull | タスクの詳細文字列 |
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
-| whoisdoinguserid | 整数またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
+| whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
@@ -555,8 +555,8 @@ GET /authed/tasks
 | キー | データ型 | 必須/任意 | 説明 |
 ----|----|----|----
 | name | 文字列 | 必須 | タスクの表示名 |
-| comment | 文字列 | 任意 | タスクの詳細文字列 |
-| whoisdoinguserid | 整数またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
+| comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
+| whoisdoinguserid | 数字またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
 
 #### レスポンスbody
 
@@ -564,10 +564,10 @@ GET /authed/tasks
 ----|----|----
 | id | 数字 | タスクid |
 | name | 文字列 | タスクの表示名 |
-| comment | 文字列 | タスクの詳細文字列 |
+| comment | 文字列またはnull | タスクの詳細文字列 |
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か(タスク作成時はデフォルトでfalseが設定される) |
-| whoisdoinguserid | 整数またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
+| whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
@@ -600,10 +600,10 @@ GET /authed/tasks
 ----|----|----
 | id | 数字 | タスクid |
 | name | 文字列 | タスクの表示名 |
-| comment | 文字列 | タスクの詳細文字列 |
+| comment | 文字列またはnull | タスクの詳細文字列 |
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
-| whoisdoinguserid | 整数またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
+| whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
@@ -628,9 +628,9 @@ GET /authed/tasks
 | キー | データ型 | 必須/任意 | 説明 |
 ----|----|----|----
 | name | 文字列 | 任意 | タスクの表示名 |
-| comment | 文字列 | 任意 | タスクの詳細文字列 |
+| comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
 | isfinished | 真偽値 | 任意 | タスクが完了したか否か |
-| whoisdoinguserid | 整数またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
+| whoisdoinguserid | 数字またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
 
 #### レスポンスbody
 
@@ -638,10 +638,10 @@ GET /authed/tasks
 ----|----|----
 | id | 数字 | タスクid |
 | name | 文字列 | タスクの表示名 |
-| comment | 文字列 | タスクの詳細文字列 |
+| comment | 文字列またはnull | タスクの詳細文字列 |
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
-| whoisdoinguserid | 整数またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
+| whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
