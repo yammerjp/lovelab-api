@@ -388,6 +388,7 @@ inviteeは必ずグループに所属していない(groupid=null)である必�
 | message | 文字列またはnull | 招待相手に見せるメッセージ |
 | id | 数字 | 招待id |
 | groupid | 数字 | 招待先のグループ |
+| groupname | 数字 | 招待先のグループの名前 |
 | inviteruserid | 数字 | 招待者(既にグループに加入している人)のユーザid |
 | inviteeuserid | 数字 | 被招待者(まだグループに加入していない人)のユーザid |
 | updateAt | 文字列 | この招待レコードが更新された日時を表す タイムゾーンなし |
