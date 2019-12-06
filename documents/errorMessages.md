@@ -918,3 +918,21 @@ Database error. tasks update
 
 タスク編集時、データベースエラーが発生。想定していない。
 
+## errorCode: 1621
+
+### HTTP status code
+
+409
+
+### Error Message
+
+whoisdoinguserid is invalid
+
+### Error Message Jp
+
+リクエストボディのwhoisdoinguseridが無効な値です。
+
+### Status
+
+タスク編集時、リクエストボディに無効な値が与えられた時発生。
+
