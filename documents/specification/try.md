@@ -4,9 +4,9 @@
 
 以下では、terminalのcrulコマンドと[Postman](https://www.getpostman.com/)で実際にAPIと通信する手順を解説する。
 
-### 3.1. 認証無しのリクエストを試してみる
+## 3.1. 認証無しのリクエストを試してみる
 
-#### 3.1.1. curlで通信
+### 3.1.1. curlで通信
 
 ```sh
 # ユーザ登録
@@ -21,7 +21,7 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/login" \
        -d '{"email":"charlie@example.com","password":"charlie-password"}' 
 ```
 
-#### 3.1.2. Postmanで通信
+### 3.1.2. Postmanで通信
 
 1. HTTPリクエストメソッドを`POST`に設定 (画像1枚目)
 1. URIを(`https://lovelab.2n2n/ninja/api/v1/ ... `に適宜設定 (画像1枚目)
@@ -35,9 +35,9 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/login" \
 
 ![Postmanのスクリーンショット2](postman_noauth_2.png)
 
-### 3.2. 認証付きのリクエストを試してみる
+## 3.2. 認証付きのリクエストを試してみる
 
-#### 3.2.1. curlで通信
+### 3.2.1. curlで通信
 
 terminalで次のコマンドを実行
 
@@ -50,7 +50,7 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/authed/users/1" \
 # xxxx は取得したAPIキーに置き換えること
 ```
 
-#### 3.2.2. Postmanで通信
+### 3.2.2. Postmanで通信
 
 1. リクエストのAuthorizationタブを開き、TYPEを`Bearer Token`に設定
 1. Tokenにトークンを入力
@@ -62,7 +62,7 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/authed/users/1" \
 
 ![Postmanのスクリーンショット3](postman_auth.png)
 
-#### 3.2.3. Swiftで送信する
+### 3.2.3. Swiftで送信する
 
 未調査... 頑張ってください....
 
