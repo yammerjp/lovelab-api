@@ -11,6 +11,7 @@ interface TaskRequest {
   whoisdoinguserid?: number;
   finisheddate?: Date;
   doneuserid?: number;
+  deadlinedate?: Date | null;
 }
 const router = express.Router();
 
@@ -34,13 +35,20 @@ router.get("/", (req, res) => {
 // POST https://lovelab.2n2n.ninja/api/v1/tasks
 //  タスクを追加 自分の所属するグループのみ追加可能
 router.post("/", (req, res) => {
-  const { groupidAuth, name, comment, whoisdoinguserid } = req.body;
+  const {
+    groupidAuth,
+    name,
+    comment,
+    whoisdoinguserid,
+    deadlinedate
+  } = req.body;
   // TODO: deadlinedate, finisheddateを受け取って型変換する。(あとでデータベースに詰め込めるようにする)
   const taskRequest: TaskRequest = {
     name,
     comment,
     groupid: groupidAuth,
-    whoisdoinguserid
+    whoisdoinguserid,
+    deadlinedate
   };
 
   if (name === null || name === undefined) {
@@ -120,27 +128,19 @@ router.put("/:taskid", (req, res) => {
     name,
     isfinished,
     comment,
-    whoisdoinguserid
+    whoisdoinguserid,
+    deadlinedate
   } = req.body;
   // TODO: Deadline, finishedlineを扱えるようにする
   // TODO: name, commentのSQLインジェクション可能性排除
 
-  const taskRequest: TaskRequest = {};
-  if (name !== undefined) {
-    taskRequest.name = name;
-  }
-  if (comment !== undefined) {
-    taskRequest.comment = comment;
-  }
-  if (isfinished === true || isfinished === false) {
-    taskRequest.isfinished = isfinished;
-  } else if (isfinished !== undefined) {
-    errorHandle(res, 1615);
-    return;
-  }
-  if (whoisdoinguserid !== undefined) {
-    taskRequest.whoisdoinguserid = whoisdoinguserid;
-  }
+  const taskRequest: TaskRequest = {
+    name,
+    comment,
+    isfinished,
+    whoisdoinguserid,
+    deadlinedate
+  };
 
   new Promise((resolve, reject) => { // eslint-disable-line
     if (

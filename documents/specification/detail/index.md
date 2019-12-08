@@ -42,6 +42,7 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | ユーザ | [特定のグループに所属するユーザ達の情報を取得](user.md#特定のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?groupid=:id` |
 | ユーザ | [自分のグループに所属するユーザ達の情報を取得](user.md#自分のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?mygroup=true` |
 | ユーザ | [特定のユーザの情報を取得](user.md#特定のユーザの情報を取得) | 有り | GET | `/authed/users/:id` |
+| 招待 | [自分への招待をすべて取得](invitation.md#自分への招待をすべて取得) | 有り | GET | `/authed/invitations` |
 | 招待 | [新しい招待を作成](invitation.md#新しい招待を作成) | 有り | POST | `/authed/invitations` |
 | 招待 | [特定の招待を拒否](invitation.md#特定の招待を拒否)| 有り | DELETE | `/authed/invitations/:id` |
 | 招待 | [特定の招待を承諾](invitation.md#特定の招待を承諾) | 有り | DELETE | `/authed/invitations/:id?agreement=true` |

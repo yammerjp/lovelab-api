@@ -10,12 +10,14 @@ interface GroupResponceObject {
   name: string;
   picturepath: string;
 }
+
 const groupResponceObjectFilter = (
   group: GroupResponceObject
 ): GroupResponceObject => {
   const { id, name, picturepath } = group;
   return { id, name, picturepath };
 };
+
 const validate = (str: string): boolean => {
   if (str === undefined || str === null || str === "") {
     return false;
@@ -23,7 +25,6 @@ const validate = (str: string): boolean => {
   return true;
 };
 
-// GET https://lovelab.2n2n.ninja/api/v1/groups/:groupid
 //  グループの情報を取得
 router.get("/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
@@ -44,7 +45,6 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// POST https://lovelab.2n2n.ninja/api/v1/groups
 //  グループを追加 自分が強制的にそのグループに所属することになる
 router.post("/", (req, res) => {
   const { useridAuth, groupidAuth, name, picturepath } = req.body;
@@ -52,11 +52,11 @@ router.post("/", (req, res) => {
     errorHandle(res, 1304);
     return;
   }
-  // 自分がグループに所属していないことを確認
   if (groupidAuth !== null) {
     errorHandle(res, 1306);
     return;
   }
+
   Groups.create({ name, picturepath })
     .then(group => {
       // アクセスしたユーザーを新しく作ったグループに加盟させる。
@@ -81,5 +81,4 @@ router.post("/", (req, res) => {
     });
 });
 
-// routerをモジュールとして扱う準備
 export default router;

@@ -522,24 +522,6 @@ Failed to delete
 
 特定の招待を承諾/拒否時、招待レコードの削除時にデータベースエラーが発生
 
-## errorCode: 1501
-
-### HTTP status code
-
-400
-
-### Error Message
-
-Need to specify groupid
-
-### Error Message Jp
-
-グループidによる絞り込みが必須です。
-
-### Status
-
-グループ所属ユーザ取得時、グループidによる絞り込みのクエリがURI末尾にふかされていないときに発生
-
 ## errorCode: 1502
 
 ### HTTP status code

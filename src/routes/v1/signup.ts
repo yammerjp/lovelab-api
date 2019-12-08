@@ -7,7 +7,6 @@ import errorHandle from "../../others/error";
 
 const router = express.Router();
 
-// POST https://lovelab.2n2n.ninja/api/v1/signup
 //  ユーザーを追加 (認証に絡む。新しいアカウントの作成)
 router.post("/", (req, res) => {
   const { email, password, name } = req.body;
@@ -40,7 +39,6 @@ router.post("/", (req, res) => {
     })
     .catch(e => {
       errorHandle(res, e === 1202 ? e : 1205);
-      // errorHandle(res, 1204);
     });
 });
 
