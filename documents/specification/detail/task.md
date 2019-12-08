@@ -28,7 +28,7 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時 |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
@@ -54,6 +54,7 @@ GET /authed/tasks
 | name | 文字列 | 必須 | タスクの表示名 |
 | comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
 | whoisdoinguserid | 数字またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
+| deadlinedate | 文字列またはnull | 任意 | タスクの締め切り日時(ISO8601) |
 
 ### レスポンスbody
 
@@ -65,7 +66,7 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か(タスク作成時はデフォルトでfalseが設定される) |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
@@ -101,7 +102,7 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
@@ -128,6 +129,7 @@ GET /authed/tasks
 | comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
 | isfinished | 真偽値 | 任意 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
+| deadlinedate | 文字列またはnull | 任意 | タスクの締め切り日時(ISO8601) |
 
 ### レスポンスbody
 
@@ -139,7 +141,7 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
 | finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
