@@ -173,12 +173,6 @@
     "messageJp":"データベースエラーにより、招待の削除に失敗しました。",
     "status":"特定の招待を承諾/拒否時、招待レコードの削除時にデータベースエラーが発生"
   },
-  "1501":{
-    "httpStatus":400,
-    "message":"Need to specify groupid",
-    "messageJp":"グループidによる絞り込みが必須です。",
-    "status":"グループ所属ユーザ取得時、グループidによる絞り込みのクエリがURI末尾にふかされていないときに発生"
-  },
   "1502":{
     "httpStatus":400,
     "message":"groupid is invalid",
