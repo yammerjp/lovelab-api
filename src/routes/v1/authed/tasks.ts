@@ -10,6 +10,7 @@ interface TaskRequest {
   isfinished?: boolean;
   whoisdoinguserid?: number;
   finisheddate?: Date;
+  doneuserid?: number;
 }
 const router = express.Router();
 
@@ -113,7 +114,14 @@ router.put("/:taskid", (req, res) => {
     return;
   }
 
-  const { groupidAuth, name, isfinished, comment, whoisdoinguserid } = req.body;
+  const {
+    useridAuth,
+    groupidAuth,
+    name,
+    isfinished,
+    comment,
+    whoisdoinguserid
+  } = req.body;
   // TODO: Deadline, finishedlineを扱えるようにする
   // TODO: name, commentのSQLインジェクション可能性排除
 
@@ -161,6 +169,7 @@ router.put("/:taskid", (req, res) => {
       }
       if (task.isfinished === false && isfinished === true) {
         taskRequest.finisheddate = new Date();
+        taskRequest.doneuserid = useridAuth;
       }
       return Tasks.update(taskRequest, { where: { id: taskid } });
     })

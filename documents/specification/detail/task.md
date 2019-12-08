@@ -30,6 +30,7 @@ GET /authed/tasks
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -67,6 +68,7 @@ GET /authed/tasks
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -103,6 +105,7 @@ GET /authed/tasks
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -141,6 +144,7 @@ GET /authed/tasks
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
 | deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 

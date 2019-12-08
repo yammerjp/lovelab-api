@@ -15,6 +15,8 @@ class Tasks extends Model {
 
   public finisheddate: Date;
 
+  public doneuserid: number;
+
   public whoisdoinguserid: number;
 
   public static attach(sequelize: Sequelize): void {
@@ -67,6 +69,15 @@ class Tasks extends Model {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: null
+        },
+        doneuserid: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          defaultValue: null,
+          references: {
+            model: "users",
+            key: "id"
+          }
         }
       },
       {
