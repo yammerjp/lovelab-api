@@ -120,7 +120,7 @@ describe("/login", () => {
     });
     expect(res.body.token.length).toBe(66);
     bearerUser1 = res.body.token;
-    console.log(`bearer token user1 : ${bearerUser1}`);
+    // console.log(`bearer token user1 : ${bearerUser1}`);
   });
 
   it("user2", async () => {
@@ -139,7 +139,7 @@ describe("/login", () => {
     });
     expect(res.body.token.length).toBe(66);
     bearerUser2 = res.body.token;
-    console.log(`bearer token user2 : ${bearerUser2}`);
+    // console.log(`bearer token user2 : ${bearerUser2}`);
   });
 
   it("user3", async () => {
@@ -150,7 +150,7 @@ describe("/login", () => {
     const res = await req.post("/api/v1/login").send(reqBody);
     expect(res.status).toBe(200);
     bearerUser3 = res.body.token;
-    console.log(`bearer token user3 : ${bearerUser3}`);
+    // console.log(`bearer token user3 : ${bearerUser3}`);
   });
 
   it("user4", async () => {
@@ -161,7 +161,7 @@ describe("/login", () => {
     const res = await req.post("/api/v1/login").send(reqBody);
     expect(res.status).toBe(200);
     bearerUser4 = res.body.token;
-    console.log(`bearer token user4 : ${bearerUser4}`);
+    // console.log(`bearer token user4 : ${bearerUser4}`);
   });
 
   it("user1 wrong password (will fail)", async () => {
@@ -730,7 +730,7 @@ describe("/tasks", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(1707);
+    expect(res.body.errorCode).toBe(1703);
   });
 
   it("PUT /authed/tasks/1 whoisdoinguserid is invalid", async () => {
