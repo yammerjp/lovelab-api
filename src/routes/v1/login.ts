@@ -6,8 +6,7 @@ import errorHandle from "../../others/error";
 
 const router = express.Router();
 
-// POST https://lovelab.2n2n.ninja/api/v1/login
-// APIのアクセスキーを発行。
+// APIのアクセスキーを発行
 router.post("/", (req, res) => {
   const { email, password } = req.body;
   Users.findAll({ where: { email } })
@@ -25,7 +24,6 @@ router.post("/", (req, res) => {
       deadline.setDate(deadline.getDate() + 30);
       const token = `${user.id}-${sha256(email + password + deadline)}`;
 
-      // セッションキーを発行して登録
       const tokenObj = { userid: user.id, token, deadline };
       return Tokens.create(tokenObj);
     })
@@ -33,11 +31,7 @@ router.post("/", (req, res) => {
       res.json(tokenObj);
     })
     .catch(e => {
-      if (e === 1101 || e === 1102) {
-        errorHandle(res, e);
-      } else {
-        errorHandle(res, 1103);
-      }
+      errorHandle(res, e === 1101 || e === 1102 ? e : 1103);
     });
 });
 

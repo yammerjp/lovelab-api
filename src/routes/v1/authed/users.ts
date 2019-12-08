@@ -5,8 +5,25 @@ import errorHandle from "../../../others/error";
 
 const router = express.Router();
 
-const getUsersByGroupid = (groupid: number, res: express.Response): void => {
-  Users.findAll({ where: { groupid } })
+//  グループに所属するユーザーを取得
+router.get("/", (req, res) => {
+  const promise: Promise<number> = new Promise((resolve, reject) => {
+    if (req.query.groupid === undefined && req.query.mygroup === "true") {
+      resolve(req.body.groupidAuth);
+      return;
+    }
+    const groupid = parseInt(req.query.groupid, 10);
+    if (Number.isNaN(groupid) || groupid < 0) {
+      reject(1502);
+      return;
+    }
+    resolve(groupid);
+  });
+
+  promise
+    .then((groupid: number) => {
+      return Users.findAll({ where: { groupid } });
+    })
     .then(users => {
       res.json(
         users.map(user => {
@@ -14,31 +31,11 @@ const getUsersByGroupid = (groupid: number, res: express.Response): void => {
         })
       );
     })
-    .catch(() => {
-      errorHandle(res, 1503);
+    .catch(e => {
+      errorHandle(res, e === 1502 ? e : 1503);
     });
-};
-// GET https://lovelab.2n2n.ninja/api/v1/users?groups=:groupid
-//  グループに所属するユーザーを取得
-router.get("/", (req, res) => {
-  if (req.query.groupid === undefined) {
-    if (req.query.mygroup === "true") {
-      getUsersByGroupid(req.body.groupidAuth, res);
-      return;
-    }
-    errorHandle(res, 1501);
-
-    return;
-  }
-  const groupid = parseInt(req.query.groupid, 10);
-  if (Number.isNaN(groupid) || groupid < 0) {
-    errorHandle(res, 1502);
-    return;
-  }
-  getUsersByGroupid(groupid, res);
 });
 
-// GET https://lovelab.2n2n.ninja/api/v1/users/:id
 //  ユーザー情報を取得
 router.get("/:userid", (req, res) => {
   const userid = parseInt(req.params.userid, 10);
@@ -55,5 +52,4 @@ router.get("/:userid", (req, res) => {
   });
 });
 
-// routerをモジュールとして扱う準備
 export default router;

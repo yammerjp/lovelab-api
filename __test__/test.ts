@@ -453,7 +453,7 @@ describe("/users", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(1501);
+    expect(res.body.errorCode).toBe(1502);
   });
   it("GET /authed/users/1", async () => {
     const res = await req

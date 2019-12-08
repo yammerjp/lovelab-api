@@ -5,8 +5,6 @@ import typeCheck from "./middleware/typeCheck";
 import routerV1 from "./routes/v1/index";
 import routerV1authed from "./routes/v1/authed/index";
 
-// sha256 テスト
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
