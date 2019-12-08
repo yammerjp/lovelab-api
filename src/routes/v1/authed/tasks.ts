@@ -9,6 +9,7 @@ interface TaskRequest {
   groupid?: number;
   isfinished?: boolean;
   whoisdoinguserid?: number;
+  finisheddate?: Date;
 }
 const router = express.Router();
 
@@ -152,6 +153,15 @@ router.put("/:taskid", (req, res) => {
       });
   })
     .then(() => {
+      return Tasks.findByPk(taskid);
+    })
+    .then(task => {
+      if (task === null) {
+        return Promise.reject(1617);
+      }
+      if (task.isfinished === false && isfinished === true) {
+        taskRequest.finisheddate = new Date();
+      }
       return Tasks.update(taskRequest, { where: { id: taskid } });
     })
     .then(() => {
