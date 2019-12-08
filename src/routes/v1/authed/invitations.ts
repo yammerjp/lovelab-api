@@ -1,9 +1,21 @@
 import * as express from "express";
 import { Invitations } from "../../../models/invitations";
 import { Users } from "../../../models/users";
+import { Groups } from "../../../models/groups";
 import errorHandle from "../../../others/error";
 
 const router = express.Router();
+
+interface ReturnInvitationObject {
+  message: string | null;
+  id: number;
+  groupid: number;
+  inviteruserid: number;
+  inviteeuserid: number;
+  updatedAt: Date;
+  createdAt: Date;
+  groupname: string;
+}
 
 //  グループへの招待を追加 自分の所属するグループへの招待のみ可能
 router.post("/", (req, res) => {
@@ -49,9 +61,27 @@ router.post("/", (req, res) => {
 // 自分への招待のみ取得可能
 router.get("/", (req, res) => {
   const inviteeuserid = req.body.useridAuth;
-  Invitations.findAll({ where: { inviteeuserid } })
+  Invitations.findAll({
+    where: { inviteeuserid },
+    raw: true,
+    include: [{ model: Groups, required: true }]
+  })
     .then(invitations => {
-      res.json(invitations);
+      res.json(
+        invitations.map(invitation => {
+          const returnInvitation: ReturnInvitationObject = {
+            message: invitation.message,
+            id: invitation.id,
+            groupid: invitation.GroupId,
+            inviteruserid: invitation.inviteruserid,
+            inviteeuserid: invitation.inviteeuserid,
+            updatedAt: invitation.updatedAt,
+            createdAt: invitation.createdAt,
+            groupname: invitation.GroupName
+          };
+          return returnInvitation;
+        })
+      );
     })
     .catch(() => {
       errorHandle(res, 1409);

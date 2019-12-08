@@ -1,4 +1,5 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
+import { Groups } from "./groups";
 
 class Invitations extends Model {
   public id!: number;
@@ -10,6 +11,14 @@ class Invitations extends Model {
   public inviteeuserid!: number;
 
   public message: string;
+
+  public createdAt!: Date;
+
+  public updatedAt!: Date;
+
+  public GroupId: number;
+
+  public GroupName: string;
 
   public static attach(sequelize: Sequelize): void {
     this.init(
@@ -62,6 +71,7 @@ class Invitations extends Model {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const invitationsFactory = (sequelize: Sequelize) => {
   Invitations.attach(sequelize);
+  Invitations.belongsTo(Groups);
   return Invitations;
 };
 
