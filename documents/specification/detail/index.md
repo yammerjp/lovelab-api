@@ -50,6 +50,7 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | グループ | [新規グループ作成](group.md#新規グループ作成)| 有り | POST | `/authed/groups` |
 | タスク | [グループのタスクをすべて取得](task.md#グループのタスクをすべて取得) | 有り | GET | `/authed/tasks` |
 | タスク | [新規タスクの作成](task.md#新規タスクの作成) | 有り | POST | `/authed/tasks` |
+| タスク | [新規タスクの作成-ランダム振り分け](task.md#新規タスクの作成-ランダム振り分け) | 有り | POST | `/authed/tasks?auto=true` |
 | タスク | [特定のタスクの情報を取得](task.md#特定のタスクの情報を取得)| 有り | GET | `/authed/tasks/:id` |
 | タスク | [特定のタスクの内容を変更](task.md#特定のタスクの内容を変更)| 有り | PUT | `/authed/tasks/:id` |
 
