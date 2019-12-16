@@ -57,6 +57,11 @@ router.post("/", (req, res) => {
   }
 
   new Promise((resolve, reject) => { // eslint-disable-line
+    if (req.query.auto === "true") {
+      // whoisdoinguseridをどの値にするか、マジックナンバーではなくデータベースを参照せねばならない
+      taskRequest.whoisdoinguserid = 2;
+      return resolve();
+    }
     if (
       taskRequest.whoisdoinguserid === undefined ||
       taskRequest.whoisdoinguserid === null
