@@ -1,0 +1,4 @@
+diff a/src/middleware/authorization.ts b/src/middleware/authorization.ts	(rejected hunks)
+@@ -26 +26 @@ const authorization = (
+-    .then((user:any) => {
++    .then((user: any) => {
