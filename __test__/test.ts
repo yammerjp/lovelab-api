@@ -925,4 +925,28 @@ describe("/tasks", () => {
       createdAt: expect.anything()
     });
   });
+
+  it("POST /authed/tasks?auto=true", async () => {
+    const reqBody = {
+      name: "taskNameAuto"
+    };
+    const res = await req
+      .post("/api/v1/authed/tasks?auto=true")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: 2,
+      isfinished: false,
+      deadlinedate: null,
+      finisheddate: null,
+      doneuserid: null,
+      id: 4,
+      name: "taskNameAuto",
+      comment: null,
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
 });
