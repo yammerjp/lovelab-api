@@ -2,6 +2,7 @@ import * as express from "express";
 import { Users } from "../../../models/users";
 import { Tasks } from "../../../models/tasks";
 import errorHandle from "../../../others/error";
+import suggestWhoisdoinguserid from "../../../others/suggestWhoisdoinguserid";
 
 interface TaskRequest {
   name?: string;
@@ -59,8 +60,10 @@ router.post("/", (req, res) => {
   new Promise((resolve, reject) => { // eslint-disable-line
     if (req.query.auto === "true") {
       // whoisdoinguseridをどの値にするか、マジックナンバーではなくデータベースを参照せねばならない
-      taskRequest.whoisdoinguserid = 2;
-      return resolve();
+      return suggestWhoisdoinguserid(groupidAuth).then(userid => {
+        taskRequest.whoisdoinguserid = userid;
+        resolve();
+      });
     }
     if (
       taskRequest.whoisdoinguserid === undefined ||
