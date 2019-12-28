@@ -14,10 +14,21 @@ beforeAll(() => {
 });
 
 describe("/signup", () => {
-  it("user1 without name", async () => {
+  it("user1 without name (bad request)", async () => {
     const reqBody = {
       email: "user1",
       password: "hogehoge"
+    };
+    const res = await req.post("/api/v1/signup").send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1201);
+  });
+
+  it("user1 with name", async () => {
+    const reqBody = {
+      email: "user1",
+      password: "hogehoge",
+      name: "user1"
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(200);
@@ -26,7 +37,7 @@ describe("/signup", () => {
       picturepath: null,
       id: 1,
       email: "user1",
-      name: null
+      name: "user1"
     });
   });
 
@@ -50,7 +61,8 @@ describe("/signup", () => {
   it("user3 with name", async () => {
     const reqBody = {
       email: "user3",
-      password: "hogehoge"
+      password: "hogehoge",
+      name: "user3"
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(200);
@@ -68,7 +80,8 @@ describe("/signup", () => {
   it("user4 with name", async () => {
     const reqBody = {
       email: "user4",
-      password: "hogehoge"
+      password: "hogehoge",
+      name: "user4"
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(200);
@@ -95,7 +108,8 @@ describe("/signup", () => {
   it("a user as same as user1's email (will fail)", async () => {
     const reqBody = {
       email: "user1",
-      password: "hoge"
+      password: "hoge",
+      name: "hogeeeeeeeee"
     };
     const res = await req.post("/api/v1/signup").send(reqBody);
     expect(res.status).toBe(409);
@@ -403,7 +417,7 @@ describe("/users", () => {
         picturepath: null,
         id: 1,
         email: "user1",
-        name: null
+        name: "user1"
       },
       {
         groupid: 1,
@@ -427,7 +441,7 @@ describe("/users", () => {
         picturepath: null,
         id: 1,
         email: "user1",
-        name: null
+        name: "user1"
       },
       {
         groupid: 1,
@@ -466,7 +480,7 @@ describe("/users", () => {
       picturepath: null,
       id: 1,
       email: "user1",
-      name: null
+      name: "user1"
     });
   });
   it("GET /authed/users/5", async () => {
@@ -920,6 +934,76 @@ describe("/tasks", () => {
       id: 1,
       name: "newTaskName",
       comment: "newTaskComment",
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("POST /authed/tasks?auto=true", async () => {
+    const reqBody = {
+      name: "taskNameAuto"
+    };
+    const res = await req
+      .post("/api/v1/authed/tasks?auto=true")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: 2,
+      isfinished: false,
+      deadlinedate: null,
+      finisheddate: null,
+      doneuserid: null,
+      id: 4,
+      name: "taskNameAuto",
+      comment: null,
+      groupid: 1,
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("PUT /authed/tasks/2 done", async () => {
+    const reqBody = {
+      isfinished: true
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/2")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+  });
+
+  it("PUT /authed/tasks/3 done", async () => {
+    const reqBody = {
+      isfinished: true
+    };
+    const res = await req
+      .put("/api/v1/authed/tasks/3")
+      .set("Authorization", `Bearer ${bearerUser2}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+  });
+
+  it("POST /authed/tasks?auto=true", async () => {
+    const reqBody = {
+      name: "taskNameAuto"
+    };
+    const res = await req
+      .post("/api/v1/authed/tasks?auto=true")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      whoisdoinguserid: 1,
+      isfinished: false,
+      deadlinedate: null,
+      finisheddate: null,
+      doneuserid: null,
+      id: 5,
+      name: "taskNameAuto",
+      comment: null,
       groupid: 1,
       updatedAt: expect.anything(),
       createdAt: expect.anything()
