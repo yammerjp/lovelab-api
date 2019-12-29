@@ -9,27 +9,28 @@ interface ReturnConfig {
   password: string;
 }
 
-const configfunc = (isTest = false): ReturnConfig => {
+const configfunc = (): ReturnConfig | null => {
   dotenv.config();
-  const runningConfig: ReturnConfig = {
-    host: process.env.ENV_HOST || "localhost",
-    port: parseInt(process.env.ENV_PORT ?? "5432", 10),
-    dialect: "postgres",
-    database: process.env.ENV_DATABASE || "database_of_lovelab",
-    user: process.env.ENV_USER || "root",
-    password: process.env.ENV_PASSWORD || ""
-  };
 
-  const testConfig: ReturnConfig = {
-    host: process.env.ENV_TEST_HOST || "localhost",
-    port: parseInt(process.env.ENV_TEST_PORT ?? "5432", 10),
-    dialect: "postgres",
-    database: process.env.ENV_TEST_DATABASE || "database_of_lovelab",
-    user: process.env.ENV_TEST_USER || "root",
-    password: process.env.ENV_TEST_PASSWORD || ""
-  };
+  if (
+    process.env.POSTGRES_HOST === undefined ||
+    process.env.POSTGRES_PORT === undefined ||
+    process.env.POSTGRES_DATABASE === undefined ||
+    process.env.POSTGRES_USER === undefined ||
+    process.env.POSTGRES_PASSWORD === undefined
+  ) {
+    return null;
+  }
 
-  return isTest ? testConfig : runningConfig;
+  const returnConfig: ReturnConfig = {
+    host: process.env.POSTGRES_HOST,
+    port: parseInt(process.env.POSTGRES_PORT, 10),
+    dialect: "postgres",
+    database: process.env.POSTGRES_DATABASE,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD
+  };
+  return returnConfig;
 };
 
 export default configfunc;
