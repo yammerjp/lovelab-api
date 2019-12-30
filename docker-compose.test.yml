@@ -11,7 +11,8 @@ services:
       - .env.test
     ports:
       - "3000"
-    command: npm test
+    command: ["./wait-for-postgres.sh","npm","test"]
   postgresql:
     env_file:
       - .env.test
+        #    restart: no

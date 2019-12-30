@@ -15,9 +15,9 @@ const configfunc = (): ReturnConfig | null => {
   if (
     process.env.POSTGRES_HOST === undefined ||
     process.env.POSTGRES_PORT === undefined ||
-    process.env.POSTGRES_DATABASE === undefined ||
-    process.env.POSTGRES_USER === undefined ||
-    process.env.POSTGRES_PASSWORD === undefined
+    process.env.POSTGRES_DATABASE_UNROOT === undefined ||
+    process.env.POSTGRES_USER_UNROOT === undefined ||
+    process.env.POSTGRES_PASSWORD_UNROOT === undefined
   ) {
     return null;
   }
@@ -26,9 +26,9 @@ const configfunc = (): ReturnConfig | null => {
     host: process.env.POSTGRES_HOST,
     port: parseInt(process.env.POSTGRES_PORT, 10),
     dialect: "postgres",
-    database: process.env.POSTGRES_DATABASE,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD
+    database: process.env.POSTGRES_DATABASE_UNROOT,
+    user: process.env.POSTGRES_USER_UNROOT,
+    password: process.env.POSTGRES_PASSWORD_UNROOT
   };
   return returnConfig;
 };
