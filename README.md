@@ -23,7 +23,13 @@ $ docker-compose up
 ## Running test Locally
 
 ```sh
-$ docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+$ docker-compose -f docker-compose.yml -f docker-compose.test.yml run app
+```
+
+or
+
+```sh
+$ ./test.sh
 ```
 
 ## Specification
