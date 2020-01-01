@@ -1015,8 +1015,8 @@ describe("/tasks", () => {
       .delete("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser3}`)
       .send();
-    expect(res.status).toBe(409);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.status).toBe(403);
+    expect(res.body.errorCode).toBe(1622);
   });
 
   it("delete /authed/tasks/1 (permission denied, bad request)", async () => {
@@ -1024,8 +1024,8 @@ describe("/tasks", () => {
       .delete("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser4}`)
       .send();
-    expect(res.status).toBe(409);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.status).toBe(403);
+    expect(res.body.errorCode).toBe(1622);
   });
 
   it("delete /authed/tasks/100 (not exist resource, bad request)", async () => {
@@ -1033,8 +1033,8 @@ describe("/tasks", () => {
       .delete("/api/v1/authed/tasks/100")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
-    expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.status).toBe(500);
+    expect(res.body.errorCode).toBe(1620);
   });
 
   it("delete /authed/tasks/1", async () => {
@@ -1050,7 +1050,7 @@ describe("/tasks", () => {
       .get("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
-    expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(1610);
   });
 });
