@@ -198,18 +198,31 @@ router.put("/:taskid", (req, res) => {
       errorHandle(res, e === 1617 || e === 1618 || e === 1621 ? e : 1619);
     });
 });
-/*
+
 router.delete("/:id", (req, res) => {
   // 実装方針: groupidAuthとtask.groupidが一致していたら、deleteして204を返す
   const id: number = Number.parseInt(req.params.id, 10);
   if (Number.isNaN(id)) {
-    errorHandke(res, 1620);
+    errorHandle(res, 1620);
     return;
   }
-  Tasks.findByPk(id).then(task => {
-    if (task.groupid === req.body.groupidAuth) return;
-  });
+  Tasks.findByPk(id)
+    .then(task => {
+      if (task === null) {
+        return Promise.reject(1620);
+      }
+      if (task.groupid !== req.body.groupidAuth) {
+        return Promise.reject(1622);
+      }
+      return Tasks.destroy({ where: { id } });
+    })
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(e => {
+      errorHandle(res, e === 1622 || e === 1620 ? e : 1623);
+    });
 });
-*/
+
 // routerをモジュールとして扱う準備
 export default router;
