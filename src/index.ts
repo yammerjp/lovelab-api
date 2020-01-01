@@ -7,12 +7,8 @@ const forceReset =
   process.argv.findIndex(arg => {
     return arg === "--reset";
   }) !== -1;
-const isTest =
-  process.argv.findIndex(arg => {
-    return arg === "--testDB";
-  }) !== -1;
 
-connectDataBase(forceReset, isTest).then(() => {
+connectDataBase(forceReset).then(() => {
   // eslint-disable-next-line no-console
   console.log("\nSuccess to connect database\n");
   // サーバ起動

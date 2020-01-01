@@ -20,9 +20,12 @@ router.post("/", (req, res) => {
     email === null ||
     email === undefined ||
     password === null ||
-    password === undefined
+    password === undefined ||
+    name === null ||
+    name === undefined
   ) {
     errorHandle(res, 1201);
+    return;
   }
 
   Users.findOne({ where: { email } })

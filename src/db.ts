@@ -7,17 +7,19 @@ import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
 // database接続
 let isConnected = false;
-const connectDataBase = (
-  forceReset = false,
-  isTest = false
-): Promise<boolean> => {
+const connectDataBase = (forceReset = false): Promise<boolean> => {
   // eslint-disable-next-line no-console
   console.log(`isConnected: ${isConnected}`);
   if (isConnected === true) {
     return Promise.resolve(true);
   }
 
-  const config = configfunc(isTest);
+  const config = configfunc();
+  if (config === null) {
+    console.log(".env is wrong");
+    process.exit(1);
+  }
+
   const sequelize = new Sequelize(
     config.database,
     config.user,
