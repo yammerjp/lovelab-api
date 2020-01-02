@@ -10,7 +10,7 @@ let bearerUser3 = "";
 let bearerUser4 = "";
 
 beforeAll(() => {
-  return connectDatabase(true, true);
+  return connectDatabase(true);
 });
 
 describe("/signup", () => {
