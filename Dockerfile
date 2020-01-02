@@ -1,4 +1,8 @@
 FROM node:13-alpine
+
+# PostgreSQLの初期化(userとdatabaseの作成)が終わったことを確認するwait-for-postgres.shでpsqlコマンドを使うため
+RUN apk --update add postgresql-client
+
 # アプリケーションディレクトリを作成する
 WORKDIR /usr/src/app
 

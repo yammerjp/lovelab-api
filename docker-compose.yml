@@ -3,25 +3,16 @@ version: '3.7'
 services:
   app:
     depends_on:
-      - postgresql
+      - lovelab-postgres
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
-    ports:
-      - "0.0.0.0:3000:3000"
-  postgresql:
+  lovelab-postgres:
     image: postgres:11.6-alpine
-    container_name: postgresql
+    container_name: lovelab-postgres
     expose:
       - "5432"
-        #volumes:
-        #- ./postgres/init:/docker-entrypoint-initdb.d
-        #    env_file:
-        #- .env
-    env_file:
-      - .env
-    hostname: postgres
-    restart: always
-    user: root
+    volumes:
+      - ./postgres-init:/docker-entrypoint-initdb.d:ro
+    hostname: $POSTGRES_HOST
+    user: $POSTGRES_USER

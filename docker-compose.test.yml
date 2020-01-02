@@ -2,16 +2,11 @@ version: '3.7'
 
 services:
   app:
-    depends_on:
-      - postgresql
-    build:
-      context: .
-      dockerfile: Dockerfile
     env_file:
       - .env.test
     ports:
       - "3000"
-    command: npm test
-  postgresql:
+    command: ["./wait-for-postgres.sh","npm","test"]
+  lovelab-postgres:
     env_file:
       - .env.test
