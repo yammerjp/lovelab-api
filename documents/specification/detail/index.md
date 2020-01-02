@@ -53,5 +53,6 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | タスク | [新規タスクの作成-ランダム振り分け](task.md#新規タスクの作成-ランダム振り分け) | 有り | POST | `/authed/tasks?auto=true` |
 | タスク | [特定のタスクの情報を取得](task.md#特定のタスクの情報を取得)| 有り | GET | `/authed/tasks/:id` |
 | タスク | [特定のタスクの内容を変更](task.md#特定のタスクの内容を変更)| 有り | PUT | `/authed/tasks/:id` |
+| タスク | [特定のタスクを削除](task.md#特定のタスクを削除)| 有り | DELETE | `/authed/tasks/:id` |
 
 [もくじに戻る](../index.md)

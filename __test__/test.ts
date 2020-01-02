@@ -1009,4 +1009,48 @@ describe("/tasks", () => {
       createdAt: expect.anything()
     });
   });
+
+  it("delete /authed/tasks/1 (permission denied, bad request)", async () => {
+    const res = await req
+      .delete("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser3}`)
+      .send();
+    expect(res.status).toBe(403);
+    expect(res.body.errorCode).toBe(1622);
+  });
+
+  it("delete /authed/tasks/1 (permission denied, bad request)", async () => {
+    const res = await req
+      .delete("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser4}`)
+      .send();
+    expect(res.status).toBe(403);
+    expect(res.body.errorCode).toBe(1622);
+  });
+
+  it("delete /authed/tasks/100 (not exist resource, bad request)", async () => {
+    const res = await req
+      .delete("/api/v1/authed/tasks/100")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(500);
+    expect(res.body.errorCode).toBe(1620);
+  });
+
+  it("delete /authed/tasks/1", async () => {
+    const res = await req
+      .delete("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(204);
+  });
+
+  it("get /authed/tasks/1 (not exist resouce)", async () => {
+    const res = await req
+      .get("/api/v1/authed/tasks/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(1610);
+  });
 });

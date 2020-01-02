@@ -311,6 +311,12 @@
     "messageJp":"リクエストボディのwhoisdoinguseridが無効な値です。",
     "status":"タスク編集時、リクエストボディに無効な値が与えられた時発生。"
   },
+  "1622":{
+    "httpStatus":403,
+    "message":"Not permitted. the task is out of your group.",
+    "messageJp":"自分の所属するグループのタスクのみ削除可能です。",
+    "status":"タスク削除時、指定されたidｎタスクが、リクエストユーザのグループと一致しないときに発生。"
+  },
   "1700":{
     "httpStatus":400,
     "message":"Requested JSON is invalid",
