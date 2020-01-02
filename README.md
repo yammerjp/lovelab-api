@@ -17,7 +17,7 @@ $ git clone https://github.com/basd4g/lovelab.heroku.git
 $ cd lovelab.heroku
 $ cp .env.example .env
 $ docker-compose up
-# Open [localhost:3000](http://localhost:3000/) on browser.
+# Open [localhost:3000/api/v1](http://localhost:3000/api/v1) on browser.
 ```
 
 ## Running test Locally
