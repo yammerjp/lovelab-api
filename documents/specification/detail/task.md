@@ -28,8 +28,9 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
-| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時 |
+| finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -54,6 +55,7 @@ GET /authed/tasks
 | name | 文字列 | 必須 | タスクの表示名 |
 | comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
 | whoisdoinguserid | 数字またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
+| deadlinedate | 文字列またはnull | 任意 | タスクの締め切り日時(ISO8601) |
 
 ### レスポンスbody
 
@@ -65,17 +67,55 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か(タスク作成時はデフォルトでfalseが設定される) |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
-| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
+| finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
 ### サーバ内の状態変化
 
-新しいグループのレコードが作成される
+新しいタスクのレコードが作成される
 
-リクエストしたユーザのgroupidが書き換えられる
+## 新規タスクの作成-ランダム振り分け
 
+| 認証の有無 | HTTPメソッド | URI末尾 |
+----|----|----
+| 有り | POST | `/authed/tasks?auto=true` |
+
+グループに所属しているユーザのみ実行可能
+
+自らのグループに紐付いたタスクを作る
+
+whoisdoinguseridを、グループ内で過去にこなしたタスク数が最も少ない人に割り振る。
+
+### リクエストbody
+
+| キー | データ型 | 必須/任意 | 説明 |
+----|----|----|----
+| name | 文字列 | 必須 | タスクの表示名 |
+| comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
+| deadlinedate | 文字列またはnull | 任意 | タスクの締め切り日時(ISO8601) |
+
+### レスポンスbody
+
+| キー | データ型 | 説明 |
+----|----|----
+| id | 数字 | タスクid |
+| name | 文字列 | タスクの表示名 |
+| comment | 文字列またはnull | タスクの詳細文字列 |
+| groupid | 数字 | タスクの所属するグループid |
+| isfinished | 真偽値 | タスクが完了したか否か(タスク作成時はデフォルトでfalseが設定される) |
+| whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
+| finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
+| updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
+| createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+
+### サーバ内の状態変化
+
+新しいタスクのレコードが作成される
 
 ## 特定のタスクの情報を取得
 
@@ -101,8 +141,9 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
-| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
+| finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -128,6 +169,7 @@ GET /authed/tasks
 | comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
 | isfinished | 真偽値 | 任意 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | 任意 | タスクを担当するユーザid(必ずリクエストを送信しているユーザ、タスクと同じグループに属するユーザでなければならない) |
+| deadlinedate | 文字列またはnull | 任意 | タスクの締め切り日時(ISO8601) |
 
 ### レスポンスbody
 
@@ -139,8 +181,9 @@ GET /authed/tasks
 | groupid | 数字 | タスクの所属するグループid |
 | isfinished | 真偽値 | タスクが完了したか否か |
 | whoisdoinguserid | 数字またはnull | タスク担当者のユーザid(担当者未定の場合はnull) |
-| deadlinedate | null | タスクの締め切り日時を表す予定のフィールド(現在未使用) |
-| finisheddate | null | タスクを完了にした日時を表す予定のフィールド(現在未使用) |
+| deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
+| finisheddate | 文字列またはnull | タスクを完了にした日時 |
+| doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -155,5 +198,28 @@ GET /authed/tasks
   "isfinished" : true
 }
 ```
+
+## 特定のタスクを削除
+
+特定のタスクを削除する。
+削除できるのは自身の所属するグループのタスクのみである。
+
+| 認証の有無 | HTTPメソッド | URI末尾 |
+----|----|----
+| 有り | DELETE | `/authed/tasks/:id` |
+
+`:id`はタスクid(数字)に置き換える
+
+### リクエストbody
+
+無し
+
+### レスポンスbody
+
+無し(HTTPステータスコード:204)が返る
+
+### サーバ内の状態変化
+
+当該タスクのレコードが削除される
 
 [エンドポイントのもくじに戻る](index.md)

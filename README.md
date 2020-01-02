@@ -10,49 +10,26 @@ API server of lovelab with node.js and express
 
 ## Running Locally
 
-Make sure you have Node.js and PostgreSQL installed.
-
-### Set .env
-
-Set your database name, database user, database password.
-
-```.env
-ENV_HOST=localhost
-ENV_DATABASE=yourDatabaseName
-ENV_USER=yourDatabasesUser
-ENV_PORT=5432
-ENV_PASSWORD=yourPassword
-ENV_DIALECT=postgres
-
-ENV_HOST=localhost
-ENV_DATABASE=yourDatabaseNameForTest
-ENV_USER=yourDatabasesUserForTest
-ENV_PORT=5432
-ENV_PASSWORD=yourPasswordForTest
-ENV_DIALECT=postgres
-```
-
-### Start PostgreSQL server
+Need docker-compose
 
 ```sh
-$ postgres -D /usr/local/var/postgres
-```
-
-### Start lovelab.heroku
-
-```sh
-$ git clone https://github.com/basd4g/lovelab.heroku
+$ git clone https://github.com/basd4g/lovelab.heroku.git
 $ cd lovelab.heroku
-$ npm install
-$ npm start
+$ cp .env.example .env
+$ docker-compose up
+# Open [localhost:3000/api/v1](http://localhost:3000/api/v1) on browser.
 ```
 
-Open [localhost:3000](http://localhost:3000/) on browser.
-
-### Check database
+## Running test Locally
 
 ```sh
-$ psql -h localhost -p 5432 -d yourDatabaseName -U yourDatabaseUser
+$ docker-compose -f docker-compose.yml -f docker-compose.test.yml run app
+```
+
+or
+
+```sh
+$ ./test.sh
 ```
 
 ## Specification

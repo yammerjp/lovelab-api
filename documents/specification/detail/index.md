@@ -42,6 +42,7 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | ユーザ | [特定のグループに所属するユーザ達の情報を取得](user.md#特定のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?groupid=:id` |
 | ユーザ | [自分のグループに所属するユーザ達の情報を取得](user.md#自分のグループに所属するユーザ達の情報を取得) | 有り | GET | `/authed/users?mygroup=true` |
 | ユーザ | [特定のユーザの情報を取得](user.md#特定のユーザの情報を取得) | 有り | GET | `/authed/users/:id` |
+| 招待 | [自分への招待をすべて取得](invitation.md#自分への招待をすべて取得) | 有り | GET | `/authed/invitations` |
 | 招待 | [新しい招待を作成](invitation.md#新しい招待を作成) | 有り | POST | `/authed/invitations` |
 | 招待 | [特定の招待を拒否](invitation.md#特定の招待を拒否)| 有り | DELETE | `/authed/invitations/:id` |
 | 招待 | [特定の招待を承諾](invitation.md#特定の招待を承諾) | 有り | DELETE | `/authed/invitations/:id?agreement=true` |
@@ -49,7 +50,9 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | グループ | [新規グループ作成](group.md#新規グループ作成)| 有り | POST | `/authed/groups` |
 | タスク | [グループのタスクをすべて取得](task.md#グループのタスクをすべて取得) | 有り | GET | `/authed/tasks` |
 | タスク | [新規タスクの作成](task.md#新規タスクの作成) | 有り | POST | `/authed/tasks` |
+| タスク | [新規タスクの作成-ランダム振り分け](task.md#新規タスクの作成-ランダム振り分け) | 有り | POST | `/authed/tasks?auto=true` |
 | タスク | [特定のタスクの情報を取得](task.md#特定のタスクの情報を取得)| 有り | GET | `/authed/tasks/:id` |
 | タスク | [特定のタスクの内容を変更](task.md#特定のタスクの内容を変更)| 有り | PUT | `/authed/tasks/:id` |
+| タスク | [特定のタスクを削除](task.md#特定のタスクを削除)| 有り | DELETE | `/authed/tasks/:id` |
 
 [もくじに戻る](../index.md)

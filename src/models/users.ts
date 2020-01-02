@@ -41,8 +41,8 @@ class Users extends Model {
         },
         name: {
           type: DataTypes.STRING,
-          allowNull: true,
-          defaultValue: null
+          allowNull: false,
+          defaultValue: "Anonymous"
         },
         groupid: {
           type: DataTypes.INTEGER,
