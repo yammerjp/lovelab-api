@@ -59,6 +59,6 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | 定期タスク | [グループの定期タスクをすべて取得](taskGenerator.md#グループの定期タスクをすべて取得)| 有り | GET | `/authed/taskgenerators` |
 | 定期タスク | [特定の定期タスクの内容を取得](taskGenerator.md#特定の定期タスクの内容を取得)| 有り | GET | `/authed/taskgenerators/:id` |
 | 定期タスク | [特定の定期タスクの内容を変更](taskGenerator.md#特定の定期タスクの内容を変更)| 有り | PUT | `/authed/taskgenerators/:id` |
-| 定期タスク | [特定の定期タスクの内容を削除](taskGenerator.md#特定の定期タスクの内容を削除)| 有り | DELETE | `/authed/taskgenerators/:id` |
+| 定期タスク | [特定の定期タスクを削除](taskGenerator.md#特定の定期タスクを削除)| 有り | DELETE | `/authed/taskgenerators/:id` |
 
 [もくじに戻る](../index.md)
