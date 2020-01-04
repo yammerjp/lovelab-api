@@ -15,8 +15,7 @@
 | name | 文字列 | 必須 | タスクの表示名 |
 | comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
 | interval | 文字列 | 必須 | タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstgeneratedate | 文字列 | 必須 | タスクの締め切り日時(ISO8601) |
-| firstdeadlinedate | 文字列 | 必須 | タスクの締め切り日時(ISO8601) |
+| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
 
 ### レスポンスbody
 
@@ -28,10 +27,9 @@
 | name | 文字列 |  タスクの表示名 |
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstgeneratedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| firstdeadlinedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
-| createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| updatedAt | 文字列 | 当該レコードの最終更新日時 |
+| createdAt | 文字列 | 当該レコードの作成日時 |
 
 ### サーバ内の状態変化
 
@@ -57,10 +55,9 @@
 | name | 文字列 |  タスクの表示名 |
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstgeneratedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| firstdeadlinedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
-| createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| updatedAt | 文字列 | 当該レコードの最終更新日時 |
+| createdAt | 文字列 | 当該レコードの作成日時 |
 
 ### サーバ内の状態変化
 
@@ -84,10 +81,9 @@
 | name | 文字列 |  タスクの表示名 |
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstgeneratedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| firstdeadlinedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
-| createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| updatedAt | 文字列 | 当該レコードの最終更新日時 |
+| createdAt | 文字列 | 当該レコードの作成日時 |
 
 ### サーバ内の状態変化
 
@@ -106,8 +102,7 @@
 | name | 文字列 | 任意 | タスクの表示名 |
 | comment | 文字列またはnull | 任意 | タスクの詳細文字列 |
 | interval | 文字列 | 任意 | タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstgeneratedate | 文字列 | 任意 | タスクの締め切り日時(ISO8601) |
-| firstdeadlinedate | 文字列 | 任意 | タスクの締め切り日時(ISO8601) |
+| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
 
 ### レスポンスbody
 
@@ -117,10 +112,9 @@
 | name | 文字列 |  タスクの表示名 |
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstgeneratedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| firstdeadlinedate | 文字列 | タスクの締め切り日時(ISO8601) |
-| updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
-| createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
+| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| updatedAt | 文字列 | 当該レコードの最終更新日時 |
+| createdAt | 文字列 | 当該レコードの作成日時 |
 
 ### サーバ内の状態変化
 
