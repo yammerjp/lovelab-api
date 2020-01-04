@@ -14,7 +14,7 @@ beforeAll(() => {
 });
 
 describe("/signup", () => {
-  it("user1 without name (bad request)", async () => {
+  it("x POST   /signup   user1, without name", async () => {
     const reqBody = {
       email: "user1",
       password: "hogehoge"
@@ -24,7 +24,7 @@ describe("/signup", () => {
     expect(res.body.errorCode).toBe(1201);
   });
 
-  it("user1 with name", async () => {
+  it("o POST   /signup   user1, with name", async () => {
     const reqBody = {
       email: "user1",
       password: "hogehoge",
@@ -41,7 +41,7 @@ describe("/signup", () => {
     });
   });
 
-  it("user2 with name", async () => {
+  it("o POST   /signup   user2, with name", async () => {
     const reqBody = {
       email: "user2",
       password: "hogehoge",
@@ -58,7 +58,7 @@ describe("/signup", () => {
     });
   });
 
-  it("user3 with name", async () => {
+  it("o POST   /signup   user3, with name", async () => {
     const reqBody = {
       email: "user3",
       password: "hogehoge",
@@ -68,7 +68,7 @@ describe("/signup", () => {
     expect(res.status).toBe(200);
   });
 
-  it("a user only email (will fail)", async () => {
+  it("x POST   /signup   lacks of password and name", async () => {
     const reqBody = {
       email: "user3"
     };
@@ -77,7 +77,7 @@ describe("/signup", () => {
     expect(res.body.errorCode).toBe(1201);
   });
 
-  it("user4 with name", async () => {
+  it("o POST   /signup   user4, with name", async () => {
     const reqBody = {
       email: "user4",
       password: "hogehoge",
@@ -87,7 +87,7 @@ describe("/signup", () => {
     expect(res.status).toBe(200);
   });
 
-  it("a user only email (will fail)", async () => {
+  it("x POST   /signup   lacks of password and name", async () => {
     const reqBody = {
       email: "user3"
     };
@@ -96,7 +96,7 @@ describe("/signup", () => {
     expect(res.body.errorCode).toBe(1201);
   });
 
-  it("a user only email (will fail)", async () => {
+  it("x POST   /signup   lacks of email and name", async () => {
     const reqBody = {
       password: "password"
     };
@@ -105,7 +105,7 @@ describe("/signup", () => {
     expect(res.body.errorCode).toBe(1201);
   });
 
-  it("a user as same as user1's email (will fail)", async () => {
+  it("x POST   /signup   conflict email", async () => {
     const reqBody = {
       email: "user1",
       password: "hoge",
@@ -118,7 +118,7 @@ describe("/signup", () => {
 });
 
 describe("/login", () => {
-  it("user1", async () => {
+  it("o POST   /login   user1", async () => {
     const reqBody = {
       email: "user1",
       password: "hogehoge"
@@ -137,7 +137,7 @@ describe("/login", () => {
     // console.log(`bearer token user1 : ${bearerUser1}`);
   });
 
-  it("user2", async () => {
+  it("o POST   /login   user2", async () => {
     const reqBody = {
       email: "user2",
       password: "hogehoge"
@@ -156,7 +156,7 @@ describe("/login", () => {
     // console.log(`bearer token user2 : ${bearerUser2}`);
   });
 
-  it("user3", async () => {
+  it("o POST   /login   user3", async () => {
     const reqBody = {
       email: "user3",
       password: "hogehoge"
@@ -167,7 +167,7 @@ describe("/login", () => {
     // console.log(`bearer token user3 : ${bearerUser3}`);
   });
 
-  it("user4", async () => {
+  it("o POST   /login   user4", async () => {
     const reqBody = {
       email: "user4",
       password: "hogehoge"
@@ -178,7 +178,7 @@ describe("/login", () => {
     // console.log(`bearer token user4 : ${bearerUser4}`);
   });
 
-  it("user1 wrong password (will fail)", async () => {
+  it("x POST   /login   user1, wrong password", async () => {
     const reqBody = {
       email: "user1",
       password: "hogehogehoge"
@@ -190,15 +190,15 @@ describe("/login", () => {
 });
 
 describe("/authed", () => {
-  it("GET /groups/1 (no authorization)", async () => {
+  it("x GET    /authed/groups/1   without authorization", async () => {
     const res = await req.get("/api/v1/authed/groups/1").send();
     expect(res.status).toBe(401);
     expect(res.body.errorCode).toBe(1001);
   });
 });
 
-describe("/groups", () => {
-  it("GET /groups/1 (no resouce)", async () => {
+describe("/authed/groups", () => {
+  it("x GET    /authed/groups/1   user1 is not exist", async () => {
     const res = await req
       .get("/api/v1/authed/groups/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -207,7 +207,7 @@ describe("/groups", () => {
     expect(res.body.errorCode).toBe(1302);
   });
 
-  it("POST /groups , create group (no-name, wrong)", async () => {
+  it("x POST   /authed/groups   create group. a lack of name", async () => {
     const reqBody = {};
     const res = await req
       .post("/api/v1/authed/groups")
@@ -217,7 +217,7 @@ describe("/groups", () => {
     expect(res.body.errorCode).toBe(1304);
   });
 
-  it("POST /groups , create group", async () => {
+  it("o POST   /authed/groups   create group", async () => {
     const reqBody = {
       name: "groupname"
     };
@@ -230,7 +230,7 @@ describe("/groups", () => {
     expect(res.body.name).toBe("groupname");
   });
 
-  it("POST /groups , create group ( groupid=2 user3 is joined )", async () => {
+  it("o POST   /authed/groups   create group. user3 created group2", async () => {
     const reqBody = {
       name: "groupname"
     };
@@ -243,7 +243,7 @@ describe("/groups", () => {
     expect(res.body.name).toBe("groupname");
   });
 
-  it("GET /groups/1", async () => {
+  it("o GET    /authed/groups/1", async () => {
     const res = await req
       .get("/api/v1/authed/groups/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -257,8 +257,8 @@ describe("/groups", () => {
   });
 });
 
-describe("/invitations", () => {
-  it("GET /invitations (no-invitations)", async () => {
+describe("/authed/invitations", () => {
+  it("o GET    /authed/invitations   no invitations", async () => {
     const res = await req
       .get("/api/v1/authed/invitations")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -267,7 +267,7 @@ describe("/invitations", () => {
     expect(res.body.length).toBe(0);
   });
 
-  it("POST /invitations (wrong, user1 -> user1)", async () => {
+  it("x POST   /authed/invitations   invite on my own (user1 -> user1)", async () => {
     const reqBody = {
       inviteeuserid: 1,
       message: "invitation message"
@@ -280,7 +280,7 @@ describe("/invitations", () => {
     expect(res.body.errorCode).toBe(1402);
   });
 
-  it("POST /invitations (wrong, user2 -> user1)", async () => {
+  it("x POST   /authed/invitations   user2 dose not belong to any groups (user2 -> user1)", async () => {
     const reqBody = {
       inviteeuserid: 1,
       message: "invitation message"
@@ -293,7 +293,7 @@ describe("/invitations", () => {
     expect(res.body.errorCode).toBe(1404);
   });
 
-  it("POST /invitations (user1 -> user2)", async () => {
+  it("o POST   /authed/invitations   (user1 -> user2)", async () => {
     const reqBody = {
       inviteeuserid: 2,
       message: "invitation message"
@@ -314,7 +314,7 @@ describe("/invitations", () => {
     });
   });
 
-  it("POST /invitations (user1 -> user2)", async () => {
+  it("o POST   /authed/invitations   without message (user1 -> user2)", async () => {
     const reqBody = {
       inviteeuserid: 2
     };
@@ -334,7 +334,7 @@ describe("/invitations", () => {
     });
   });
 
-  it("GET /invitations (2 invitations)", async () => {
+  it("o GET    /authed/invitations   2 invitations", async () => {
     const res = await req
       .get("/api/v1/authed/invitations")
       .set("Authorization", `Bearer ${bearerUser2}`)
@@ -362,7 +362,7 @@ describe("/invitations", () => {
     ]);
   });
 
-  it("DELETE /invitations (reject)", async () => {
+  it("o DELETE /authed/invitations   user2 reject a invitation", async () => {
     const res = await req
       .delete("/api/v1/authed/invitations/1")
       .set("Authorization", `Bearer ${bearerUser2}`)
@@ -370,7 +370,7 @@ describe("/invitations", () => {
     expect(res.status).toBe(204);
   });
 
-  it("GET /users/2 (not joined any groups", async () => {
+  it("o GET    /authed/users/2   user2 does not belong to any groups", async () => {
     const res = await req
       .get("/api/v1/authed/users/2")
       .set("Authorization", `Bearer ${bearerUser2}`)
@@ -378,7 +378,7 @@ describe("/invitations", () => {
     expect(res.body.groupid).toBe(null);
   });
 
-  it("DELETE /invitations (accept)", async () => {
+  it("o DELETE /authed/invitations   user2 accept a invitation", async () => {
     const res = await req
       .delete("/api/v1/authed/invitations/2?agreement=true")
       .set("Authorization", `Bearer ${bearerUser2}`)
@@ -386,7 +386,7 @@ describe("/invitations", () => {
     expect(res.status).toBe(204);
   });
 
-  it("GET /users/2 (joined group 1", async () => {
+  it("o GET    /authed/users/2   user2 joined group1", async () => {
     const res = await req
       .get("/api/v1/authed/users/2")
       .set("Authorization", `Bearer ${bearerUser2}`)
@@ -394,7 +394,7 @@ describe("/invitations", () => {
     expect(res.body.groupid).toBe(1);
   });
 
-  it("GET /invitations (no-invitations)", async () => {
+  it("o GET    /authed/invitations   user2 has no invitations", async () => {
     const res = await req
       .get("/api/v1/authed/invitations")
       .set("Authorization", `Bearer ${bearerUser2}`)
@@ -404,8 +404,8 @@ describe("/invitations", () => {
   });
 });
 
-describe("/users", () => {
-  it("GET /authed/users?groupid=1", async () => {
+describe("/authed/users", () => {
+  it("o GET    /authed/users?groupid=1", async () => {
     const res = await req
       .get("/api/v1/authed/users?groupid=1")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -429,7 +429,7 @@ describe("/users", () => {
     ]);
   });
 
-  it("GET /authed/users?mygroup=true", async () => {
+  it("o GET    /authed/users?mygroup=true", async () => {
     const res = await req
       .get("/api/v1/authed/users?mygroup=true")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -453,7 +453,7 @@ describe("/users", () => {
     ]);
   });
 
-  it("GET /authed/users?groupid=3", async () => {
+  it("o GET    /authed/users?groupid=3", async () => {
     const res = await req
       .get("/api/v1/authed/users?groupid=3")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -461,7 +461,7 @@ describe("/users", () => {
     expect(res.status).toBe(200);
     expect(res.body.length).toBe(0);
   });
-  it("GET /authed/users", async () => {
+  it("x GET     /authed/users   need groupid or mygroupid=true", async () => {
     const res = await req
       .get("/api/v1/authed/users")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -469,7 +469,7 @@ describe("/users", () => {
     expect(res.status).toBe(400);
     expect(res.body.errorCode).toBe(1502);
   });
-  it("GET /authed/users/1", async () => {
+  it("o GET     /authed/users/1", async () => {
     const res = await req
       .get("/api/v1/authed/users/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -483,7 +483,7 @@ describe("/users", () => {
       name: "user1"
     });
   });
-  it("GET /authed/users/5", async () => {
+  it("x GET    /authed/users/5   not exist", async () => {
     const res = await req
       .get("/api/v1/authed/users/5")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -493,8 +493,8 @@ describe("/users", () => {
   });
 });
 
-describe("/tasks", () => {
-  it("GET /authed/tasks", async () => {
+describe("/authed/tasks", () => {
+  it("o GET    /authed/tasks", async () => {
     const res = await req
       .get("/api/v1/authed/tasks")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -503,7 +503,7 @@ describe("/tasks", () => {
     expect(res.body).toEqual([]);
   });
 
-  it("GET /authed/tasks/1 (bad request)", async () => {
+  it("x GET    /authed/tasks/1   not exist", async () => {
     const res = await req
       .get("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -512,7 +512,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1610);
   });
 
-  it("POST /authed/tasks only comment (bad request)", async () => {
+  it("x POST   /authed/tasks   a lack of name", async () => {
     const reqBody = {
       comment: "taskComment"
     };
@@ -524,7 +524,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1605);
   });
 
-  it("POST /authed/tasks name, commemt and deadlinedate(not ISO8601) (bad request)", async () => {
+  it("x POST   /authed/tasks   deadlinedate's format is not ISO8601", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment",
@@ -538,7 +538,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1706);
   });
 
-  it("POST /authed/tasks (user4, not belonged to any group) (bad request)", async () => {
+  it("x POST   /authed/tasks   user4 does not belong to any groups", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment"
@@ -551,7 +551,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toEqual(1607);
   });
 
-  it("POST /authed/tasks name", async () => {
+  it("o POST   /authed/tasks   with name", async () => {
     const reqBody = {
       name: "taskName"
     };
@@ -575,7 +575,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("POST /authed/tasks name, comment and whoisdoinguserid", async () => {
+  it("o POST   /authed/tasks   with name, comment, whoisdoinguserid", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment",
@@ -601,7 +601,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("POST /authed/tasks name, comment, whoisdoinguserid and deadlinedate", async () => {
+  it("o POST   /authed/tasks   with name, comment, whoisdoinguserid, deadlinedate", async () => {
     const reqBody = {
       name: "taskName",
       comment: "taskComment",
@@ -628,7 +628,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("GET /authed/tasks", async () => {
+  it("o GET    /authed/tasks", async () => {
     const res = await req
       .get("/api/v1/authed/tasks")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -689,7 +689,7 @@ describe("/tasks", () => {
     ]);
   });
 
-  it("GET /authed/tasks/1", async () => {
+  it("o GET    /authed/tasks/1", async () => {
     const res = await req
       .get("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -710,7 +710,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/100 (not found) (bad request)", async () => {
+  it("x PUT    /authed/tasks/100   not exist", async () => {
     const reqBody = {
       name: "newTaskName",
       comment: "taskComment"
@@ -723,7 +723,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toEqual(1617);
   });
 
-  it("PUT /authed/tasks/1 change name", async () => {
+  it("o PUT    /authed/tasks/1   change name", async () => {
     const reqBody = {
       name: "newTaskName"
     };
@@ -747,7 +747,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/1 comment and isfinished", async () => {
+  it("o PUT    /authed/tasks/1   change comment,isfinished", async () => {
     const reqBody = {
       comment: "newTaskComment",
       isfinished: true
@@ -772,7 +772,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/1 whoisdoinguserid is string (bad request)", async () => {
+  it("x PUT    /authed/tasks/1   whoisdoinguserid is not number", async () => {
     const reqBody = {
       whoisdoinguserid: "isNotNumber"
     };
@@ -784,7 +784,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1703);
   });
 
-  it("PUT /authed/tasks/1 whoisdoinguserid 's user is not found (bad request)", async () => {
+  it("x PUT    /authed/tasks/1   whoisdoinguserid 's user is exist", async () => {
     const reqBody = {
       whoisdoinguserid: 100
     };
@@ -796,7 +796,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1621);
   });
 
-  it("PUT /authed/tasks/1 whoisdoinguserid 's user is not join any groups (bad request)", async () => {
+  it("x PUT    /authed/tasks/1   whoisdoinguserid 's user does not belong to any groups", async () => {
     const reqBody = {
       whoisdoinguserid: 4
     };
@@ -808,7 +808,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1621);
   });
 
-  it("PUT /authed/tasks/1 whoisdoinguserid 's user is not join same group (bad request)", async () => {
+  it("x PUT    /authed/tasks/1  whoisdoinguserid 's user belongs to another group", async () => {
     const reqBody = {
       whoisdoinguserid: 3
     };
@@ -820,7 +820,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1621);
   });
 
-  it("PUT /authed/tasks/1 whoisdoinguserid", async () => {
+  it("o PUT    /authed/tasks/1   change whoisdoinguserid", async () => {
     const reqBody = {
       whoisdoinguserid: 1
     };
@@ -844,7 +844,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/1 whoisdoinguserid is null", async () => {
+  it("o PUT    /authed/tasks/1   change whoisdoinguserid to null", async () => {
     const reqBody = {
       whoisdoinguserid: null
     };
@@ -868,7 +868,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/1 deadlinedate (is not string) (bad request)", async () => {
+  it("x PUT    /authed/tasks/1   deadlinedate is not string", async () => {
     const reqBody = {
       deadlinedate: 0
     };
@@ -880,7 +880,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1705);
   });
 
-  it("PUT /authed/tasks/1 deadlinedate (is not date string(ISO8601)) (bad request)", async () => {
+  it("x PUT    /authed/tasks/1   deadlinedate's format is not ISO8601", async () => {
     const reqBody = {
       deadlinedate: "isNotDateString(ISO8601)"
     };
@@ -892,7 +892,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1706);
   });
 
-  it("PUT /authed/tasks/1 deadlinedate", async () => {
+  it("o PUT    /authed/tasks/1  change deadlinedate", async () => {
     const reqBody = {
       deadlinedate: "2021-02-03T04:05:06.078Z"
     };
@@ -916,7 +916,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/1 deadlinedate(null)", async () => {
+  it("o PUT    /authed/tasks/1   change deadlinedate to null", async () => {
     const reqBody = {
       deadlinedate: null
     };
@@ -940,7 +940,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("POST /authed/tasks?auto=true", async () => {
+  it("o POST   /authed/tasks?auto=true", async () => {
     const reqBody = {
       name: "taskNameAuto"
     };
@@ -964,7 +964,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("PUT /authed/tasks/2 done", async () => {
+  it("x PUT    /authed/tasks/2   finish task", async () => {
     const reqBody = {
       isfinished: true
     };
@@ -975,7 +975,7 @@ describe("/tasks", () => {
     expect(res.status).toBe(200);
   });
 
-  it("PUT /authed/tasks/3 done", async () => {
+  it("o PUT    /authed/tasks/3    finish task", async () => {
     const reqBody = {
       isfinished: true
     };
@@ -986,7 +986,7 @@ describe("/tasks", () => {
     expect(res.status).toBe(200);
   });
 
-  it("POST /authed/tasks?auto=true", async () => {
+  it("o POST    /authed/tasks?auto=true", async () => {
     const reqBody = {
       name: "taskNameAuto"
     };
@@ -1010,7 +1010,7 @@ describe("/tasks", () => {
     });
   });
 
-  it("delete /authed/tasks/1 (permission denied, bad request)", async () => {
+  it("x DELETE /authed/tasks/1   user3 does not belong to task1's group", async () => {
     const res = await req
       .delete("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser3}`)
@@ -1019,7 +1019,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1622);
   });
 
-  it("delete /authed/tasks/1 (permission denied, bad request)", async () => {
+  it("x DELETE /authed/tasks/1   user4 does no belong to task1's group", async () => {
     const res = await req
       .delete("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser4}`)
@@ -1028,7 +1028,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1622);
   });
 
-  it("delete /authed/tasks/100 (not exist resource, bad request)", async () => {
+  it("x DELETE /authed/tasks/100   not exist", async () => {
     const res = await req
       .delete("/api/v1/authed/tasks/100")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -1037,7 +1037,7 @@ describe("/tasks", () => {
     expect(res.body.errorCode).toBe(1620);
   });
 
-  it("delete /authed/tasks/1", async () => {
+  it("o DELETE /authed/tasks/1", async () => {
     const res = await req
       .delete("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
@@ -1045,7 +1045,7 @@ describe("/tasks", () => {
     expect(res.status).toBe(204);
   });
 
-  it("get /authed/tasks/1 (not exist resouce)", async () => {
+  it("x GET    /authed/tasks/1   not exist", async () => {
     const res = await req
       .get("/api/v1/authed/tasks/1")
       .set("Authorization", `Bearer ${bearerUser1}`)
