@@ -1060,7 +1060,6 @@ describe("/authed/taskgenerators", () => {
     const reqBody = {
       comment: "taskgenerator's comment",
       interval: "oneday",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z"
     };
     const res = await req
@@ -1075,7 +1074,6 @@ describe("/authed/taskgenerators", () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z"
     };
     const res = await req
@@ -1091,22 +1089,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "invalidstring",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
-    };
-    const res = await req
-      .post("/api/v1/authed/taskgenerators")
-      .set("Authorization", `Bearer ${bearerUser1}`)
-      .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
-  });
-
-  it("x POST   /authed/taskgenerators   a lack of firstgeneratedate", async () => {
-    const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: "oneday",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z"
     };
     const res = await req
@@ -1121,24 +1103,7 @@ describe("/authed/taskgenerators", () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
-      interval: "oneday",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z"
-    };
-    const res = await req
-      .post("/api/v1/authed/taskgenerators")
-      .set("Authorization", `Bearer ${bearerUser1}`)
-      .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
-  });
-
-  it("x POST   /authed/taskgenerators   firstgeneratedate's format is not ISO8601", async () => {
-    const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: "oneday",
-      firstgeneratedate: "invalidstring",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+      interval: "oneday"
     };
     const res = await req
       .post("/api/v1/authed/taskgenerators")
@@ -1153,7 +1118,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "oneday",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "invalidstring"
     };
     const res = await req
@@ -1169,7 +1133,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "oneday",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z"
     };
     const res = await req
@@ -1182,7 +1145,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "oneday",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1194,7 +1156,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "oneweek",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z"
     };
     const res = await req
@@ -1207,7 +1168,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "oneweek",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1219,7 +1179,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "onemonth",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z"
     };
     const res = await req
@@ -1232,7 +1191,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "onemonth",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1251,7 +1209,6 @@ describe("/authed/taskgenerators", () => {
         name: "task generator name",
         comment: "taskgenerator's comment",
         interval: "oneday",
-        firstgeneratedate: "2020-02-03T04:00:00.000Z",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
         updatedAt: expect.anything(),
         createdAt: expect.anything()
@@ -1261,7 +1218,6 @@ describe("/authed/taskgenerators", () => {
         name: "task generator name",
         comment: "taskgenerator's comment",
         interval: "oneweek",
-        firstgeneratedate: "2020-02-03T04:00:00.000Z",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
         updatedAt: expect.anything(),
         createdAt: expect.anything()
@@ -1271,7 +1227,6 @@ describe("/authed/taskgenerators", () => {
         name: "task generator name",
         comment: "taskgenerator's comment",
         interval: "onemonth",
-        firstgeneratedate: "2020-02-03T04:00:00.000Z",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
         updatedAt: expect.anything(),
         createdAt: expect.anything()
@@ -1290,7 +1245,6 @@ describe("/authed/taskgenerators", () => {
       name: "task generator name",
       comment: "taskgenerator's comment",
       interval: "oneday",
-      firstgeneratedate: "2020-02-03T04:00:00.000Z",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
       updatedAt: expect.anything(),
       createdAt: expect.anything()
