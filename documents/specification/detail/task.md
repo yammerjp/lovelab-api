@@ -31,7 +31,7 @@ GET /authed/tasks
 | deadlinedate | 文字列またはnull | タスクの締め切り日時 |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
 | doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
-| taskgeneratorid | 数字またはnull | このタスクのもととなる定期タスクid |
+| taskgeneratorid | 数字またはnull | 親定期タスクid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -71,7 +71,7 @@ GET /authed/tasks
 | deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
 | doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
-| taskgeneratorid | null | このタスクのもととなる定期タスクid用プロパティ |
+| taskgeneratorid | null | 親定期タスクid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -112,7 +112,7 @@ whoisdoinguseridを、グループ内で過去にこなしたタスク数が最�
 | deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
 | doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
-| taskgeneratorid | null | このタスクのもととなる定期タスクid用プロパティ |
+| taskgeneratorid | null | 親定期タスクid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -147,7 +147,7 @@ whoisdoinguseridを、グループ内で過去にこなしたタスク数が最�
 | deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
 | doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
-| taskgeneratorid | null | このタスクのもととなる定期タスクid用プロパティ |
+| taskgeneratorid | 数字またはnull | 親定期タスクid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
@@ -188,7 +188,7 @@ whoisdoinguseridを、グループ内で過去にこなしたタスク数が最�
 | deadlinedate | 文字列またはnull | タスクの締め切り日時(ISO8601) |
 | finisheddate | 文字列またはnull | タスクを完了にした日時 |
 | doneuserid | 数字またはnull | タスクを完了にしたユーザのユーザid |
-| taskgeneratorid | null | このタスクのもととなる定期タスクid用プロパティ |
+| taskgeneratorid | 数字またはnull | 親定期タスクid |
 | updatedAt | 文字列 | 当該レコードの最終更新日時(タイムゾーンなし) |
 | createdAt | 文字列 | 当該レコードの作成日時(タイムゾーンなし) |
 
