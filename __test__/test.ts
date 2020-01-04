@@ -1238,4 +1238,71 @@ describe("/authed/taskgenerators", () => {
       createdAt: expect.anything()
     });
   });
+
+  it("o GET    /authed/taskgenerators", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      {
+        id: 1,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        interval: "oneday",
+        firstgeneratedate: "2020-02-03T04:00:00.000Z",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        id: 2,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        interval: "oneweek",
+        firstgeneratedate: "2020-02-03T04:00:00.000Z",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        id: 3,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        interval: "onemonth",
+        firstgeneratedate: "2020-02-03T04:00:00.000Z",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      }
+    ]);
+  });
+
+  it("o GET    /authed/taskgenerators/1", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "oneday",
+      firstgeneratedate: "2020-02-03T04:00:00.000Z",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("x GET    /authed/taskgenerators/100   not exist", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(9999);
+  });
 });
