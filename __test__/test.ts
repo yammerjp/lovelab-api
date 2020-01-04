@@ -1056,7 +1056,7 @@ describe("/authed/tasks", () => {
 });
 
 describe("/authed/taskgenerators", () => {
-  it("POST /authed/taskgenerators (a lack of name, bad request", async () => {
+  it("x POST   /authed/taskgenerators   a lack of name", async () => {
     const reqBody = {
       comment: "taskgenerator's comment",
       interval: "oneday",
@@ -1071,7 +1071,7 @@ describe("/authed/taskgenerators", () => {
     expect(res.body.errorCode).toBe(9999);
   });
 
-  it("POST /authed/taskgenerators (a lack of interval, bad request", async () => {
+  it("x POST   /authed/taskgenerators   a lack of interval", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1086,7 +1086,7 @@ describe("/authed/taskgenerators", () => {
     expect(res.body.errorCode).toBe(9999);
   });
 
-  it("POST /authed/taskgenerators (invalid string of interval, bad request", async () => {
+  it("x POST   /authed/taskgenerators   interval is invalid string", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1102,7 +1102,7 @@ describe("/authed/taskgenerators", () => {
     expect(res.body.errorCode).toBe(9999);
   });
 
-  it("POST /authed/taskgenerators (a lack of firstgeneratedate, bad request", async () => {
+  it("x POST   /authed/taskgenerators   a lack of firstgeneratedate", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1117,7 +1117,7 @@ describe("/authed/taskgenerators", () => {
     expect(res.body.errorCode).toBe(9999);
   });
 
-  it("POST /authed/taskgenerators (a lack of firstdeadlinedate, bad request", async () => {
+  it("x POST   /authed/taskgenerators   a lack of firstdeadlinedate", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1132,7 +1132,7 @@ describe("/authed/taskgenerators", () => {
     expect(res.body.errorCode).toBe(9999);
   });
 
-  it("POST /authed/taskgenerators (firstgeneratedate is not ISO8601, bad request", async () => {
+  it("x POST   /authed/taskgenerators   firstgeneratedate's format is not ISO8601", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1148,7 +1148,7 @@ describe("/authed/taskgenerators", () => {
     expect(res.body.errorCode).toBe(9999);
   });
 
-  it("POST /authed/taskgenerators (firstdeadlinedate is not ISO8601, bad request", async () => {
+  it("x POST   /authed/taskgenerators   firstdeadlinedate's format is not ISO8601", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1164,7 +1164,7 @@ describe("/authed/taskgenerators", () => {
     expect(res.body.errorCode).toBe(9999);
   });
 
-  it("POST /authed/taskgenerators oneday", async () => {
+  it("o POST   /authed/taskgenerators   oneday", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1189,7 +1189,7 @@ describe("/authed/taskgenerators", () => {
     });
   });
 
-  it("POST /authed/taskgenerators oneweek", async () => {
+  it("o POST   /authed/taskgenerators   oneweek", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
@@ -1214,7 +1214,7 @@ describe("/authed/taskgenerators", () => {
     });
   });
 
-  it("POST /authed/taskgenerators onemonth", async () => {
+  it("o POST   /authed/taskgenerators   onemonth", async () => {
     const reqBody = {
       name: "task generator name",
       comment: "taskgenerator's comment",
