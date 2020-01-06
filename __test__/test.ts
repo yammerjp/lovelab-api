@@ -1326,10 +1326,7 @@ describe("/authed/taskgenerators", () => {
 
   it("x PUT    /authed/taskgenerators/1   interval is invalid string", async () => {
     const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: "invalidstring",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+      name: "new task generator name"
     };
     const res = await req
       .put("/api/v1/authed/taskgenerators/1")
@@ -1337,6 +1334,54 @@ describe("/authed/taskgenerators", () => {
       .send(reqBody);
     expect(res.status).toBe(400);
     expect(res.body.errorCode).toBe(9999);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of name", async () => {
+    const reqBody = {
+      name: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body).toBe(9999);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of comment", async () => {
+    const reqBody = {
+      comment: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body).toBe(9999);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of interval", async () => {
+    const reqBody = {
+      interval: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body).toBe(9999);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of firstdeadlinedate", async () => {
+    const reqBody = {
+      firstdeadlinedate: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body).toBe(9999);
   });
 
   it("o PUT    /authed/taskgenerators/1   change name", async () => {
@@ -1358,66 +1403,6 @@ describe("/authed/taskgenerators", () => {
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
-  });
-
-  it("x PUT    /authed/taskgenerators/1   invalid type of name", async () => {
-    const reqBody = {
-      name: 1234,
-      comment: "taskgenerator's comment",
-      interval: "oneday",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
-    };
-    const res = await req
-      .put("/api/v1/authed/taskgenerators/1")
-      .set("Authorization", `Bearer ${bearerUser1}`)
-      .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body).toBe(9999);
-  });
-
-  it("x PUT    /authed/taskgenerators/1   invalid type of comment", async () => {
-    const reqBody = {
-      name: "task generator name",
-      comment: 1234,
-      interval: "oneday",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
-    };
-    const res = await req
-      .put("/api/v1/authed/taskgenerators/1")
-      .set("Authorization", `Bearer ${bearerUser1}`)
-      .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body).toBe(9999);
-  });
-
-  it("x PUT    /authed/taskgenerators/1   invalid type of interval", async () => {
-    const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: 1234,
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
-    };
-    const res = await req
-      .put("/api/v1/authed/taskgenerators/1")
-      .set("Authorization", `Bearer ${bearerUser1}`)
-      .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body).toBe(9999);
-  });
-
-  it("x PUT    /authed/taskgenerators/1   invalid type of firstdeadlinedate", async () => {
-    const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: "oneday",
-      firstdeadlinedate: 1234
-    };
-    const res = await req
-      .put("/api/v1/authed/taskgenerators/1")
-      .set("Authorization", `Bearer ${bearerUser1}`)
-      .send(reqBody);
-    expect(res.status).toBe(400);
-    expect(res.body).toBe(9999);
   });
 
   it("o PUT    /authed/taskgenerators/1   change comment", async () => {
@@ -1443,10 +1428,7 @@ describe("/authed/taskgenerators", () => {
 
   it("o PUT    /authed/taskgenerators/1   change interval", async () => {
     const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: "oneweek",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+      interval: "oneweek"
     };
     const res = await req
       .put("/api/v1/authed/taskgenerators/1")
@@ -1455,8 +1437,8 @@ describe("/authed/taskgenerators", () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       id: 1,
-      name: "task generator name",
-      comment: "taskgenerator's comment",
+      name: "new task generator name",
+      comment: "new taskgenerator's comment",
       groupid: 1,
       interval: "oneweek",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
@@ -1467,9 +1449,6 @@ describe("/authed/taskgenerators", () => {
 
   it("o PUT    /authed/taskgenerators/1   change firstdeadlinedate", async () => {
     const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: "oneday",
       firstdeadlinedate: "2020-02-19T04:00:00.000Z"
     };
     const res = await req
@@ -1479,10 +1458,10 @@ describe("/authed/taskgenerators", () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       id: 1,
-      name: "task generator name",
-      comment: "taskgenerator's comment",
+      name: "new task generator name",
+      comment: "newtaskgenerator's comment",
       groupid: 1,
-      interval: "oneday",
+      interval: "oneweek",
       firstdeadlinedate: "2020-02-19T04:00:00.000Z",
       updatedAt: expect.anything(),
       createdAt: expect.anything()
