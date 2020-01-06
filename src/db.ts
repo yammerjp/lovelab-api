@@ -5,6 +5,8 @@ import { Invitations, invitationsFactory } from "./models/invitations";
 import { Groups, groupsFactory } from "./models/groups";
 import { Tasks, tasksFactory } from "./models/tasks";
 import { Tokens, tokensFactory } from "./models/tokens";
+import { TaskGenerators, taskGeneratorsFactory } from "./models/taskGenerators";
+
 // database接続
 let isConnected = false;
 const connectDataBase = (forceReset = false): Promise<boolean> => {
@@ -36,6 +38,7 @@ const connectDataBase = (forceReset = false): Promise<boolean> => {
   invitationsFactory(sequelize);
   tasksFactory(sequelize);
   tokensFactory(sequelize);
+  taskGeneratorsFactory(sequelize);
 
   return sequelize
     .authenticate()
@@ -61,6 +64,11 @@ const connectDataBase = (forceReset = false): Promise<boolean> => {
     })
     .then(() => {
       return Tokens.sync({
+        force: forceReset
+      });
+    })
+    .then(() => {
+      return TaskGenerators.sync({
         force: forceReset
       });
     })
