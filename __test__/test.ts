@@ -1264,6 +1264,24 @@ describe("/authed/taskgenerators", () => {
     ]);
   });
 
+  it("x GET    /authed/taskgenerators/100   not exist", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(9999);
+  });
+
+  it("x GET    /authed/taskgenerators/4   another group's taskgenerator", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators/4")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(9999);
+  });
+
   it("o GET    /authed/taskgenerators/1", async () => {
     const res = await req
       .get("/api/v1/authed/taskgenerators/1")
@@ -1282,27 +1300,27 @@ describe("/authed/taskgenerators", () => {
     });
   });
 
-  it("x GET    /authed/taskgenerators/100   not exist", async () => {
-    const res = await req
-      .get("/api/v1/authed/taskgenerators/1")
-      .set("Authorization", `Bearer ${bearerUser1}`)
-      .send();
-    expect(res.status).toBe(404);
-    expect(res.body.errorCode).toBe(9999);
-  });
-
   it("x PUT    /authed/taskgenerators/100   not exist", async () => {
     const reqBody = {
-      name: "task generator name",
-      comment: "taskgenerator's comment",
-      interval: "oneday",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+      name: "new task generator name"
     };
     const res = await req
       .put("/api/v1/authed/taskgenerators/100")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(9999);
+  });
+
+  it("x PUT    /authed/taskgenerators/4   another group's taskgenerator", async () => {
+    const reqBody = {
+      name: "new task generator name"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/4")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
     expect(res.body.errorCode).toBe(9999);
   });
 
