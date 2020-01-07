@@ -364,5 +364,11 @@
     "message":"Requested JSON is invalid",
     "messageJp":"Requested JSON is invalid",
     "status":"Requested JSON is invalid"
+  },
+  "1708":{
+    "httpStatus":400,
+    "message":"Requested JSON is invalid",
+    "messageJp":"Requested JSON is invalid",
+    "status":"Requested JSON is invalid"
   }
 }
