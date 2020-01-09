@@ -918,6 +918,24 @@ whoisdoinguserid is invalid
 
 タスク編集時、リクエストボディに無効な値が与えられた時発生。
 
+## errorCode: 1622
+
+### HTTP status code
+
+403
+
+### Error Message
+
+Not permitted. the task is out of your group.
+
+### Error Message Jp
+
+自分の所属するグループのタスクのみ削除可能です。
+
+### Status
+
+タスク削除時、指定されたidｎタスクが、リクエストユーザのグループと一致しないときに発生。
+
 ## errorCode: 1700
 
 ### HTTP status code
@@ -1061,4 +1079,256 @@ Requested JSON is invalid
 ### Status
 
 Requested JSON is invalid
+
+## errorCode: 1708
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1800
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested JSON is invalid
+
+### Error Message Jp
+
+Requested JSON is invalid
+
+### Status
+
+Requested JSON is invalid
+
+## errorCode: 1801
+
+### HTTP status code
+
+400
+
+### Error Message
+
+Requested URI is invalid. Task generator id is number
+
+### Error Message Jp
+
+URI内で渡されたTask generator idは整数である必要があります。
+
+### Status
+
+特定のTask generatorを取得する時、URIで指定されたidが整数でない文字列のときに発生。
+
+## errorCode: 1802
+
+### HTTP status code
+
+404
+
+### Error Message
+
+The task generator is not found.
+
+### Error Message Jp
+
+指定されたidのTask generatorが見つかりません。
+
+### Status
+
+特定のTask generatorを取得する時、URIで指定したidのTask generatorがデータベース内に存在しないときに発生。
+
+## errorCode: 1803
+
+### HTTP status code
+
+409
+
+### Error Message
+
+Not permitted. the task generator is out of your group.
+
+### Error Message Jp
+
+取得できるTask generatorはグループ内のものに限ります。
+
+### Status
+
+特定のTask generatorを取得する時、URIで指定したidのTask generatorのgroupidがリクエストしたユーザのgroupidと一致しないときに発生。
+
+## errorCode: 1804
+
+### HTTP status code
+
+500
+
+### Error Message
+
+Unknown error.
+
+### Error Message Jp
+
+想定外のエラーが発生しました。
+
+### Status
+
+特定のTask generatorを取得する時、想定外のエラーが発生。
+
+## errorCode: 1805
+
+### HTTP status code
+
+500
+
+### Error Message
+
+Unknown error.
+
+### Error Message Jp
+
+想定外のエラーが発生しました。
+
+### Status
+
+特定のTask generatorを作成する時、想定外のエラーが発生。
+
+## errorCode: 1806
+
+### HTTP status code
+
+500
+
+### Error Message
+
+Unknown error.
+
+### Error Message Jp
+
+想定外のエラーが発生しました。
+
+### Status
+
+グループ内すべてのTask generatorを取得する時、想定外のエラーが発生。
+
+## errorCode: 1807
+
+### HTTP status code
+
+404
+
+### Error Message
+
+The task generator is not found.
+
+### Error Message Jp
+
+指定されたidのTask generatorが存在しません
+
+### Status
+
+特定のTask generatorを更新しようとしたが、Task generatorが存在しないときに発生。
+
+## errorCode: 1808
+
+### HTTP status code
+
+409
+
+### Error Message
+
+Not permitted.
+
+### Error Message Jp
+
+更新できるTask generatorはグループ内のものに限ります。
+
+### Status
+
+特定のTask generatorを更新する時、URIで指定したidのTask generatorのgroupidがリクエストしたユーザのgroupidと一致しないときに発生。
+
+## errorCode: 1809
+
+### HTTP status code
+
+500
+
+### Error Message
+
+Unknown error.
+
+### Error Message Jp
+
+想定外のエラーが発生しました。
+
+### Status
+
+特定のTask generatorを更新しようとする時、想定外のエラーが発生。
+
+## errorCode: 1810
+
+### HTTP status code
+
+404
+
+### Error Message
+
+Not found.
+
+### Error Message Jp
+
+指定されたidのTask generatorが存在しません
+
+### Status
+
+特定のTask generatorを削除しようとしたが、Task generatorが存在しないときに発生。
+
+## errorCode: 1811
+
+### HTTP status code
+
+409
+
+### Error Message
+
+Not permitted.
+
+### Error Message Jp
+
+削除できるTask generatorはグループ内のものに限ります。
+
+### Status
+
+特定のTask generatorを削除する時、URIで指定したidのTask generatorのgroupidがリクエストしたユーザのgroupidと一致しないときに発生。
+
+## errorCode: 1812
+
+### HTTP status code
+
+500
+
+### Error Message
+
+Unknown error.
+
+### Error Message Jp
+
+想定外のエラーが発生しました。
+
+### Status
+
+特定のTask generatorを削除しようとする時、想定外のエラーが発生。
 
