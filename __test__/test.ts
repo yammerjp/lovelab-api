@@ -1486,7 +1486,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(404);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1810);
   });
 
   it("x DELETE /authed/taskgenerators/4   another group's task generator", async () => {
@@ -1495,7 +1495,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(409);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1811);
   });
 
   it("o DELETE /authed/taskgenerators/1", async () => {

@@ -146,13 +146,33 @@ router.put("/:id", (req, res) => {
       res.json(taskGenerator);
     })
     .catch(e => {
-      errorHandle(res, e >= 1807 && e <= 1808 ? e : 1809);
+      errorHandle(res, e === 1807 || e === 1808 ? e : 1809);
     });
 });
 
 router.delete("/:id", (req, res) => {
-  console.log(req.params.id);
-  res.json({ message: `hello, taskgenerators/${req.params.id}, delete` });
+  const taskGeneratorId = parseInt(req.params.id, 10);
+  const { groupidAuth } = req.body;
+
+  TaskGenerators.findByPk(taskGeneratorId)
+    .then(taskGenerator => {
+      if (taskGenerator === null) {
+        return Promise.reject(1810);
+      }
+      if (taskGenerator.groupid !== groupidAuth) {
+        return Promise.reject(1811);
+      }
+      return Promise.resolve();
+    })
+    .then(() => {
+      return TaskGenerators.destroy({ where: { id: taskGeneratorId } });
+    })
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(e => {
+      errorHandle(res, e === 1810 || e === 1811 ? e : 1812);
+    });
 });
 
 // postまたはputしたとき、firstdeadlinedateから計算してnextgeneratingdateを求める
