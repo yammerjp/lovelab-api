@@ -5,8 +5,6 @@
 import * as express from "express";
 import errorHandle from "../others/error";
 
-type Interval = "oneday" | "oneweek" | "onemonth";
-
 interface RequestBody {
   email?: string;
   password?: string;

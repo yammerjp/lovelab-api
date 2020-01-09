@@ -23,7 +23,7 @@ class TaskGenerators extends Model {
 
   public firstdeadlinedate: Date;
 
-  public nextdeadlinedate: Date;
+  public nextgeneratingdate: Date;
 
   public static attach(sequelize: Sequelize): void {
     this.init(
@@ -59,7 +59,7 @@ class TaskGenerators extends Model {
           type: DataTypes.DATE,
           allowNull: false
         },
-        nextdeadlinedate: {
+        nextgeneratingdate: {
           type: DataTypes.DATE,
           allowNull: false
         }

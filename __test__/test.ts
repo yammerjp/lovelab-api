@@ -1067,7 +1067,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1800);
   });
 
   it("x POST   /authed/taskgenerators   a lack of interval", async () => {
@@ -1081,7 +1081,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1800);
   });
 
   it("x POST   /authed/taskgenerators   interval is invalid string", async () => {
@@ -1096,7 +1096,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1707);
   });
 
   it("x POST   /authed/taskgenerators   a lack of firstdeadlinedate", async () => {
@@ -1110,7 +1110,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1800);
   });
 
   it("x POST   /authed/taskgenerators   firstdeadlinedate's format is not ISO8601", async () => {
@@ -1125,7 +1125,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send(reqBody);
     expect(res.status).toBe(400);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1706);
   });
 
   it("o POST   /authed/taskgenerators   oneday", async () => {
@@ -1147,6 +1147,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "oneday",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1171,6 +1172,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "oneweek",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1195,6 +1197,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "onemonth",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1219,6 +1222,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 2,
       interval: "onemonth",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1238,6 +1242,7 @@ describe("/authed/taskgenerators", () => {
         groupid: 1,
         interval: "oneday",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
       },
@@ -1248,6 +1253,7 @@ describe("/authed/taskgenerators", () => {
         groupid: 1,
         interval: "oneweek",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
       },
@@ -1258,6 +1264,7 @@ describe("/authed/taskgenerators", () => {
         groupid: 1,
         interval: "onemonth",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
       }
@@ -1295,6 +1302,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "oneday",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1400,6 +1408,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "oneday",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1421,6 +1430,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "oneday",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1442,6 +1452,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "oneweek",
       firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1463,6 +1474,7 @@ describe("/authed/taskgenerators", () => {
       groupid: 1,
       interval: "oneweek",
       firstdeadlinedate: "2020-02-19T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
     });
@@ -1508,6 +1520,7 @@ describe("/authed/taskgenerators", () => {
         groupid: 1,
         interval: "oneweek",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
       },
@@ -1518,6 +1531,7 @@ describe("/authed/taskgenerators", () => {
         groupid: 1,
         interval: "onemonth",
         firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
       }
