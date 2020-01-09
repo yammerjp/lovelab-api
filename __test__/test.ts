@@ -1273,11 +1273,11 @@ describe("/authed/taskgenerators", () => {
 
   it("x GET    /authed/taskgenerators/100   not exist", async () => {
     const res = await req
-      .get("/api/v1/authed/taskgenerators/1")
+      .get("/api/v1/authed/taskgenerators/100")
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(404);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1802);
   });
 
   it("x GET    /authed/taskgenerators/4   another group's taskgenerator", async () => {
@@ -1286,7 +1286,7 @@ describe("/authed/taskgenerators", () => {
       .set("Authorization", `Bearer ${bearerUser1}`)
       .send();
     expect(res.status).toBe(409);
-    expect(res.body.errorCode).toBe(9999);
+    expect(res.body.errorCode).toBe(1803);
   });
 
   it("o GET    /authed/taskgenerators/1", async () => {

@@ -14,13 +14,40 @@ const calcFirstGeneratingDate = (
 };
 
 router.get("/", (req, res) => {
-  console.log(req.body);
-  res.json({ message: "hello, taskgenerators, get" });
+  const { groupidAuth } = req.body;
+
+  TaskGenerators.findAll({ where: { groupid: groupidAuth } })
+    .then(taskGenerators => {
+      res.json(taskGenerators);
+    })
+    .catch(() => {
+      errorHandle(res, 1806);
+    });
 });
 
 router.get("/:id", (req, res) => {
-  console.log(req.params.id);
-  res.json({ message: `hello, taskgenerators/${req.params.id}, get` });
+  const taskGeneratorId = parseInt(req.params.id, 10);
+  const { groupidAuth } = req.body;
+
+  if (Number.isNaN(taskGeneratorId)) {
+    errorHandle(res, 1801);
+    return;
+  }
+
+  TaskGenerators.findByPk(req.params.id)
+    .then(taskGenerator => {
+      if (taskGenerator === null) {
+        return Promise.reject(1802);
+      }
+      if (taskGenerator.groupid !== groupidAuth) {
+        return Promise.reject(1803);
+      }
+      res.json(taskGenerator);
+      return Promise.resolve();
+    })
+    .catch(e => {
+      errorHandle(res, e >= 1802 && e <= 1803 ? e : 1804);
+    });
 });
 
 router.post("/", (req, res) => {
@@ -40,6 +67,7 @@ router.post("/", (req, res) => {
   }
   if (groupidAuth === null) {
     errorHandle(res, 1801);
+    return;
   }
 
   TaskGenerators.create({
@@ -49,9 +77,13 @@ router.post("/", (req, res) => {
     firstdeadlinedate,
     groupid: groupidAuth,
     nextgeneratingdate: calcFirstGeneratingDate(firstdeadlinedate, interval)
-  }).then(taskGenerator => {
-    res.json(taskGenerator);
-  });
+  })
+    .then(taskGenerator => {
+      res.json(taskGenerator);
+    })
+    .catch(() => {
+      errorHandle(res, 1805);
+    });
 });
 
 router.put("/:id", (req, res) => {

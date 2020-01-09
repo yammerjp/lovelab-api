@@ -376,5 +376,43 @@
     "message":"Requested JSON is invalid",
     "messageJp":"Requested JSON is invalid",
     "status":"Requested JSON is invalid"
+  },
+  "1801":{
+    "httpStatus":400,
+    "message":"Requested URI is invalid. Task generator id is number",
+    "messageJp":"URI内で渡されたTask generator idは整数である必要があります。",
+    "status":"特定のTask generatorを取得する時、URIで指定されたidが整数でない文字列のときに発生。"
+  },
+  "1802":{
+    "httpStatus":404,
+    "message":"The task generator is not found.",
+    "messageJp":"指定されたidのTask generatorが見つかりません。",
+    "status":"特定のTask generatorを取得する時、URIで指定したidのTask generatorがデータベース内に存在しないときに発生。"
+  },
+  "1803":{
+    "httpStatus":409,
+    "message":"Not permitted. the task generator is out of your group.",
+    "messageJp":"取得できるTask generatorはグループ内のものに限ります。",
+    "status":"特定のTask generatorを取得する時、URIで指定したidのTask generatorのgroupidがリクエストしたユーザのgroupidと一致しないときに発生。"
+  },
+  "1804":{
+    "httpStatus":500,
+    "message":"Unknown error.",
+    "messageJp":"想定外のエラーが発生しました。",
+    "status":"特定のTask generatorを取得する時、想定外のエラーが発生。"
+  },
+  "1805":{
+    "httpStatus":500,
+    "message":"Unknown error.",
+    "messageJp":"想定外のエラーが発生しました。",
+    "status":"特定のTask generatorを作成する時、想定外のエラーが発生。"
+  },
+  "1806":{
+    "httpStatus":500,
+    "message":"Unknown error.",
+    "messageJp":"想定外のエラーが発生しました。",
+    "status":"グループ内すべてのTask generatorを取得する時、想定外のエラーが発生。"
   }
+
+
 }
