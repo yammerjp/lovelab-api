@@ -62,7 +62,8 @@ taskgeneratorid ... もととなる定期タスクのid
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | groupid | 数字 | グループid |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| firstdeadlinedate | 文字列 | 初回タスクの締め切り日時(ISO8601) |
+| nextgeneratingdate | 文字列 | 次回タスク生成される日時(ISO8601) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時 |
 | createdAt | 文字列 | 当該レコードの作成日時 |
 
@@ -91,7 +92,8 @@ taskgeneratorid ... もととなる定期タスクのid
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | groupid | 数字 | グループid |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| firstdeadlinedate | 文字列 | 初回タスクの締め切り日時(ISO8601) |
+| nextgeneratingdate | 文字列 | 次回タスク生成される日時(ISO8601) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時 |
 | createdAt | 文字列 | 当該レコードの作成日時 |
 
@@ -118,7 +120,8 @@ taskgeneratorid ... もととなる定期タスクのid
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | groupid | 数字 | グループid |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| firstdeadlinedate | 文字列 | 初回タスクの締め切り日時(ISO8601) |
+| nextgeneratingdate | 文字列 | 次回タスク生成される日時(ISO8601) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時 |
 | createdAt | 文字列 | 当該レコードの作成日時 |
 
@@ -150,7 +153,8 @@ taskgeneratorid ... もととなる定期タスクのid
 | comment | 文字列またはnull |  タスクの詳細文字列 |
 | groupid | 数字 | グループid |
 | interval | 文字列 |  タスクの生成間隔(`oneday`または`oneweek`または`onemonth`) |
-| firstdeadlinedate | 文字列 | 必須 | 初回タスクの締め切り日時(ISO8601) |
+| firstdeadlinedate | 文字列 | 初回タスクの締め切り日時(ISO8601) |
+| nextgeneratingdate | 文字列 | 次回タスク生成される日時(ISO8601) |
 | updatedAt | 文字列 | 当該レコードの最終更新日時 |
 | createdAt | 文字列 | 当該レコードの作成日時 |
 
