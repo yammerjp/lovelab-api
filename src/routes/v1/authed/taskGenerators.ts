@@ -2,6 +2,14 @@ import * as express from "express";
 import { TaskGenerators } from "../../../models/taskGenerators";
 import errorHandle from "../../../others/error";
 
+interface TaskGeneratorRequest {
+  name?: string;
+  comment?: string;
+  interval?: Interval;
+  firstdeadlinedate?: Date;
+  nextgeneratingdate?: Date;
+}
+
 const router = express.Router();
 
 const calcFirstGeneratingDate = (
@@ -87,8 +95,59 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  console.log(req.params.id);
-  res.json(req.body);
+  // どの値を書き換えるか
+  // idで指定したtaskGeneratorのgroupidAuthが一致したとき、書き換える。
+  const taskGeneratorId = parseInt(req.params.id, 10);
+  const { name, comment, interval, firstdeadlinedate, groupidAuth } = req.body;
+  const nextgeneratingdateOrUndefinedOrNull = (
+    _firstdeadlinedate: Date,
+    _interval: Interval
+  ) => {
+    if (_firstdeadlinedate === null || _firstdeadlinedate === undefined) {
+      return _firstdeadlinedate;
+    }
+    return calcFirstGeneratingDate(_firstdeadlinedate, _interval);
+  };
+  const taskGeneratorRequest: TaskGeneratorRequest = {
+    name,
+    comment,
+    interval,
+    firstdeadlinedate,
+    nextgeneratingdate: nextgeneratingdateOrUndefinedOrNull(
+      firstdeadlinedate,
+      interval
+    )
+  };
+
+  if (Number.isNaN(taskGeneratorId)) {
+    errorHandle(res, 1806);
+    return;
+  }
+
+  TaskGenerators.findByPk(taskGeneratorId)
+    .then(taskGenerator => {
+      if (taskGenerator === null) {
+        return Promise.reject(1807);
+      }
+      if (taskGenerator.groupid !== groupidAuth) {
+        return Promise.reject(1808);
+      }
+      return Promise.resolve();
+    })
+    .then(() => {
+      return TaskGenerators.update(taskGeneratorRequest, {
+        where: { id: taskGeneratorId }
+      });
+    })
+    .then(() => {
+      return TaskGenerators.findByPk(taskGeneratorId);
+    })
+    .then(taskGenerator => {
+      res.json(taskGenerator);
+    })
+    .catch(e => {
+      errorHandle(res, e >= 1807 && e <= 1808 ? e : 1809);
+    });
 });
 
 router.delete("/:id", (req, res) => {
