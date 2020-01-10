@@ -306,6 +306,7 @@ describe("/authed/invitations", () => {
     expect(res.body).toEqual({
       id: 1,
       groupid: 1,
+      groupname: "groupname",
       inviteruserid: 1,
       inviteeuserid: 2,
       message: "invitation message",
@@ -326,6 +327,7 @@ describe("/authed/invitations", () => {
     expect(res.body).toEqual({
       id: 2,
       groupid: 1,
+      groupname: "groupname",
       inviteruserid: 1,
       inviteeuserid: 2,
       message: null,
@@ -344,6 +346,7 @@ describe("/authed/invitations", () => {
       {
         id: 1,
         groupid: 1,
+        groupname: "groupname",
         inviteruserid: 1,
         inviteeuserid: 2,
         message: "invitation message",
@@ -353,6 +356,7 @@ describe("/authed/invitations", () => {
       {
         id: 2,
         groupid: 1,
+        groupname: "groupname",
         inviteruserid: 1,
         inviteeuserid: 2,
         message: null,
