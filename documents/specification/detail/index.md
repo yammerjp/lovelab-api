@@ -32,6 +32,7 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 - [4.2.3. 招待](invitation.md)
 - [4.2.4. グループ](group.md)
 - [4.2.5. タスク](task.md)
+- [4.2.6. 定期タスク](taskGenerator.md)
 
 ## 4.3. API一覧
 
@@ -54,5 +55,10 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 | タスク | [特定のタスクの情報を取得](task.md#特定のタスクの情報を取得)| 有り | GET | `/authed/tasks/:id` |
 | タスク | [特定のタスクの内容を変更](task.md#特定のタスクの内容を変更)| 有り | PUT | `/authed/tasks/:id` |
 | タスク | [特定のタスクを削除](task.md#特定のタスクを削除)| 有り | DELETE | `/authed/tasks/:id` |
+| 定期タスク | [新規定期タスクの作成](taskGenerator.md#新規定期タスクの作成)| 有り | POST | `/authed/taskgenerators` |
+| 定期タスク | [グループの定期タスクをすべて取得](taskGenerator.md#グループの定期タスクをすべて取得)| 有り | GET | `/authed/taskgenerators` |
+| 定期タスク | [特定の定期タスクの内容を取得](taskGenerator.md#特定の定期タスクの内容を取得)| 有り | GET | `/authed/taskgenerators/:id` |
+| 定期タスク | [特定の定期タスクの内容を変更](taskGenerator.md#特定の定期タスクの内容を変更)| 有り | PUT | `/authed/taskgenerators/:id` |
+| 定期タスク | [特定の定期タスクを削除](taskGenerator.md#特定の定期タスクを削除)| 有り | DELETE | `/authed/taskgenerators/:id` |
 
 [もくじに戻る](../index.md)

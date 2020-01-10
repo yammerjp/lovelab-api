@@ -15,6 +15,8 @@ interface RequestBody {
   isfinished?: boolean;
   whoisdoinguserid?: number | null;
   deadlinedate?: Date | null;
+  interval?: Interval | null;
+  firstdeadlinedate?: Date | null;
 }
 
 const validate = (
@@ -77,6 +79,16 @@ const dateOrNullOrUndefined = (val: any): Date | null | undefined => {
   return new Date(milliSecond);
 };
 
+const intervalOrNullOrUndefined = (val: any): Interval | null | undefined => {
+  if (val === null || val === undefined) {
+    return val;
+  }
+  if (val === "oneday" || val === "oneweek" || val === "onemonth") {
+    return val;
+  }
+  throw 1707;
+};
+
 const validateReqBody = (
   req: express.Request,
   res: express.Response,
@@ -94,14 +106,16 @@ const validateReqBody = (
       comment: stringOrNullOrUndefined(req.body.comment),
       isfinished: booleanOrUndefined(req.body.isfinished),
       whoisdoinguserid: numberOrNullOrUndefined(req.body.whoisdoinguserid),
-      deadlinedate: dateOrNullOrUndefined(req.body.deadlinedate)
+      deadlinedate: dateOrNullOrUndefined(req.body.deadlinedate),
+      interval: intervalOrNullOrUndefined(req.body.interval),
+      firstdeadlinedate: dateOrNullOrUndefined(req.body.firstdeadlinedate)
     };
   } catch (e) {
-    if (e >= 1700 && e <= 1706) {
+    if (e >= 1700 && e <= 1707) {
       errorHandle(res, e);
       return;
     }
-    errorHandle(res, 1707);
+    errorHandle(res, 1708);
   }
 
   req.body = body;

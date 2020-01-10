@@ -1054,3 +1054,487 @@ describe("/authed/tasks", () => {
     expect(res.body.errorCode).toBe(1610);
   });
 });
+
+describe("/authed/taskgenerators", () => {
+  it("x POST   /authed/taskgenerators   a lack of name", async () => {
+    const reqBody = {
+      comment: "taskgenerator's comment",
+      interval: "oneday",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1800);
+  });
+
+  it("x POST   /authed/taskgenerators   a lack of interval", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1800);
+  });
+
+  it("x POST   /authed/taskgenerators   interval is invalid string", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "invalidstring",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1707);
+  });
+
+  it("x POST   /authed/taskgenerators   a lack of firstdeadlinedate", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "oneday"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1800);
+  });
+
+  it("x POST   /authed/taskgenerators   firstdeadlinedate's format is not ISO8601", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "oneday",
+      firstdeadlinedate: "invalidstring"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1706);
+  });
+
+  it("o POST   /authed/taskgenerators   oneday", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "oneday",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      groupid: 1,
+      interval: "oneday",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("o POST   /authed/taskgenerators   oneweek", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "oneweek",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 2,
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      groupid: 1,
+      interval: "oneweek",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("o POST   /authed/taskgenerators   onemonth", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "onemonth",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 3,
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      groupid: 1,
+      interval: "onemonth",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("o POST   /authed/taskgenerators   group2", async () => {
+    const reqBody = {
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      interval: "onemonth",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z"
+    };
+    const res = await req
+      .post("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser3}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 4,
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      groupid: 2,
+      interval: "onemonth",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("o GET    /authed/taskgenerators", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      {
+        id: 1,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        groupid: 1,
+        interval: "oneday",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        id: 2,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        groupid: 1,
+        interval: "oneweek",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        id: 3,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        groupid: 1,
+        interval: "onemonth",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      }
+    ]);
+  });
+
+  it("x GET    /authed/taskgenerators/100   not exist", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators/100")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(1802);
+  });
+
+  it("x GET    /authed/taskgenerators/4   another group's taskgenerator", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators/4")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1803);
+  });
+
+  it("o GET    /authed/taskgenerators/1", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "task generator name",
+      comment: "taskgenerator's comment",
+      groupid: 1,
+      interval: "oneday",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("x PUT    /authed/taskgenerators/100   not exist", async () => {
+    const reqBody = {
+      name: "new task generator name"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/100")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(1807);
+  });
+
+  it("x PUT    /authed/taskgenerators/4   another group's taskgenerator", async () => {
+    const reqBody = {
+      name: "new task generator name"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/4")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1808);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   interval is invalid string", async () => {
+    const reqBody = {
+      interval: "invalid string"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1707);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of name", async () => {
+    const reqBody = {
+      name: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1701);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of comment", async () => {
+    const reqBody = {
+      comment: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1701);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of interval", async () => {
+    const reqBody = {
+      interval: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1707);
+  });
+
+  it("x PUT    /authed/taskgenerators/1   invalid type of firstdeadlinedate", async () => {
+    const reqBody = {
+      firstdeadlinedate: 1234
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(400);
+    expect(res.body.errorCode).toBe(1705);
+  });
+
+  it("o PUT    /authed/taskgenerators/1   change name", async () => {
+    const reqBody = {
+      name: "new task generator name"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "new task generator name",
+      comment: "taskgenerator's comment",
+      groupid: 1,
+      interval: "oneday",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("o PUT    /authed/taskgenerators/1   change comment", async () => {
+    const reqBody = {
+      comment: "new taskgenerator's comment"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "new task generator name",
+      comment: "new taskgenerator's comment",
+      groupid: 1,
+      interval: "oneday",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("o PUT    /authed/taskgenerators/1   change interval", async () => {
+    const reqBody = {
+      interval: "oneweek"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "new task generator name",
+      comment: "new taskgenerator's comment",
+      groupid: 1,
+      interval: "oneweek",
+      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("o PUT    /authed/taskgenerators/1   change firstdeadlinedate", async () => {
+    const reqBody = {
+      firstdeadlinedate: "2020-02-19T04:00:00.000Z"
+    };
+    const res = await req
+      .put("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send(reqBody);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      name: "new task generator name",
+      comment: "new taskgenerator's comment",
+      groupid: 1,
+      interval: "oneweek",
+      firstdeadlinedate: "2020-02-19T04:00:00.000Z",
+      nextgeneratingdate: expect.anything(),
+      updatedAt: expect.anything(),
+      createdAt: expect.anything()
+    });
+  });
+
+  it("x DELETE /authed/taskgenerators/100   not exist", async () => {
+    const res = await req
+      .delete("/api/v1/authed/taskgenerators/100")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(404);
+    expect(res.body.errorCode).toBe(1810);
+  });
+
+  it("x DELETE /authed/taskgenerators/4   another group's task generator", async () => {
+    const res = await req
+      .delete("/api/v1/authed/taskgenerators/4")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(409);
+    expect(res.body.errorCode).toBe(1811);
+  });
+
+  it("o DELETE /authed/taskgenerators/1", async () => {
+    const res = await req
+      .delete("/api/v1/authed/taskgenerators/1")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(204);
+  });
+
+  it("o GET    /authed/taskgenerators", async () => {
+    const res = await req
+      .get("/api/v1/authed/taskgenerators")
+      .set("Authorization", `Bearer ${bearerUser1}`)
+      .send();
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      {
+        id: 2,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        groupid: 1,
+        interval: "oneweek",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      },
+      {
+        id: 3,
+        name: "task generator name",
+        comment: "taskgenerator's comment",
+        groupid: 1,
+        interval: "onemonth",
+        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        nextgeneratingdate: expect.anything(),
+        updatedAt: expect.anything(),
+        createdAt: expect.anything()
+      }
+    ]);
+  });
+});
