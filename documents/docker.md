@@ -11,4 +11,9 @@ $ docker-compose -f docker-compose.yml -f docker-compose.test.yml up
 
 # build no-cache
 $ docker-compose build --no-cache
+
+# show docker volumes
+$ docker volume ls
+# delete database data
+$ docker volume rm lovelab-postgres-data
 ```
