@@ -1,9 +1,29 @@
 import * as express from "express";
 import { Invitations } from "../../../models/invitations";
 import { Users } from "../../../models/users";
+import { Groups } from "../../../models/groups";
 import errorHandle from "../../../others/error";
 
 const router = express.Router();
+
+const addGroupName2invitation = (invitation: any) => {
+  const promise = Groups.findByPk(invitation.groupid).then(group => {
+    if (group === null) {
+      return Promise.reject(1414);
+    }
+    return Promise.resolve({
+      id: invitation.id,
+      message: invitation.message,
+      groupid: invitation.groupid,
+      inviteeuserid: invitation.inviteeuserid,
+      inviteruserid: invitation.inviteruserid,
+      updatedAt: invitation.updatedAt,
+      createdAt: invitation.createdAt,
+      groupname: group.name
+    });
+  });
+  return promise;
+};
 
 //  グループへの招待を追加 自分の所属するグループへの招待のみ可能
 router.post("/", (req, res) => {
@@ -36,10 +56,13 @@ router.post("/", (req, res) => {
       });
     })
     .then(newInvitation => {
-      res.json(newInvitation);
+      return addGroupName2invitation(newInvitation);
+    })
+    .then(invitationWithGroupname => {
+      res.json(invitationWithGroupname);
     })
     .catch(e => {
-      if (e === 1403) {
+      if (e === 1403 || e === 1414) {
         errorHandle(res, e);
       }
       errorHandle(res, 1404);
@@ -51,7 +74,14 @@ router.get("/", (req, res) => {
   const inviteeuserid = req.body.useridAuth;
   Invitations.findAll({ where: { inviteeuserid } })
     .then(invitations => {
-      res.json(invitations);
+      return Promise.all(
+        invitations.map(invitation => {
+          return addGroupName2invitation(invitation);
+        })
+      );
+    })
+    .then(invitationsWithGroupname => {
+      res.json(invitationsWithGroupname);
     })
     .catch(() => {
       errorHandle(res, 1409);
