@@ -2,22 +2,23 @@
 
 API server of lovelab with node.js and express
 
-- node.js
- - express
- - TypeScript
- - Sequelize
-- PostgreSQL
+- [node.js](https://nodejs.org/)
+ - [Express](https://expressjs.com/)
+ - [TypeScript](https://www.typescriptlang.org/)
+ - [Sequelize](https://sequelize.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/)
 
 ## Running Locally
 
-Need docker-compose
+Need docker-compose version 1.24.1
 
 ```sh
 $ git clone https://github.com/basd4g/lovelab.heroku.git
 $ cd lovelab.heroku
 $ cp .env.example .env
 $ docker-compose up
-# Open [localhost:3000/api/v1](http://localhost:3000/api/v1) on browser.
+# Open http://localhost/api/v1 on browser.
 ```
 
 ## Running test Locally
