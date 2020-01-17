@@ -3,10 +3,10 @@ version: '3.7'
 services:
   app:
     env_file:
-      - .env.test
+      - .env.jest
     ports:
       - "3000"
     command: ["./wait-for-postgres.sh","npm","test"]
   lovelab-postgres:
     env_file:
-      - .env.test
+      - .env.jest
