@@ -36,6 +36,29 @@ whoisdoinguserid ... グループ内のメンバーに自動振り分けされ�
 deadlinedate ... 前回締め切り日時と締め切り間隔から計算した値が採用される。
 taskgeneratorid ... もととなる定期タスクのid
 
+### nextgeneratingdateの仕様
+
+#### post時
+
+firstdeadlinedateを過ぎて次の00分の時刻
+
+#### put時
+
+nextgeneratingdate +=( firstdeadlinedate(新).getTime() - firstdeadlinedate(旧).getTime ) % interval - interval/2;
+
+ただし、nextgeneratingdate(新)が過去であるときは、そのタスク生成を行った上で、nextgeneratingdateを次回に更新する。
+
+#### タスク生成時
+
+nextgeneratingdate += interval
+
+### lovelab-batchの動作
+
+定期タスクは、毎時00分にdatabaseに操作をするバッチプログラムコンテナ「lovelab-batch」により実現している。
+
+lovelab-batchはnextgeneratingdateと現在時刻について、実行日時と日付と時が一致するタスクについてタスク生成を行う。
+またこのとき、nextgeneratingdate += intervalとして値を書き換えることで実行が実現している
+
 ## 新規定期タスクの作成
 
 | 認証の有無 | HTTPメソッド | URI末尾 |
@@ -70,6 +93,8 @@ taskgeneratorid ... もととなる定期タスクのid
 ### サーバ内の状態変化
 
 新しい定期タスクのレコードが作成される
+
+同時に、定期タスクの初回のタスクのレコードがtasksテーブルに生成される
 
 ## グループの定期タスクをすべて取得
 
@@ -160,7 +185,9 @@ taskgeneratorid ... もととなる定期タスクのid
 
 ### サーバ内の状態変化
 
-特になし
+該当の定期タスクのレコードが更新される
+
+nextgeneratingdateが現在時刻よりも過去に更新されてしまう時、タスク生成を行い、nextgeneratingdateを次回時刻に進める
 
 ## 特定の定期タスクを削除
 
