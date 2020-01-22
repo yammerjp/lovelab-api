@@ -1,6 +1,9 @@
 version: '3.7'
 
 services:
+  lovelab-api:
+    env_file:
+      - .env
   lovelab-postgres:
     volumes:
       - postgres-data-volume:/var/lib/postgresql/data/

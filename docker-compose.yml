@@ -27,8 +27,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000"
-    env_file:
-      - .env
     command: ["./wait-for-postgres.sh","npm","start"]
 
   # Database
