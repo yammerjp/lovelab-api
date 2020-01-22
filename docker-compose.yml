@@ -35,8 +35,6 @@ services:
   lovelab-postgres:
     image: postgres:11.6-alpine
     container_name: lovelab-postgres
-    env_file:
-      - .env
     restart: always
     expose:
       - "5432"

@@ -11,36 +11,33 @@ API server of [Lovelab(private repository)](https://github.com/enpit2su-ics/2019
 
 ## What is Lovelab?
 
-Lovelab is a to-do list application on iphone.
+Lovelab is a to-do list application on iPhone.
 You can share a to-do list with a team or community like a laboratory.
 Lovelab is suitable for laboratories.
 
-## Running on web
+## Running on Web
 
-Lovelab API server is running on [lovelab.pw](http://lovelab.pw/api/v1).
+Lovelab API server is running on [lovelab.pw](https://lovelab.pw/api/v1).
 
 ## Running Locally
 
-Need docker-compose version 1.24.1
+Need [docker-compose](https://docs.docker.com/compose/install/) (version 1.24.1)
 
 ```sh
 $ git clone https://github.com/basd4g/lovelab-api.git
 $ cd lovelab-api
 $ cp .env.example .env
-$ docker-compose up
-# Open http://localhost/api/v1 on browser.
+
+$ ./run.sh local
+# same as `$ docker-compose up`
+
+# Open https://localhost/api/v1 on browser.
 ```
 
 ## Running test Locally
 
 ```sh
-$ docker-compose -f docker-compose.yml -f docker-compose.test.yml run app
-```
-
-or
-
-```sh
-$ ./test.sh
+$ ./run.sh test
 ```
 
 ## Specification

@@ -3,3 +3,6 @@ version: '3.7'
 services:
   lovelab-api:
     command: ["./wait-for-postgres.sh","npm","test"]
+  lovelab-postgres:
+    env_file:
+      - .env.jest

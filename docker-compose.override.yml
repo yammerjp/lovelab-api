@@ -4,6 +4,8 @@ services:
   lovelab-postgres:
     volumes:
       - postgres-data-volume:/var/lib/postgresql/data/
+    env_file:
+      - .env
 volumes:
   postgres-data-volume:
     name: lovelab-postgres-data
