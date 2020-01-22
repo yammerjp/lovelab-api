@@ -1,5 +1,5 @@
 {
-  "name": "lovelab.heroku",
+  "name": "lovelab-api",
   "version": "0.1.0",
   "description": "API server of lovelab with Express.js",
   "engines": {
@@ -7,6 +7,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
+    "compile": "tsc --build tsconfig.json",
     "server": "node dist/index.js",
     "server:reset": "node dist/index.js --reset",
     "start": "tsc && node dist/index.js",
@@ -53,11 +54,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/basd4g/lovelab.heroku.git"
+    "url": "https://github.com/basd4g/lovelab-api.git"
   },
   "keywords": [
     "node",
-    "heroku",
     "express"
   ],
   "license": "MIT",

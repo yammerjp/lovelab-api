@@ -1,18 +1,31 @@
 version: '3.7'
 
 services:
-  app:
+  # API app server
+  lovelab-api:
+    container_name: lovelab-api
     depends_on:
       - lovelab-postgres
     build:
       context: .
       dockerfile: Dockerfile
+    ports:
+      - "3000"
+    command: ["./wait-for-postgres.sh","npm","run","server"]
+
+  # Database
   lovelab-postgres:
     image: postgres:11.6-alpine
     container_name: lovelab-postgres
+    restart: always
     expose:
       - "5432"
     volumes:
       - ./postgres-init:/docker-entrypoint-initdb.d:ro
+      - postgres-data-volume:/var/lib/postgresql/data/
     hostname: $POSTGRES_HOST
     user: $POSTGRES_USER
+volumes:
+  postgres-data-volume:
+    name: lovelab-postgres-data
+    driver: local

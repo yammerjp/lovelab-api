@@ -1,12 +1,13 @@
 version: '3.7'
 
 services:
-  app:
+  lovelab-api:
     env_file:
       - .env.jest
-    ports:
-      - "3000"
     command: ["./wait-for-postgres.sh","npm","test"]
   lovelab-postgres:
     env_file:
       - .env.jest
+volumes:
+  postgres-data-volume:
+    name: lovelab-postgres-data-test
