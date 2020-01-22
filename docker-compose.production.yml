@@ -4,8 +4,7 @@ services:
   https-portal:
     environment:
       DOMAINS: 'lovelab.pw -> http://lovelab-api:3000/, api.lovelab.pw -> http://lovelab-api:3000/api/'
-      STAGE: 'staging'
-      # STAGE: 'production'
+      STAGE: 'production'
       FORCE_RENEW: 'false'
     volumes:
       - lovelab-ssl-certs:/var/lib/https-portal 
