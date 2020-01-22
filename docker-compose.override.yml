@@ -1,19 +1,11 @@
 version: '3.7'
 
 services:
-  app:
-    env_file:
-      - .env
+  lovelab-api:
     ports:
-      - "0.0.0.0:80:3000"
-    command: ["./wait-for-postgres.sh","npm","start"]
-  lovelab-postgres:
-    volumes:
-      - postgres-data-volume:/var/lib/postgresql/data/
+      - "127.0.0.1:80:3000"
     env_file:
       - .env
-    restart: always
-volumes:
-  postgres-data-volume:
-    name: lovelab-postgres-data
-    driver: local
+  lovelab-postgres:
+    env_file:
+      - .env
