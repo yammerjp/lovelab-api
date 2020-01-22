@@ -1,6 +1,7 @@
 import * as express from "express";
 import { TaskGenerators } from "../../../models/taskGenerators";
 import errorHandle from "../../../others/error";
+import { taskGeneratorCreator } from "../../../others/taskGeneratorEdit";
 
 interface TaskGeneratorRequest {
   name?: string;
@@ -77,21 +78,19 @@ router.post("/", (req, res) => {
     errorHandle(res, 1801);
     return;
   }
-
-  TaskGenerators.create({
+  taskGeneratorCreator({
     name,
     comment,
     interval,
     firstdeadlinedate,
-    groupid: groupidAuth,
-    nextgeneratingdate: calcFirstGeneratingDate(firstdeadlinedate, interval)
-  })
-    .then(taskGenerator => {
-      res.json(taskGenerator);
-    })
-    .catch(() => {
+    groupid: groupidAuth
+  }).then(taskGenerator => {
+    if (taskGenerator == null) {
       errorHandle(res, 1805);
-    });
+    } else {
+      res.json(taskGenerator);
+    }
+  });
 });
 
 router.put("/:id", (req, res) => {

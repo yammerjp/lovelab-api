@@ -17,7 +17,6 @@
     "doc": "tsc && node dist/others/errorTest.js > documents/errorMessages.md",
     "test": "jest --forceExit",
     "test:coverage": "jest --forceExit --coverage"
-    
   },
   "dependencies": {
     "@types/body-parser": "^1.17.1",
