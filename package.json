@@ -7,6 +7,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
+    "compile": "tsc --build tsconfig.json",
     "server": "node dist/index.js",
     "server:reset": "node dist/index.js --reset",
     "start": "tsc && node dist/index.js",

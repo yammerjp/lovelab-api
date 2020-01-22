@@ -6,7 +6,7 @@ services:
       - .env
     ports:
       - "0.0.0.0:80:3000"
-    command: ["./wait-for-postgres.sh","npm","start"]
+    command: ["./wait-for-postgres.sh","npm","run","server"]
   lovelab-postgres:
     volumes:
       - postgres-data-volume:/var/lib/postgresql/data/
