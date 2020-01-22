@@ -1,22 +1,6 @@
 version: '3.7'
 
 services:
-
-  # Reverse proxy with nginx
-  # Automatic updator SSL certificate of Let's Encrypt
-  https-portal:
-    image: steveltn/https-portal:1
-    container_name: lovelab-https-portal
-    ports:
-      - '80:80'
-      - '443:443'
-    restart: always
-    environment:
-      DOMAINS: 'lovelab.pw -> http://lovelab-api:3000/, localhost -> http://lovelab-api:3000/'
-      STAGE: 'local'
-      # STAGE: 'production'
-      # FORCE_RENEW: 'true'
-
   # API app server
   lovelab-api:
     container_name: lovelab-api
@@ -38,5 +22,10 @@ services:
       - "5432"
     volumes:
       - ./postgres-init:/docker-entrypoint-initdb.d:ro
+      - postgres-data-volume:/var/lib/postgresql/data/
     hostname: $POSTGRES_HOST
     user: $POSTGRES_USER
+volumes:
+  postgres-data-volume:
+    name: lovelab-postgres-data
+    driver: local

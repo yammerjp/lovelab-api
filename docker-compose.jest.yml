@@ -8,3 +8,6 @@ services:
   lovelab-postgres:
     env_file:
       - .env.jest
+volumes:
+  postgres-data-volume:
+    name: lovelab-postgres-data-test
