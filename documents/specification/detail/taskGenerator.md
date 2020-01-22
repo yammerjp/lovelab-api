@@ -40,13 +40,25 @@ taskgeneratorid ... もととなる定期タスクのid
 
 #### post時
 
-firstdeadlinedateを過ぎて次の00分の時刻
+firstdeadlinedateを過ぎて次の00分の時刻が格納される。
 
 #### put時
 
-nextgeneratingdate +=( firstdeadlinedate(新).getTime() - firstdeadlinedate(旧).getTime ) % interval - interval/2;
+firstdeadlinedateの値が変更された時、書き換えられる。
+
+##### intervalがそのままの時
+
+変更された差分と同じだけ、nextgeneratingdateに反映する。
+ただしここでいう差分とは、intervalの期間の半分より短いものとする。
+例えば、interval=onedayのとき、firstdeadlinedateの時刻が17時から19時に変更していたら+2時間、17時から6時に変更していたら-11時間、17時から4時に変更していたら+11時間、と差分を定める。(日付は無視する)
+
+( 執筆者メモ: nextgeneratingdate +=( firstdeadlinedate(新).getTime() - firstdeadlinedate(旧).getTime ) % interval - interval/2; )
 
 ただし、nextgeneratingdate(新)が過去であるときは、そのタスク生成を行った上で、nextgeneratingdateを次回に更新する。
+
+##### intervalが変更された時
+
+nextgeneratingdateは変更せず、現在生成されているタスクのdeadlinedateの1時間後
 
 #### タスク生成時
 
