@@ -14,5 +14,7 @@ connectDataBase(forceReset).then(() => {
   // サーバ起動
   app.listen(port);
   // eslint-disable-next-line no-console
-  console.log(`listen on port ${port}`);
+  console.log(`listen on port ${port} in docker-network`);
+  // eslint-disable-next-line no-console
+  console.log(`listen on port 80 or 80,443 in local environment`);
 });

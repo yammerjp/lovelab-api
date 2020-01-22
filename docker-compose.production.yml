@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+
+  # Reverse proxy with nginx
+  # Automatic updator SSL certificate of Let's Encrypt
+  https-portal:
+    image: steveltn/https-portal:1
+    container_name: lovelab-https-portal
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    environment:
+      # DOMAINS: 'lovelab.pw -> http://lovelab-api:3000/, localhost -> http://lovelab-api:3000/'
+      DOMAINS: 'lovelab.pw -> http://lovelab-api:3000/, api.lovelab.pw -> http://lovelab-api:3000/api/'
+      # STAGE: 'local'
+      STAGE: 'production'
+      # FORCE_RENEW: 'true'
+      FORCE_RENEW: 'false'
+    volumes:
+      - lovelab-ssl-certs:/var/lib/https-portal 
+  lovelab-api:
+    env_file:
+      - .env
+  lovelab-postgres:
+    env_file:
+      - .env
+volumes:
+  lovelab-ssl-certs:
+    name: lovelab-ssl-certs
+    driver: local
+
