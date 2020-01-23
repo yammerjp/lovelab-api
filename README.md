@@ -63,3 +63,7 @@ MIT
 - [lovelab-api docker-hub (this repository)](https://hub.docker.com/r/basd4g/lovelab-api)
 - [lovelab-batch (Batch server of lovelab)](https://github.com/basd4g/lovelab-batch)
 - [lovelab-batch docker-hub](https://hub.docker.com/r/basd4g/lovelab-batch)
+
+## Language
+
+ [Japanese README](./README.ja.md) | English README
