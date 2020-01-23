@@ -9,3 +9,17 @@ services:
   lovelab-postgres:
     env_file:
       - .env
+
+  # Batch server
+  lovelab-batch:
+    container_name: lovelab-batch
+    image: basd4g/lovelab-batch
+    depends_on:
+      - lovelab-api
+      - lovelab-postgres
+    restart: always
+    env_file:
+      - .env
+    command: ["./wait-for-lovelab-api.sh","npm","start"]
+
+
