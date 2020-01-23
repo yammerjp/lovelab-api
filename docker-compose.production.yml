@@ -26,6 +26,9 @@ services:
   lovelab-postgres:
     env_file:
       - .env
+  lovelab-batch: 
+    env_file:
+      - .env
 volumes:
   lovelab-ssl-certs:
     name: lovelab-ssl-certs

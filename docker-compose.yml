@@ -26,6 +26,16 @@ services:
     hostname: $POSTGRES_HOST
     user: $POSTGRES_USER
 
+  # Batch server
+  lovelab-batch:
+    container_name: lovelab-batch
+    image: basd4g/lovelab-batch
+    depends_on:
+      - lovelab-api
+      - lovelab-postgres
+    restart: always
+    command: ["./wait-for-lovelab-api.sh","npm","start"]
+
 volumes:
   postgres-data-volume:
     name: lovelab-postgres-data
