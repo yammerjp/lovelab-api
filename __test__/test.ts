@@ -1150,10 +1150,11 @@ describe("/authed/taskgenerators", () => {
       comment: "taskgenerator's comment",
       groupid: 1,
       interval: "oneday",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
+      // firstdeadlinedateとnextgeneratingdateのテストは現状無い
     });
   });
 
@@ -1175,7 +1176,7 @@ describe("/authed/taskgenerators", () => {
       comment: "taskgenerator's comment",
       groupid: 1,
       interval: "oneweek",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1200,7 +1201,7 @@ describe("/authed/taskgenerators", () => {
       comment: "taskgenerator's comment",
       groupid: 1,
       interval: "onemonth",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1225,7 +1226,7 @@ describe("/authed/taskgenerators", () => {
       comment: "taskgenerator's comment",
       groupid: 2,
       interval: "onemonth",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1245,7 +1246,7 @@ describe("/authed/taskgenerators", () => {
         comment: "taskgenerator's comment",
         groupid: 1,
         interval: "oneday",
-        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        firstdeadlinedate: expect.anything(),
         nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
@@ -1256,7 +1257,7 @@ describe("/authed/taskgenerators", () => {
         comment: "taskgenerator's comment",
         groupid: 1,
         interval: "oneweek",
-        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        firstdeadlinedate: expect.anything(),
         nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
@@ -1267,7 +1268,7 @@ describe("/authed/taskgenerators", () => {
         comment: "taskgenerator's comment",
         groupid: 1,
         interval: "onemonth",
-        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        firstdeadlinedate: expect.anything(),
         nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
@@ -1305,7 +1306,7 @@ describe("/authed/taskgenerators", () => {
       comment: "taskgenerator's comment",
       groupid: 1,
       interval: "oneday",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1411,7 +1412,7 @@ describe("/authed/taskgenerators", () => {
       comment: "taskgenerator's comment",
       groupid: 1,
       interval: "oneday",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1433,7 +1434,7 @@ describe("/authed/taskgenerators", () => {
       comment: "new taskgenerator's comment",
       groupid: 1,
       interval: "oneday",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1455,7 +1456,7 @@ describe("/authed/taskgenerators", () => {
       comment: "new taskgenerator's comment",
       groupid: 1,
       interval: "oneweek",
-      firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1477,7 +1478,7 @@ describe("/authed/taskgenerators", () => {
       comment: "new taskgenerator's comment",
       groupid: 1,
       interval: "oneweek",
-      firstdeadlinedate: "2020-02-19T04:00:00.000Z",
+      firstdeadlinedate: expect.anything(),
       nextgeneratingdate: expect.anything(),
       updatedAt: expect.anything(),
       createdAt: expect.anything()
@@ -1523,7 +1524,7 @@ describe("/authed/taskgenerators", () => {
         comment: "taskgenerator's comment",
         groupid: 1,
         interval: "oneweek",
-        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        firstdeadlinedate: expect.anything(),
         nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
@@ -1534,7 +1535,7 @@ describe("/authed/taskgenerators", () => {
         comment: "taskgenerator's comment",
         groupid: 1,
         interval: "onemonth",
-        firstdeadlinedate: "2020-02-09T04:00:00.000Z",
+        firstdeadlinedate: expect.anything(),
         nextgeneratingdate: expect.anything(),
         updatedAt: expect.anything(),
         createdAt: expect.anything()
