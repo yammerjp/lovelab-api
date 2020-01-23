@@ -18,7 +18,7 @@ Lovelabは、タスク管理を行うiPhoneアプリである。
 
 ## 使用方法
 
-- [iPhoneアプリを含めた使用方法の詳細](./documents/howToUse.md)
+- [iPhoneアプリを含めた使用方法の詳細](./documents/HowToUse.md)
 - [dockerコンテナの扱いについての詳細](./documents/docker.md)
 
 ### Webで実行
