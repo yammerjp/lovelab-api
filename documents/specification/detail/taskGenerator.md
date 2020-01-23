@@ -44,32 +44,18 @@ firstdeadlinedateを過ぎて次の00分の時刻が格納される。
 
 #### put時
 
-firstdeadlinedateの値が変更された時、書き換えられる。
-
-##### intervalがそのままの時
-
-変更された差分と同じだけ、nextgeneratingdateに反映する。
-ただしここでいう差分とは、intervalの期間の半分より短いものとする。
-例えば、interval=onedayのとき、firstdeadlinedateの時刻が17時から19時に変更していたら+2時間、17時から6時に変更していたら-11時間、17時から4時に変更していたら+11時間、と差分を定める。(日付は無視する)
-
-( 執筆者メモ: nextgeneratingdate +=( firstdeadlinedate(新).getTime() - firstdeadlinedate(旧).getTime ) % interval - interval/2; )
-
-ただし、nextgeneratingdate(新)が過去であるときは、そのタスク生成を行った上で、nextgeneratingdateを次回に更新する。
-
-##### intervalが変更された時
-
-nextgeneratingdateは変更せず、現在生成されているタスクのdeadlinedateの1時間後
+変更されない。
 
 #### タスク生成時
 
-nextgeneratingdate += interval
+タスクに設定したdeadlinedate+1時間
 
 ### lovelab-batchの動作
 
 定期タスクは、毎時00分にdatabaseに操作をするバッチプログラムコンテナ「lovelab-batch」により実現している。
 
 lovelab-batchはnextgeneratingdateと現在時刻について、実行日時と日付と時が一致するタスクについてタスク生成を行う。
-またこのとき、nextgeneratingdate += intervalとして値を書き換えることで実行が実現している
+またこのとき、nextgeneratingdateの値を次回生成タイミングに書き換えることで実行が実現している
 
 ## 新規定期タスクの作成
 
