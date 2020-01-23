@@ -38,7 +38,9 @@ const neighborDate = (
         dateOrg.getFullYear(),
         monthNew + 1,
         0,
-        dateOrg.getHours()
+        dateOrg.getHours(),
+        dateOrg.getMinutes(),
+        dateOrg.getSeconds()
       );
     }
 
