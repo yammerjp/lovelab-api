@@ -11,9 +11,9 @@ API server of [Lovelab(private repository)](https://github.com/enpit2su-ics/2019
 
 ## What is Lovelab?
 
-Lovelab is a to-do list application on iPhone.
-You can share a to-do list with a team or community like a laboratory.
-Lovelab is suitable for laboratories.
+Lovelab is a to-do list application on iPhone.  
+You can share a to-do list with a team or community like a laboratory.  
+Lovelab is suitable for laboratories.  
 
 ## Usage
 
