@@ -34,6 +34,7 @@ $ docker-compose up
 # same as `$ ./run.sh local`
 
 # Open https://localhost/api/v1 on browser.
+# docker-compose.yml contains [lovelab-batch](https://github.com/basd4g/lovelab-batch)
 ```
 
 ### Running test Locally
@@ -47,7 +48,6 @@ $ ./run.sh test
 This is REST-like API(Authorization required).
 
 [API Specification is here](documents/specification/index.md)
-
 
 ## License
 
