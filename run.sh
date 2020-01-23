@@ -29,7 +29,7 @@ elif [ $1 = $PRODUCTION ]; then
   docker-compose build
   exec docker-compose -f docker-compose.yml \
                       -f docker-compose.production.yml \
-                      up
+                      up -d
 else
   echo 'example:'
   echo "$ $0 $LOCAL"
