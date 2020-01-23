@@ -17,17 +17,34 @@ const neighborDate = (
 ): Date => {
   const diff = isPast === true ? -1 : 1;
   switch (interval) {
-    case "oneday":
+    case "oneday": {
       date.setDate(date.getDate() + diff);
       return date;
-    case "oneweek":
+    }
+    case "oneweek": {
       date.setDate(date.getDate() + diff * 7);
       return date;
-    case "onemonth":
-      date.setMonth(date.getMonth() + diff);
-      return date;
-    default:
+    }
+    case "onemonth": {
+      const dateOrg = new Date(date.getTime());
+      const monthOrg = date.getMonth();
+      const monthNew = monthOrg + diff;
+      date.setMonth(monthNew);
+      if (date.getMonth() === monthNew) {
+        return date;
+      }
+      // returnする日付に29日,30日,31日を返したがその月に存在しないときは月末の日に設定する。
+      return new Date(
+        dateOrg.getFullYear(),
+        monthNew + 1,
+        0,
+        dateOrg.getHours()
+      );
+    }
+
+    default: {
       throw new Error();
+    }
   }
 };
 
