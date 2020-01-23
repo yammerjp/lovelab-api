@@ -16,7 +16,7 @@ interface TaskRequest {
 }
 const router = express.Router();
 
-// GET https://lovelab.2n2n.ninja/api/v1/tasks
+// GET /api/v1/tasks
 //  自分の所属するグループのタスク一覧を取得
 router.get("/", (req, res) => {
   const { groupidAuth } = req.body;
@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// POST https://lovelab.2n2n.ninja/api/v1/tasks
+// POST/api/v1/tasks
 //  タスクを追加 自分の所属するグループのみ追加可能
 router.post("/", (req, res) => {
   const {
@@ -93,7 +93,7 @@ router.post("/", (req, res) => {
     });
 });
 
-// GET https://lovelab.2n2n.ninja/api/v1/tasks/:taskid
+// GET /api/v1/tasks/:taskid
 //  タスクの詳細を取得 自分の所属するグループのみ取得可能
 router.get("/:taskid", (req, res) => {
   const { groupidAuth } = req.body;
@@ -121,7 +121,7 @@ router.get("/:taskid", (req, res) => {
     });
 });
 
-// PUT https://lovelab.2n2n.ninja/api/v1/groups/:groupid/tasks/:taskid
+// PUT /api/v1/groups/:groupid/tasks/:taskid
 //  タスクを完了 自分の所属するグループのみ編集可能
 router.put("/:taskid", (req, res) => {
   const taskid = parseInt(req.params.taskid, 10);

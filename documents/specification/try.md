@@ -10,12 +10,12 @@
 
 ```sh
 # ユーザ登録
-$ curl "https://lovelab.2n2n.ninja/api/v1/signup" \
+$ curl "https://lovelab.pw/api/v1/signup" \
        -X POST \
        -H "Content-Type: application/json" \
        -d '{"email":"charlie@example.com","password":"charlie-password","name":"charlie"}' 
 # ログイン(Beaerトークンを取得)
-$ curl "https://lovelab.2n2n.ninja/api/v1/login" \
+$ curl "https://lovelab.pw/api/v1/login" \
        -X POST \
        -H "Content-Type: application/json" \
        -d '{"email":"charlie@example.com","password":"charlie-password"}' 
@@ -24,7 +24,7 @@ $ curl "https://lovelab.2n2n.ninja/api/v1/login" \
 ### 3.1.2. Postmanで通信
 
 1. HTTPリクエストメソッドを`POST`に設定 (画像1枚目)
-1. URIを(`https://lovelab.2n2n/ninja/api/v1/ ... `に適宜設定 (画像1枚目)
+1. URIを(`https://lovelab.pw/api/v1/ ... `に適宜設定 (画像1枚目)
 1. AuthorizationタブのTYPEを`No Auth`に設定 (画像1枚目)
 1. Bodyタブにて形式を`raw`かつ`JSON`に設定 (画像2枚目)
 1. リクエストボディのJSONを入力 (画像2枚目)
@@ -43,7 +43,7 @@ terminalで次のコマンドを実行
 
 ```sh
 # ユーザ情報を取得
-$ curl "https://lovelab.2n2n.ninja/api/v1/authed/users/1" \
+$ curl "https://lovelab.pw/api/v1/authed/users/1" \
        -H "Content-Type: application/json" \
        -H "Authorization: Bearer xxxx" \
        -X GET
