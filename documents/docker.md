@@ -2,10 +2,21 @@
 
 ## リポジトリ内のdockerコンテナについて
 
-- lovelab-api ... APIサーバ。
-- lovelab-postgres ... データを保存するPostgreSQL。APIサーバとBatchサーバから書き換えられる。
-- lovelab-batch ... Batchサーバ。定期タスクを生成する。起動時と1時間ごとにバッチ処理が走り、Databaseに接続しタスクを生成する。
-- lovelab-https-portal ... Webサーバ。nginxがリバースプロキシとして働き、APIサーバへ転送する。Let's Encryptによる証明書自動更新を含む。 (`$ ./run.sh local-https` または `$ ./run.sh production`のときのみ動く。ローカルで動くときは自己署名証明書)
+### lovelab-api
+
+APIサーバ。
+
+### lovelab-postgres
+
+データを保存するPostgreSQL。APIサーバとBatchサーバから書き換えられる。
+
+### lovelab-batch
+
+Batchサーバ。定期タスクを生成する。起動時と1時間ごとにバッチ処理が走り、Databaseに接続しタスクを生成する。
+
+### lovelab-https-portal
+
+Webサーバ。nginxがリバースプロキシとして働き、APIサーバへ転送する。Let's Encryptによる証明書自動更新を含む。 (`$ ./run.sh local-https` または `$ ./run.sh production`のときのみ動く。ローカルで動くときは自己署名証明書)
 
 ## API serverを起動
 
