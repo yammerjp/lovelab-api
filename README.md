@@ -1,6 +1,6 @@
 # lovelab-api
 
-API server of [Lovelab(private repository)](https://github.com/enpit2su-ics/2019-team-C/) with node.js and express
+API server of [Lovelab(private repository)](https://github.com/enpit2su-ics/2019-team-C) with node.js and express
 
 - [node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)

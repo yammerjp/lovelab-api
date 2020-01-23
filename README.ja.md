@@ -1,6 +1,6 @@
 # lovelab-api
 
-lovelab-apiは、[Lovelab(private repository)](https://github.com/enpit2su-ics/2019-team-C/)で用いるAPIサーバである。
+lovelab-apiは、[Lovelab(private repository)](https://github.com/enpit2su-ics/2019-team-C)で用いるAPIサーバである。
 
 以下の技術スタックを用いて作られている。
 
@@ -18,8 +18,8 @@ Lovelabは、タスク管理を行うiPhoneアプリである。
 
 ## 使用方法
 
-- [iPhoneアプリを含めた使用方法を記載した別ページはこちら](./documents/howToUse.md)
-- [dockerコンテナの扱いについての詳細は別ページにも記載している。](./documents/docker.md)
+- [iPhoneアプリを含めた使用方法の詳細](./documents/howToUse.md)
+- [dockerコンテナの扱いについての詳細](./documents/docker.md)
 
 ### Webで実行
 
@@ -65,9 +65,9 @@ MIT
 
 ## 参考
 
-- [lovelab-swift (iPhone app of lovelab) (private repository)](https://github.com/enpit2su-ics/2019-team-C)
-- [lovelab-api docker-hub (this repository)](https://hub.docker.com/r/basd4g/lovelab-api)
-- [lovelab-batch (Batch server of lovelab)](https://github.com/basd4g/lovelab-batch)
+- [lovelab-swift (iPhoneアプリ) (private repository)](https://github.com/enpit2su-ics/2019-team-C)
+- [lovelab-api docker-hub (このリポジトリ)](https://hub.docker.com/r/basd4g/lovelab-api)
+- [lovelab-batch (Batchサーバ)](https://github.com/basd4g/lovelab-batch)
 - [lovelab-batch docker-hub](https://hub.docker.com/r/basd4g/lovelab-batch)
 
 ## Language
