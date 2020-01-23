@@ -13,7 +13,7 @@ lovelab-apiは、[Lovelab(private repository)](https://github.com/enpit2su-ics/2
 
 ## Lovelabとは?
 
-Lovelabは、タスク管理を行うiPhoneアプリである。
+Lovelabは、タスク管理を行うiPhoneアプリである。  
 大学の研究室のような、共同生活を行うチームやコミュニティにおける日常的なタスクを手軽に管理することができる。
 
 ## 使用方法
@@ -39,7 +39,7 @@ $ docker-compose up
 
 ```
 
-https://localhost/api/v1 をブラウザで開き、jsonが表示されたら正常な動作が確認できる。
+http://localhost/api/v1 をブラウザで開き、jsonが表示されたら正常な動作が確認できる。
 
 docker-compose.ymlは定期タスク機能を実現する[lovelab-batch](https://github.com/basd4g/lovelab-batch)コンテナを含む。
 
@@ -72,4 +72,4 @@ MIT
 
 ## Language
 
- Japanese README | [English README](./README.md)
+ [English README](./README.md) | Japanese README

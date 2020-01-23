@@ -43,11 +43,14 @@ $ curl http://localhost/api/v1 # jsonが取得できることを確認
 # dockerコンテナが走っていることを確認
 $ docker ps
 
+# dockerコンテナ(停止中を含む)があることを確認
+$ docker ps -a
+
 # dockerコンテナを強制停止
 $ docker kill [container-id]
 
-# dockerコンテナ(停止中を含む)があることを確認
-$ docker ps -a
+# dockerコンテナを削除
+$ docker rm [container-id]
 
 # docker-volume(dockerにマウントできる永続化領域)を確認
 $ docker volume ls

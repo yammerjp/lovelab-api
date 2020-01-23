@@ -33,7 +33,7 @@ $ cp .env.example .env
 $ docker-compose up
 # same as `$ ./run.sh local`
 
-# Open https://localhost/api/v1 on browser.
+# Open http://localhost/api/v1 on browser.
 # docker-compose.yml contains [lovelab-batch](https://github.com/basd4g/lovelab-batch)
 ```
 
@@ -66,4 +66,4 @@ MIT
 
 ## Language
 
- [Japanese README](./README.ja.md) | English README
+ English README | [Japanese README](./README.ja.md)
