@@ -1,6 +1,6 @@
-# lovelab.heroku API仕様書
+# lovelab-api API仕様書
 
-lovelab.herokuのAPIに関する仕様を記す。
+[lovelab-api](https://github.com/basd4g/lovelab-api)のAPIに関する仕様を記す。
 
 ## 概略
 
