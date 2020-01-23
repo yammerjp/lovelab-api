@@ -10,7 +10,7 @@ HTTPS通信で、jsonデータを送受信(一部は受信のみ)することで
 
 - APIの送受信するデータ形式: json
 - 認証が必要な場合の方式: Bearerトークン
-- エンドポイント `https://lovelab.2n2n.ninja/api/v1/*`( 以下は`https://lovelab.2n2n.ninja/api/v1`以下のURIを記載する
+- エンドポイント `https://lovelab.pw/api/v1/*`( 以下は`https://lovelab.pw/api/v1`以下のURIを記載する
 
 ## もくじ
 
