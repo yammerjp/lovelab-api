@@ -17,7 +17,7 @@ URIに含む`:id`はそのまま打つのではなく適宜任意の数字など
 
 - 操作の説明
 - HTTPリクエストメソッド(GET,POST,PUT,DELETE) ... (以下HTTPメソッドと表記)
-- エンドポイントのURI( https://lovelab.2n2n.ninja 以下の文字列)
+- エンドポイントのURI( https://lovelab.pw/api/v1 以下の文字列)
 - (必要な場合)リクエストボディ
 - (存在する場合)レスポンスボディ
 
